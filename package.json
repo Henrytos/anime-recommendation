@@ -1,0 +1,25 @@
+{
+  "name": "anime-recommendation",
+  "version": "1.0.0",
+  "description": "Projeto individual de p.i , recomendações de anime , plataforma web compartilhamento entre entusiastas e curiosos do mundo dos animes 🔥",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Henrytos/anime-recommendation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Henrytos/anime-recommendation/issues"
+  },
+  "homepage": "https://github.com/Henrytos/anime-recommendation#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
+  }
+}
