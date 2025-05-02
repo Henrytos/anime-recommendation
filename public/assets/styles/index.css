@@ -36,9 +36,67 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: contain;
   pointer-events: none;
 }
+
+.layout .boxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.layout .top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.layout .top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: rotate(90deg);
+}
+
+.layout .bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: rotate(180deg);
+}
+
+.layout .bottom-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: rotate(270deg);
+}
+
+.layout .box {
+  display: block;
+  width: 30px;
+  height: 30px;
+}
+
+.box-red-light {
+  background-color: var(--color-red-light);
+  opacity: 50%;
+}
+.box-red-dark {
+  background-color: var(--color-red);
+  opacity: 50%;
+}
+
+.box-purple-light {
+  background-color: var(--color-purple-light);
+  opacity: 50%;
+}
+
+.box-purple-dark {
+  background-color: var(--color-purple-black);
+  opacity: 50%;
+}
+
 .container {
   height: 100vh;
   width: 100vw;
