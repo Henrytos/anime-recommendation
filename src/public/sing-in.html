@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar</title>
+    <link rel="stylesheet" href="./assets/styles/sing-in.css">
+</head>
+
+<body class="container">
+    <div class="left">
+        <img src="../assets/images/logo-home.png" alt="logo" width="292" height="64">
+        <div id="bg-character">
+        </div>
+    </div>
+
+    <div class="right">
+        <h1>LOGIN</h1>
+
+
+        <div class="controllers">
+            <div class="input-controller email-controller">
+                <p>Email:</p>
+
+                <div class="input-content">
+                    <input type="email" required placeholder="franzhenry46@gmail.com" id="input_email">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mail-icon lucide-mail">
+                            <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div class="input-controller password-controller">
+                <p>Senha:</p>
+
+                <div class="input-content">
+                    <input type="password" required placeholder="**********" id="input_password">
+                    <span id="span_eye">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-eye-closed-icon lucide-eye-closed" id="icon_eye">
+                            <path d="m15 18-.722-3.25" />
+                            <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                            <path d="m20 15-1.726-2.05" />
+                            <path d="m4 15 1.726-2.05" />
+                            <path d="m9 18 .722-3.25" />
+                        </svg>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content-button">
+            <p>se não tiver conta,<a href="./sing-up.html">clique aqui</a> </p>
+            <button id="button-sign-in">
+                ENTRAR
+            </button>
+        </div>
+    </div>
+
+    <script src="./assets/javascript/on-click-eye-passaword.js" defer></script>
+    <script src="./assets/javascript/on-click-button-sign-in.js" defer></script>
+</body>
+
+
+</html>

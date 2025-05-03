@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Megrim&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --color-white: #f3f3f3;
+  --color-background: #141617;
+  --color-background-foreground: #f3f3f3;
+  --color-purple-light: #a39fbf;
+  --color-purple-black: #313646;
+  --color-red: #cb4648;
+  --color-red-light: #d97f77;
+
+  --size-md: 16px;
+  --size-lg: 20px;
+  --size-2xl: 24px;
+  --size-4xl: 48px;
+  --size-6xl: 64px;
+
+  --font-light: 300;
+  --font-normal: 400;
+  --font-semibold: 500;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-weight: var(--font-light);
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  padding: 20px 10%;
+  background-color: var(--color-background);
+  color: var(--color-background-foreground);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  overflow: hidden;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.left #bg-character {
+  position: absolute;
+  top: 84px;
+  background-image: url("../images/denji.png");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  left: 0;
+  height: calc(100vh - 84px);
+  width: 50%;
+  z-index: 10;
+}
+
+.right {
+  grid-column-start: 9;
+  grid-column-end: 13;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  z-index: 10;
+}
+
+.right h1 {
+  text-align: center;
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: var(--size-4xl);
+}
+
+.right .controllers {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.right .controllers .input-controller {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.right .controllers .input-controller p {
+  font-size: var(--size-lg);
+  font-weight: var(--font-semibold);
+  line-height: 30px;
+}
+
+.right .controllers .input-controller .input-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-purple-black);
+  opacity: 50%;
+  backdrop-filter: 1000px;
+  padding: 14px 20px;
+}
+
+.right .controllers .input-controller .input-content input {
+  all: unset;
+  flex-grow: 1;
+  font-size: var(--size-md);
+  backdrop-filter: 100px;
+  color: var(--color-background-foreground) !important;
+}
+
+.right .controllers .input-controller .input-content input::placeholder {
+  color: var(--color-background-foreground) !important;
+}
+
+.right .content-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.right .content-button p {
+  font-size: var(--size-md);
+  font-weight: var(--font-light);
+  text-align: center;
+}
+
+.right .content-button p a {
+  color: var(--color-purple-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-purple-light);
+}
+
+.right .content-button button {
+  all: unset;
+  border-radius: 2px;
+  padding: 14px 42px;
+  font-size: var(--size-lg);
+  font-weight: var(--font-semibold);
+  background-color: var(--color-purple-light);
+
+  color: var(--color-background);
+  cursor: pointer;
+}
+
+.container::before {
+  content: " ";
+  width: 345px;
+  height: 345px;
+  position: absolute;
+  background-image: url("../images/cycle.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  right: 30%;
+  bottom: -120px;
+}
+
+.container::after {
+  content: " ";
+  width: 345px;
+  height: 345px;
+  position: absolute;
+  background-image: url("../images/cycle.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  right: 3%;
+  transform: rotate(180deg);
+  top: 10%;
+
+  animation: 5s ease-in-out infinite animate-cycle;
+}
+
+/* @keyframes animate-cycle {
+  0% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+
+  50% {
+    transform: rotate(180deg) translate(100%, -100%);
+  }
+
+  100% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+} */
