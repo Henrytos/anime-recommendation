@@ -1,21 +1,24 @@
-import { connection } from "../database/connection.js"
+const { execute } = require("../database/connection.js")
 
-export async function createUser({ name, email, imageUrl }) {
-    console.log("function createUser(){...}")
-    await connection.query("SHOW TABLES;") // code sql name, email, imageUrl
+async function createUser(username, email, password_hash, image_url) {
+    try {
+        await execute(`INSERT INTO users(username, email, password_hash, image_url) VALUES ('${username}', '${email}', '${password_hash}', '${image_url}');`)
+
+        return true
+    } catch (error) {
+        console.log(error)
+
+        return false
+    }
 }
 
-export async function saveUser({ id, name, email, imageUrl }) {
-    console.log("function saveUser(){...}")
-    await connection.query("SHOW TABLES;") // code sql
+async function findByEmail(email) {
+    const { results } = await execute(`SELECT * FROM users WHERE email = '${email}'`) // code sql
+    console.log(results)
+    return results[0]
 }
 
-export async function deleteUser({ id }) {
-    console.log("function deleteUser(){...}")
-    await connection.query("SHOW TABLES;") // code sql
-}
-
-export async function getUser({ id }) {
-    console.log("function getUser(){...}")
-    await connection.query("SHOW TABLES;") // code sql
+module.exports = {
+    createUser,
+    findByEmail
 }
