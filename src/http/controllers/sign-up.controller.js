@@ -2,7 +2,7 @@ const { findByEmail, createUser } = require("../../models/user.model.js")
 const { deleteFileStorage } = require("../../storage/delete-file.storage.js")
 
 async function signUpController(request, response) {
-    const { name, email, password } = request.body
+    const { username, email, password } = request.body
     const avatarUrl = request.file.filename
 
     const existUserWithEmail = await findByEmail(email)
@@ -15,7 +15,7 @@ async function signUpController(request, response) {
         })
     }
 
-    await createUser(name, email, password, avatarUrl)
+    await createUser(username, email, password, avatarUrl)
 
     return response.status(201).json({
         message: "user created successfully"
