@@ -12,10 +12,14 @@
   --size-lg: 20px;
   --size-2xl: 24px;
   --size-6xl: 64px;
+  --size-7xl: 72px;
+  --size-8xl: 80px;
+  --size-9xl: 90px;
 
   --font-light: 300;
   --font-normal: 400;
   --font-semibold: 500;
+  --font-bold: 600;
 }
 
 * {
@@ -212,6 +216,7 @@ a {
   grid-column-start: 8;
   grid-column-end: 13;
   width: 100%;
+  max-height: 85vh;
   height: auto;
 
   object-fit: contain;
@@ -234,4 +239,80 @@ a {
 }
 .font-semibold {
   font-weight: var(--font-semibold);
+}
+
+/* SHEET */
+
+.sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  padding: 60px 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  pointer-events: none;
+  transition: 0.2s all;
+}
+
+.sheet-active {
+  opacity: 1;
+  pointer-events: all;
+  background-color: rgba(20, 22, 23, 0.5);
+  backdrop-filter: blur(20px);
+}
+
+.sheet .links {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+  height: 100%;
+  font-size: var(--size-6xl);
+  font-weight: var(--font-light);
+}
+
+.sheet .link {
+  transform: translateX(200%);
+  color: var(--color-background-foreground);
+  transition: 0.2s all;
+  cursor: pointer;
+}
+
+.sheet .link a {
+  color: white;
+}
+
+.sheet .link:hover {
+  font-size: var(--size-9xl);
+}
+
+.sheet .bottom .buttons {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  text-align: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(203, 70, 72, 0.5);
+}
+
+.active {
+  font-weight: var(--font-bold);
+  color: var(--color-red) !important;
+  cursor: not-allowed;
+}
+
+#button_close_menu {
+  color: var(--color-background-foreground);
+  cursor: pointer;
+}
+
+.link-active {
+  transform: translateX(0) !important;
 }

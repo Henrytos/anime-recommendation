@@ -40,7 +40,7 @@
                 </button>
                 <a class="button button-foreground" href="./sign-up.html">Cadastrar</a>
                 <a class="button button-foreground" href="./sign-in.html">Entrar</a>
-                <button class="menu" type="button">
+                <button class="menu" type="button" id="button_open_menu">
                     <span class="line"></span>
                     <span class="line"></span>
                     <span class="line"></span>
@@ -83,8 +83,44 @@
         </div>
     </section>
 
+    <!-- expand -->
+
+    <div class="sheet" id="sheet">
+        <span id="button_close_menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-x-icon lucide-x">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </svg>
+        </span>
+        <div class="links">
+
+            <span class="link">
+                <a href="./index2.html" class="active">Home</a>
+            </span>
+            <span class="link">
+                <a href="./index2.html">Quizzes</a>
+            </span>
+            <span class="link">
+                <a href="./index2.html">Populares</a>
+            </span>
+            <span class="link">
+                <a href="./index2.html">Indicações</a>
+            </span>
+            <span class="link">
+                <a href="./index2.html">Autores</a>
+            </span>
+        </div>
+
+
+    </div>
+
     <script src="./assets/javascript/redirects.js" defer></script>
     <script src="./assets/javascript/on-click-button-theme.js" defer></script>
+    <script src="./assets/javascript/on-click-toggle-menu.js" defer></script>
+    <script src="./assets/javascript/on-click-in-link-in-sheet.js" defer></script>
+
 </body>
 
 </html>
