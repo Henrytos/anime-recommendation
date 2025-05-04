@@ -5,12 +5,19 @@ A motivação do projeto está em ajudar pessoas a escolher um anime com base em
 
 ## Design 👨‍🎨
 
-## Paleta De Cores: 🎨
-![pallet](https://github.com/user-attachments/assets/720cc0d7-aec4-4bd4-8479-b7c72a74e0fb)
+  
+<span>
+  <h2>
+    Paleta De Cores 🎨 X Tipografia ✍️
+  </h2>  
+  <img src="https://github.com/user-attachments/assets/720cc0d7-aec4-4bd4-8479-b7c72a74e0fb" style="width:45%"/>  
+  <img src="https://github.com/user-attachments/assets/564c49ee-6a43-40da-9e37-f5c36af37393" style="width:30%"/>
+</span>
+
+
 
 ## Prototipação:📝
 
-<img src="https://github.com/user-attachments/assets/bac8efac-1f5e-4f63-94d7-a6c6a6a96b98" style="width:47%"/>
 <img src="https://github.com/user-attachments/assets/84c215f3-1712-4ba6-b770-5989cf879b34" style="width:47%"/>
 <img src="https://github.com/user-attachments/assets/4725b80f-57b2-48e8-9f96-95f4be9259b2" style="width:47%"/>
 <img src="https://github.com/user-attachments/assets/ea742cf2-e80d-4fe0-a50a-d2d9a057328e" style="width:47%"/>
