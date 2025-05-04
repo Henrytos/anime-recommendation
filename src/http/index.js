@@ -5,7 +5,7 @@ const { uploadFileMiddleware } = require("./middlewares/upload-file.middleware.j
 const express = require("express")
 const router = express.Router()
 
-router.post('/sing-in', signInController)
-router.post('/sing-up', uploadFileMiddleware('avatarUrl'), signUpController)
+router.post('/sign-in', signInController)
+router.post('/sign-up', uploadFileMiddleware('avatarUrl'), signUpController)
 
 module.exports = router
