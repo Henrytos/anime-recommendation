@@ -8,6 +8,11 @@ buttonSignUp.addEventListener("click", () => {
     const passwordRepeat = input_password_repeat.value
     const avatarUrl = input_avatar_url.files[0]
 
+    if (password !== passwordRepeat) {
+        alert("as senha não são iguais.")
+        return;
+    }
+
     const form = new FormData()
 
     form.append('username', username)
@@ -19,13 +24,19 @@ buttonSignUp.addEventListener("click", () => {
 })
 
 async function fetchSignUpUser(form) {
-    const data = await fetch("http://localhost:3333/sing-up", {
+    const data = await fetch("http://localhost:3333/sign-up", {
         method: "POST",
         body: form
     })
 
-    const response = await data.json()
+    const existUserWithEmail = data.status === 400
+    if (existUserWithEmail) {
+        alert("já existe um usuario com este email")
+    }
 
-    console.log(data)
-    console.log(response)
+    const isRequestSuccess = data.ok
+    if (isRequestSuccess) {
+        alert("usuario criado com sucesso")
+        window.location.assign("sign-in.html")
+    }
 }

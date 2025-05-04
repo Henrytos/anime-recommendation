@@ -9,7 +9,7 @@ buttonSignIn.addEventListener("click", () => {
 })
 
 async function fetchSignUser(email, password) {
-    const data = await fetch("http://localhost:3333/sing-in", {
+    const data = await fetch("http://localhost:3333/sign-in", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -20,9 +20,11 @@ async function fetchSignUser(email, password) {
         })
     })
 
-    if (data.ok) {
+    const isRequestSuccess = data.ok
+    if (isRequestSuccess) {
         const response = await data.json()
         sessionStorage.setItem("id", JSON.stringify(response.user.user_id))
+        window.location.assign("index.html")
     }
 
 }
