@@ -14,7 +14,6 @@ async function createUser(username, email, password_hash, image_url) {
 
 async function findByEmail(email) {
     const { results } = await execute(`SELECT * FROM users WHERE email = '${email}'`) // code sql
-    console.log(results)
     return results[0]
 }
 
