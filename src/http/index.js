@@ -1,11 +1,11 @@
+const { signInController } = require("./controllers/sign-in.controller.js")
+const { signUpController } = require("./controllers/sign-up.controller.js")
+const { uploadFileMiddleware } = require("./middlewares/upload-file.middleware.js")
+
 const express = require("express")
 const router = express.Router()
 
-const { signInController } = require("./controllers/sign-in.controller.js")
-const { signUpController } = require("./controllers/sign-up.controller.js")
-const { upload } = require('../storage/upload-file.storage.js')
-
 router.post('/sing-in', signInController)
-router.post('/sing-up', upload.single('input_avatar_url'), signUpController)
+router.post('/sing-up', uploadFileMiddleware, signUpController)
 
 module.exports = router
