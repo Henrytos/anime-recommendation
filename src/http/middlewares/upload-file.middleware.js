@@ -1,6 +1,8 @@
-function uploadFileMiddleware() {
+const { upload } = require("../../storage/upload-file.storage.js")
 
-    return upload.single('input_avatar_url')
+function uploadFileMiddleware(fieldName) {
+
+    return upload.single(fieldName)
 }
 
 module.exports = { uploadFileMiddleware }
