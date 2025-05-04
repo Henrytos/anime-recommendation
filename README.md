@@ -1,4 +1,6 @@
-# Anime Recommendation 
+![logo(1)](https://github.com/user-attachments/assets/7aa53d59-d35d-4e3b-b507-2da93b62c6c3)
+
+
 Projeto individual de p.i , recomendações de anime , plataforma web compartilhamento entre entusiastas e curiosos do mundo dos animes 🔥
 
 A motivação do projeto está em ajudar pessoas a escolher um anime com base em uma recomendação através de um site web, a importância se baseia na dificuldade das pessoas com base nas diversas obras que temos hoje em dia  
