@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Megrim&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --color-white: #f3f3f3;
+  --color-background: #141617;
+  --color-background-foreground: #f3f3f3;
+  --color-purple-light: #a39fbf;
+  --color-purple-black: #313646;
+  --color-red: #cb4648;
+  --color-red-light: #d97f77;
+
+  --size-md: 16px;
+  --size-lg: 20px;
+  --size-2xl: 24px;
+  --size-4xl: 48px;
+  --size-6xl: 64px;
+
+  --font-light: 300;
+  --font-normal: 400;
+  --font-semibold: 500;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-weight: var(--font-light);
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  padding: 20px 10%;
+  background-color: var(--color-background);
+  color: var(--color-background-foreground);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  overflow: hidden;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right #bg-character {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-image: url("../images/dandadan.png");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: contain;
+  height: 100vh;
+  width: 630px;
+  z-index: 10;
+}
+
+.left {
+  grid-column-start: 1;
+  grid-column-end: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  z-index: 10;
+  position: relative;
+}
+
+.left .logo {
+  position: absolute;
+  top: 20px;
+}
+
+.left h1 {
+  text-align: center;
+  font-family: "Megrim", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: var(--size-4xl);
+}
+
+.left .controllers {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.left .controllers .input-controllers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.left .controllers .input-controller {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.left .controllers .input-controller p {
+  font-size: var(--size-lg);
+  font-weight: var(--font-semibold);
+  line-height: 30px;
+}
+
+.left .controllers .input-controller .input-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-purple-black);
+  opacity: 50%;
+  backdrop-filter: 1000px;
+  padding: 14px 20px;
+}
+
+.left .controllers .input-controller .input-content input {
+  all: unset;
+  flex-grow: 1;
+  font-size: var(--size-md);
+  backdrop-filter: 100px;
+  color: var(--color-background-foreground) !important;
+}
+
+.left .controllers .input-controller .input-content input::placeholder {
+  color: var(--color-background-foreground) !important;
+}
+
+.left .content-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.left .content-button p {
+  font-size: var(--size-md);
+  font-weight: var(--font-light);
+  text-align: center;
+}
+
+.left .content-button p a {
+  color: var(--color-purple-light);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-purple-light);
+}
+
+.left .content-button button {
+  all: unset;
+  border-radius: 2px;
+  padding: 14px 42px;
+  font-size: var(--size-lg);
+  font-weight: var(--font-semibold);
+  background-color: var(--color-purple-light);
+
+  color: var(--color-background);
+  cursor: pointer;
+}
+
+.container::before {
+  content: " ";
+  width: 345px;
+  height: 345px;
+  position: absolute;
+  background-image: url("../images/cycle.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  left: 3%;
+  bottom: -120px;
+}
+
+.container::after {
+  content: " ";
+  width: 345px;
+  height: 345px;
+  position: absolute;
+  background-image: url("../images/cycle.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  transform: rotate(180deg);
+  top: 10%;
+
+  left: 30%;
+  animation: 5s ease-in-out infinite animate-cycle;
+}
+
+.right::before {
+  content: " ";
+  width: 345px;
+  height: 345px;
+  position: absolute;
+  background-image: url("../images/cycle.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  transform: rotate(180deg);
+  bottom: 5%;
+
+  left: 50%;
+  transform: translateX(-50%);
+  animation: 5s ease-in-out infinite animate-cycle;
+}
+
+/* @keyframes animate-cycle {
+  0% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+
+  50% {
+    transform: rotate(180deg) translate(100%, -100%);
+  }
+
+  100% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+} */

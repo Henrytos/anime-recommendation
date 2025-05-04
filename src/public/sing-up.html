@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar</title>
+    <link rel="stylesheet" href="./assets/styles/sign-up.css">
+    <link rel="shortcut icon" href="./assets/icons/logo.png" type="image/x-icon">
+</head>
+
+<body class="container">
+
+    <div class="left">
+        <img class="logo" src="./assets/images/logo-home.png" alt="logo" width="292" height="64">
+
+        <h1>SIGN UP</h1>
+
+
+        <form class="controllers" enctype="multipart/form-data">
+            <div class="input-controllers">
+                <div class="input-controller email-controller">
+                    <p>Nome:</p>
+
+                    <div class="input-content">
+                        <input type="text" required placeholder="franzhenry46@gmail.com" id="input_username">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="input-controller email-controller">
+                    <p>Email:</p>
+
+                    <div class="input-content">
+                        <input type="email" required placeholder="franzhenry46@gmail.com" id="input_email">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail">
+                                <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-controllers">
+                <div class="input-controller password-controller">
+                    <p>Senha:</p>
+
+                    <div class="input-content">
+                        <input type="password" required placeholder="**********" id="input_password">
+                        <span id="span_eye">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-eye-closed-icon lucide-eye-closed"
+                                id="icon_eye">
+                                <path d="m15 18-.722-3.25" />
+                                <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                                <path d="m20 15-1.726-2.05" />
+                                <path d="m4 15 1.726-2.05" />
+                                <path d="m9 18 .722-3.25" />
+                            </svg>
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="input-controller password-controller">
+                    <p>Confirmar Senha:</p>
+
+                    <div class="input-content">
+                        <input type="password" required placeholder="**********" id="input_password_repeat">
+                        <span id="span_eye_repeat">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-eye-closed-icon lucide-eye-closed"
+                                id="icon_eye">
+                                <path d="m15 18-.722-3.25" />
+                                <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                                <path d="m20 15-1.726-2.05" />
+                                <path d="m4 15 1.726-2.05" />
+                                <path d="m9 18 .722-3.25" />
+                            </svg>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-controller">
+                <p>Foto:</p>
+
+                <div class="input-content">
+                    <input type="file" required placeholder="**********" id="input_avatar_url">
+                    <span id="span_eye">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-upload-icon lucide-upload">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" x2="12" y1="3" y2="15" />
+                        </svg>
+                    </span>
+
+                </div>
+            </div>
+        </form>
+
+        <div class="content-button">
+            <p>se já possui conta,<a href="./sing-in.html">clique aqui</a> </p>
+            <button id="button-sign-up">
+                CADASTRAR
+            </button>
+        </div>
+    </div>
+
+    <div class="right">
+        <div id="bg-character">
+        </div>
+    </div>
+
+
+    <script src="./assets/javascript/on-click-eye-passaword.js" defer></script>
+    <script src="./assets/javascript/on-click-button-sign-up.js" defer></script>
+</body>
+
+</html>

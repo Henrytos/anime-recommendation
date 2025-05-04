@@ -6,6 +6,6 @@ const express = require("express")
 const router = express.Router()
 
 router.post('/sing-in', signInController)
-router.post('/sing-up', uploadFileMiddleware('input_avatar_url'), signUpController)
+router.post('/sing-up', uploadFileMiddleware('avatarUrl'), signUpController)
 
 module.exports = router
