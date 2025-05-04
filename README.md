@@ -10,8 +10,7 @@ A motivação do projeto está em ajudar pessoas a escolher um anime com base em
 
 ## Prototipação:📝
 
-![home(1)](https://github.com/user-attachments/assets/bac8efac-1f5e-4f63-94d7-a6c6a6a96b98)
-![home(2)](https://github.com/user-attachments/assets/84c215f3-1712-4ba6-b770-5989cf879b34)
-![Entrar](https://github.com/user-attachments/assets/4725b80f-57b2-48e8-9f96-95f4be9259b2)
-![Cadastrar](https://github.com/user-attachments/assets/ea742cf2-e80d-4fe0-a50a-d2d9a057328e)
-
+<img src="https://github.com/user-attachments/assets/bac8efac-1f5e-4f63-94d7-a6c6a6a96b98" style="width:47%"/>
+<img src="https://github.com/user-attachments/assets/84c215f3-1712-4ba6-b770-5989cf879b34" style="width:47%"/>
+<img src="https://github.com/user-attachments/assets/4725b80f-57b2-48e8-9f96-95f4be9259b2" style="width:47%"/>
+<img src="https://github.com/user-attachments/assets/ea742cf2-e80d-4fe0-a50a-d2d9a057328e" style="width:47%"/>
