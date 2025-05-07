@@ -11,6 +11,8 @@ app.use(cors())
 app.use(express.json())
 app.use(router)
 app.use(express.static(path.join(__dirname, '/public')))
+app.use(express.static(path.join(__dirname, '../', '/uploads')))
+
 
 app.listen(PORT, async () => {
     console.log(`Server running http://localhost:${PORT}`)

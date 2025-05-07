@@ -212,6 +212,203 @@ a {
   font-weight: var(--font-semibold);
 }
 
+.start .content .texts h1 span::after {
+  content: " ";
+  color: var(--color-purple-light);
+  font-weight: var(--font-semibold);
+  animation: 3s ease-in-out animate_title infinite;
+}
+
+@keyframes animate_title {
+  0% {
+    content: "A";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  4% {
+    content: "An";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  8% {
+    content: "Ani";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  12% {
+    content: "Anim";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  16% {
+    content: "Anime";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+
+  20% {
+    content: "Anime";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  24% {
+    content: "Anim";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  28% {
+    content: "Ani";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  32% {
+    content: "An";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  36% {
+    content: "A";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  40% {
+    content: " ";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  44% {
+    content: "A";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  48% {
+    content: "Av";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  52% {
+    content: "Ave";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+
+  56% {
+    content: "Aven";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  60% {
+    content: "Avent";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+
+  64% {
+    content: "Aventu";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  68% {
+    content: "Aventur";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  72% {
+    content: "Aventura";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  76% {
+    content: "Aventur";
+    border-right: 3px solid rgba(243, 243, 243, 0);
+  }
+  80% {
+    content: "Aventu";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  84% {
+    content: "Avent";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  88% {
+    content: "Avent";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  92% {
+    content: "Aven";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  96% {
+    content: "Ave";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  100% {
+    content: "Av";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "A";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  100% {
+    content: " ";
+    border-right: 3px solid var(--color-purple-light);
+  }
+
+  100% {
+    content: "D";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Di";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Div";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Dive";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Diver";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Divers";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Diversã";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Diversão";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Diversã";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Divers";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Diver";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Dive";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Div";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "Di";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: "D";
+    border-right: 3px solid var(--color-purple-light);
+  }
+  100% {
+    content: " ";
+    border-right: 3px solid var(--color-purple-light);
+  }
+}
+
 .start .content #cards {
   grid-column-start: 8;
   grid-column-end: 13;
@@ -220,6 +417,25 @@ a {
   height: auto;
 
   object-fit: contain;
+}
+
+#cards {
+  transform: translateY(0px);
+  animation: 3s ease-in-out animate_card infinite;
+}
+
+@keyframes animate_card {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .text-lg {
@@ -315,4 +531,36 @@ a {
 
 .link-active {
   transform: translateX(0) !important;
+}
+
+#preview-profile {
+  height: 44px;
+  width: 46px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 2px;
+  border: 1px solid var(--color-red);
+}
+/* globals */
+
+.invisibility {
+  visibility: hidden !important;
+  display: none !important;
+}
+
+.exit span:hover svg {
+  transition: 0.2s all;
+}
+.exit span:hover svg {
+  width: 90px;
+  height: 90px;
+}
+
+.exit span {
+  transition: 0.2s;
+  color: var(--color-red) !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

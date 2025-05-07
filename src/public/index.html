@@ -38,8 +38,11 @@
                         <path d="M9 18c-4.51 2-5-2-7-2" />
                     </svg>
                 </button>
-                <a class="button button-foreground" href="./sign-up.html">Cadastrar</a>
-                <a class="button button-foreground" href="./sign-in.html">Entrar</a>
+                <a class="button button-foreground no-auth" href="./sign-up.html">Cadastrar</a>
+                <a class="button button-foreground no-auth" href="./sign-in.html">Entrar</a>
+                <a id="preview-profile" class="auth" href="./index.html">
+
+                </a>
                 <button class="menu" type="button" id="button_open_menu">
                     <span class="line"></span>
                     <span class="line"></span>
@@ -51,7 +54,7 @@
         <div class="content">
             <div class="texts">
                 <h1>Junte-se ao universo
-                    de <span>Animes</span></h1>
+                    de <span id="title"></span></h1>
                 <button class="button button-purple text-2xl font-semibold" style="padding: 14px 28px;">
                     Veja mais
                 </button>
@@ -111,15 +114,36 @@
             <span class="link">
                 <a href="./index.html">Autores</a>
             </span>
+
+            <span class="link auth">
+                <a href="./index.html">Configuração</a>
+            </span>
+            <span class="link auth exit" id="button-exit">
+                <span href="./index.html">
+                    <p>Sair</p>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-log-out-icon lucide-log-out">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" x2="9" y1="12" y2="12" />
+                    </svg>
+                </span>
+            </span>
         </div>
 
 
     </div>
 
-    <script src="./assets/javascript/redirects.js" defer></script>
-    <script src="./assets/javascript/on-click-button-theme.js" defer></script>
-    <script src="./assets/javascript/on-click-toggle-menu.js" defer></script>
-    <script src="./assets/javascript/on-click-in-link-in-sheet.js" defer></script>
+    <script src="./assets/javascript/redirects.js" type="module" defer></script>
+    <script src="./assets/javascript/on-click-button-theme.js" type="module" defer></script>
+    <script src="./assets/javascript/on-click-toggle-menu.js" type="module" defer></script>
+    <script src="./assets/javascript/on-click-in-link-in-sheet.js" type="module" defer></script>
+    <script src="./assets/javascript/remove-item-in-page.js" type="module" defer></script>
+    <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
+    <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
+
 
 </body>
 

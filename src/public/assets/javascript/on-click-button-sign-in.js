@@ -1,3 +1,5 @@
+import { SetStorage } from "./manege-storage-session.js"
+
 const buttonSignIn = document.getElementById('button-sign-in')
 
 
@@ -23,7 +25,12 @@ async function fetchSignUser(email, password) {
     const isRequestSuccess = data.ok
     if (isRequestSuccess) {
         const response = await data.json()
-        sessionStorage.setItem("id", JSON.stringify(response.user.user_id))
+
+        SetStorage('user_id', response.user.user_id)
+        SetStorage('username', response.user.username)
+        SetStorage('email', response.user.email)
+        SetStorage('avatar_url', response.user.avatar_url)
+
         window.location.assign("index.html")
     }
 

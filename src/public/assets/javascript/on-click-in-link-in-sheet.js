@@ -8,7 +8,6 @@ links.forEach((link) => {
     })
 })
 
-function closeSheet(ev) {
-    ev.target.preventDefault()
+function closeSheet() {
     sheetElement.classList.remove("sheet-active")
 }
