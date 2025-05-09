@@ -1,3 +1,4 @@
+const crypto = require("node:crypto")
 const { findByEmail, createUser } = require("../../models/user.model.js")
 const { deleteFileStorage } = require("../../storage/delete-file.storage.js")
 
@@ -15,6 +16,9 @@ async function signUpController(request, response) {
         })
     }
 
+    console.log({ username, email, password })
+    console.log(avatarUrl)
+    // TODO: hashing password with node:crypto
     await createUser(username, email, password, avatarUrl)
 
     return response.status(201).json({

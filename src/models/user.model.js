@@ -2,6 +2,10 @@ const { execute } = require("../database/connection.js")
 
 async function createUser(username, email, password, avatarUrl) {
     try {
+
+        console.log({
+            username, email, password, avatarUrl
+        })
         await execute(`INSERT INTO users(username, email, password_hash, avatar_url) VALUES ('${username}', '${email}', '${password}', '${avatarUrl}');`)
 
         return true

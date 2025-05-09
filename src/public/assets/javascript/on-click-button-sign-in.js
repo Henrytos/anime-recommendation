@@ -34,4 +34,12 @@ async function fetchSignUser(email, password) {
         window.location.assign("index.html")
     }
 
+    const isBadRequest = data.status == "400"
+    if (isBadRequest) {
+        alert("senha incorreta")
+        input_password.type = "text"
+
+    }
+
+
 }

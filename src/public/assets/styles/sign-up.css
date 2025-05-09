@@ -51,12 +51,13 @@
   position: absolute;
   top: 0;
   right: 0;
-  background-image: url("../images/dandadan.png");
+  background-image: url("../images/denji-character.png");
   background-repeat: no-repeat;
+  background-position: right center;
   background-position: top center;
   background-size: contain;
   height: 100vh;
-  width: 630px;
+  width: 650px;
   z-index: 10;
 }
 

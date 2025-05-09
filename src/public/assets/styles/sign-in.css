@@ -50,13 +50,13 @@
 .left #bg-character {
   position: absolute;
   top: 84px;
-  background-image: url("../images/denji.png");
+  background-image: url("../images/power-character.png");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
-  left: 0;
+  left: 0%;
   height: calc(100vh - 84px);
-  width: 50%;
+  width: 800px;
   z-index: 10;
 }
 
