@@ -16,9 +16,9 @@ buttonSignIn.addEventListener("click", () => {
         fields += " senha "
     }
 
-    alert(`ops , parece houve um erro no campo(${fields})`)
 
     if (fields) {
+        alert(`ops , parece houve um erro no campo(${fields})`)
         return
     }
 
@@ -28,7 +28,7 @@ buttonSignIn.addEventListener("click", () => {
 async function fetchSignUser(email, password) {
 
 
-    const data = await fetch("http://localhost:8080/usuarios/autenticar", {
+    const data = await fetch("http://localhost:3333/usuarios/autenticar", {
         method: "POST",
         headers: {
             "content-type": "application/json"
