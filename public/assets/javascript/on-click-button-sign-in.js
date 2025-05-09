@@ -7,11 +7,28 @@ buttonSignIn.addEventListener("click", () => {
     const email = input_email.value
     const password = input_password.value
 
+    var fields = ""
+
+    if (!email) {
+        fields = "email"
+    }
+    if (!password) {
+        fields += " senha "
+    }
+
+    alert(`ops , parece houve um erro no campo(${fields})`)
+
+    if (fields) {
+        return
+    }
+
     fetchSignUser(email, password)
 })
 
 async function fetchSignUser(email, password) {
-    const data = await fetch("http://localhost:3333/sign-in", {
+
+
+    const data = await fetch("http://localhost:8080/usuarios/autenticar", {
         method: "POST",
         headers: {
             "content-type": "application/json"
@@ -26,10 +43,10 @@ async function fetchSignUser(email, password) {
     if (isRequestSuccess) {
         const response = await data.json()
 
-        SetStorage('user_id', response.user.user_id)
-        SetStorage('username', response.user.username)
-        SetStorage('email', response.user.email)
-        SetStorage('avatar_url', response.user.avatar_url)
+        SetStorage('user_id', response.user_id)
+        SetStorage('username', response.username)
+        SetStorage('email', response.email)
+        SetStorage('avatar_url', response.avatar_url)
 
         window.location.assign("index.html")
     }
