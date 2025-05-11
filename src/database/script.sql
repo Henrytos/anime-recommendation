@@ -63,7 +63,7 @@ CREATE TABLE questions(
   tilte VARCHAR(45) NOT NULL,
   number INT NOT NULL,
   CONSTRAINT pk_composite PRIMARY KEY(question_id, fk_quiz_id),
-  CONSTRAINT fk_question_quiz FOREIGN KEY (question_id) REFERENCES quizzes(quiz_id)
+  CONSTRAINT fk_question_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes(quiz_id)
 );
 
 CREATE TABLE alternatives(
@@ -99,3 +99,52 @@ CREATE TABLE quiz_result(
   CONSTRAINT quiz_result_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
   CONSTRAINT quiz_result_mapping FOREIGN KEY (fk_mapping_id) REFERENCES mappings (mapping_id)
 );
+
+-- INSERINDO DADOS
+INSERT INTO users (username, email, password_hash, avatar_url)
+VALUES 
+('henry_dev', 'henry@example.com', 'hashedpass123', 'https://example.com/avatar1.png'),
+('nathalia_art', 'nathalia@example.com', 'securepass456', 'https://example.com/avatar2.png');
+
+INSERT INTO quizzes (title, description, is_mapping)
+VALUES 
+('Qual anime combina com você?', 'Responda para saber qual anime é a sua cara.', TRUE);
+
+INSERT INTO mappings (target_audience, gender, studio, type_duration, type_style)
+VALUES 
+('shounen', 'ação', 'mappa', 'médio', 'realista'),
+('shoujo', 'romance', 'ghibli', 'curto', 'nostálgico');
+
+INSERT INTO animes (anime_id, api_anime_id, fk_mapping_id, title, image_url, description)
+VALUES 
+(1, 101, 2000, 'Jujutsu Kaisen', 'https://example.com/jjk.jpg', 'Feiticeiros enfrentam maldições com ação intensa.'),
+(2, 102, 2001, 'Kimi ni Todoke', 'https://example.com/knt.jpg', 'Romance delicado entre adolescentes.');
+
+INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
+VALUES 
+(1, 1, 1, 'Anime incrível, cheio de ação!'),
+(2, 2, 2, 'Muito fofo e emocionante.');
+
+
+DESC questions;
+INSERT INTO questions (question_id, fk_quiz_id, tilte, number)
+VALUES 
+(DEFAULT, 1000, 'Qual gênero você prefere?', 1),
+(DEFAULT,1000, 'Prefere ação ou romance?', 2);
+
+INSERT INTO alternatives (alternative_id, fk_mapping_id, title, description, image_url, is_correct)
+VALUES 
+(1, 2000, 'Ação Intensa', 'Gosta de cenas eletrizantes', 'https://example.com/action.jpg', TRUE),
+(2, 2001, 'Romance Fofo', 'Prefere histórias de amor', 'https://example.com/romance.jpg', TRUE);
+
+INSERT INTO options (fk_alternative_id, fk_question_id, fk_quiz_id)
+VALUES 
+(1, 1, 1000),
+(2, 2, 1000);
+
+INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id, fk_mapping_id)
+VALUES 
+(1, 1000, 1, 2000),
+(2, 1000, 2, 2001);
+
+
