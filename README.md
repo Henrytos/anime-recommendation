@@ -44,4 +44,83 @@ A plataforma está em desenvolvimento. Em breve novas funcionalidades como:
 - Interação entre usuario por meio de forúns e comentarios
 - Analise de aproveitamento de recomendação 
 
+---
+
+# 🧠 Sistema de Recomendação de Animes — Critérios de Mapeamento
+
+Este projeto utiliza quizzes para mapear as preferências dos usuários e recomendar animes com base em critérios cuidadosamente selecionados. Abaixo estão os principais eixos utilizados no sistema:
+
+---
+
+## ✅ 1. Faixa Etária (Público-alvo)
+
+Ajuda a filtrar animes de acordo com o nível de maturidade do usuário.
+
+**Categorias:**
+- Kodomo (infantil)
+- Shounen (adolescente masculino)
+- Shoujo (adolescente feminino)
+- Seinen (jovem/adulto masculino)
+- Josei (jovem/adulto feminino)
+- R-17+ / R-18+ (temas maduros)
+
+📌 **Quiz:**  
+_"Você prefere histórias leves e divertidas ou temas mais maduros e complexos?"_
+
+---
+
+## ✅ 2. Narrativa / Gêneros
+
+Entende os tipos de histórias preferidas pelo usuário.
+
+**Gêneros:**
+- Ação, Aventura, Romance, Comédia, Slice of Life, Drama  
+- Psicológico, Terror, Mistério, Ficção Científica, Fantasia  
+- Mecha, Isekai, Esportes, Escolar, Sobrenatural
+
+📌 **Quiz:**  
+_"Qual desses temas mais te empolga assistir?" (lista com exemplos)_
+
+---
+
+## ✅ 3. Estilo de Animação / Visual
+
+Define a preferência estética do usuário.
+
+**Aspectos:**
+- Traço realista vs. cartunesco  
+- Animação fluida vs. estática  
+- Uso de CGI (3D)  
+- Estilo nostálgico (anos 80/90) vs. moderno
+
+📌 **Quiz:**  
+_"Você prefere visuais mais clássicos ou modernos?"_
+
+---
+
+## ✅ 4. Estúdio de Animação (Direção e Qualidade Técnica)
+
+Usuários mais engajados podem ter preferência por estúdios específicos.
+
+**Estúdios populares:**
+- MAPPA, Ufotable, Kyoto Animation, Madhouse, Bones, A-1 Pictures, etc.
+
+📌 **Quiz:**  
+_"Você já assistiu algo de estúdios como MAPPA ou Ufotable e gostou do estilo?"_
+
+---
+
+## ✅ 5. Formato e Duração
+
+Identifica se o usuário prefere animes curtos ou longas jornadas.
+
+**Formatos:**
+- Episódios longos ou curtos  
+- Animes com 12, 24 episódios ou longas séries (ex: Naruto, One Piece)  
+- OVAs, Filmes, Web-animes
+
+📌 **Quiz:**  
+_"Você costuma assistir séries longas ou prefere algo que termine rápido?"_
+
+---
 
