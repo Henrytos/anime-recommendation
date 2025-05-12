@@ -1,62 +1,57 @@
-import { SetStorage } from "./manege-storage-session.js"
+import { SetStorage } from "./manege-storage-session.js";
 
-const buttonSignIn = document.getElementById('button-sign-in')
-
+const buttonSignIn = document.getElementById("button-sign-in");
 
 buttonSignIn.addEventListener("click", () => {
-    const email = input_email.value
-    const password = input_password.value
+  const email = input_email.value;
+  const password = input_password.value;
 
-    var fields = ""
+  var fields = "";
 
-    if (!email) {
-        fields = "email"
-    }
-    if (!password) {
-        fields += " senha "
-    }
+  if (!email) {
+    fields = "email";
+  }
+  if (!password) {
+    fields += " senha ";
+  }
 
+  if (fields) {
+    alert(`ops , parece houve um erro no campo(${fields})`);
+    return;
+  }
 
-    if (fields) {
-        alert(`ops , parece houve um erro no campo(${fields})`)
-        return
-    }
-
-    fetchSignUser(email, password)
-})
+  fetchSignUser(email, password);
+});
 
 async function fetchSignUser(email, password) {
+  const data = await fetch("http://localhost:3333/usuarios/autenticar", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
 
+  const isRequestSuccess = data.ok;
+  if (isRequestSuccess) {
+    const response = await data.json();
 
-    const data = await fetch("http://localhost:3333/usuarios/autenticar", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify({
-            email,
-            password
-        })
-    })
+    SetStorage("user_id", response.user_id);
+    SetStorage("username", response.username);
+    SetStorage("email", response.email);
+    SetStorage("avatar_url", response.avatar_url);
 
-    const isRequestSuccess = data.ok
-    if (isRequestSuccess) {
-        const response = await data.json()
+    window.location.assign("index.html");
+  }
 
-        SetStorage('user_id', response.user_id)
-        SetStorage('username', response.username)
-        SetStorage('email', response.email)
-        SetStorage('avatar_url', response.avatar_url)
-
-        window.location.assign("index.html")
-    }
-
-    const isBadRequest = data.status == "400"
-    if (isBadRequest) {
-        alert("senha incorreta")
-        input_password.type = "text"
-
-    }
-
-
+  const isBadRequest = data.status == "400";
+  if (isBadRequest) {
+    alert("senha incorreta");
+    input_password.type = "text";
+  } else {
+    alert("ops hove erro na autenticação");
+  }
 }
