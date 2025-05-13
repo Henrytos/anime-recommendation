@@ -51,7 +51,5 @@ async function fetchSignUser(email, password) {
   if (isBadRequest) {
     alert("senha incorreta");
     input_password.type = "text";
-  } else {
-    alert("ops hove erro na autenticação");
   }
 }

@@ -1,6 +1,5 @@
 var mysql = require("mysql2");
 
-// CONEXÃO DO BANCO MYSQL SERVER
 var mySqlConfig = {
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
@@ -21,17 +20,18 @@ function execute(query) {
   }
 
   return new Promise(function (resolve, reject) {
-    var conexao = mysql.createConnection(mySqlConfig);
-    conexao.connect();
-    conexao.query(query, function (error, results) {
-      conexao.end();
+    var connection = mysql.createConnection(mySqlConfig);
+    connection.connect();
+    console.log(query);
+    connection.query(query, function (error, results) {
+      connection.end();
       if (error) {
         reject(error);
       }
       console.log(results);
       resolve(results);
     });
-    conexao.on("error", function (error) {
+    connection.on("error", function (error) {
       return "ERRO NO MySQL SERVER: ", error.sqlMessage;
     });
   });

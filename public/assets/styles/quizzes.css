@@ -12,6 +12,7 @@
   --size-sm: 14px;
   --size-lg: 20px;
   --size-2xl: 24px;
+  --size-3xl: 32px;
   --size-4xl: 48px;
   --size-6xl: 64px;
   --size-7xl: 72px;
@@ -214,6 +215,7 @@ a {
   gap: 24px;
   width: 100%;
   max-width: 100%;
+  padding-bottom: 20px;
 }
 
 .quiz {
@@ -227,6 +229,8 @@ a {
 
 .quiz img {
   width: 100%;
+  height: 200px;
+  object-fit: cover;
   margin-bottom: 16px;
   border-radius: 2px;
 }
@@ -386,4 +390,28 @@ a {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.not-found {
+  width: 100vw;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #6a92e8;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.not-found h2 {
+  font-size: var(--size-4xl);
+  font-weight: var(--font-semibold);
+}
+
+.not-found h3 {
+  font-size: var(--size-3xl);
+  font-weight: var(--font-normal);
 }
