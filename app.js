@@ -9,11 +9,12 @@ var cors = require("cors");
 var path = require("path");
 var PORT_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
-var userRouter = require("./src/routes/user.route.js");
 
 var app = express();
 
 var indexRouter = require("./src/routes/index");
+var userRouter = require("./src/routes/user.route.js");
+var quizRouter = require("./src/routes/quiz.route.js");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,6 +24,7 @@ app.use(cors());
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);
+app.use("/quiz", quizRouter);
 
 app.listen(PORT_APP, function () {
   console.log(`
