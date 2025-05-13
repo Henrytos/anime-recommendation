@@ -44,7 +44,7 @@ buttonSignUp.addEventListener("click", () => {
 });
 
 async function fetchSignUpUser(form) {
-  const data = await fetch("http://localhost:3333/usuarios/cadastrar", {
+  const data = await fetch("http://localhost:3333/users/", {
     method: "POST",
     body: form,
   });

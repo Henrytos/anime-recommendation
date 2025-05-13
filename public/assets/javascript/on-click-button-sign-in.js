@@ -24,7 +24,7 @@ buttonSignIn.addEventListener("click", () => {
 });
 
 async function fetchSignUser(email, password) {
-  const data = await fetch("http://localhost:3333/usuarios/autenticar", {
+  const data = await fetch("http://localhost:3333/users/auth", {
     method: "POST",
     headers: {
       "content-type": "application/json",

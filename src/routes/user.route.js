@@ -9,7 +9,7 @@ const {
 } = require("../controllers/authenticate-with-password.controller.js");
 const upload = require("../config/configUpload");
 
-router.post("/cadastrar", upload.single("avatarUrl"), createUserController);
-router.post("/autenticar", authenticateWithPasswordController);
+router.post("/", upload.single("avatarUrl"), createUserController);
+router.post("/auth", authenticateWithPasswordController);
 
 module.exports = router;
