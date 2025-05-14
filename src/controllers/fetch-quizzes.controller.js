@@ -1,7 +1,7 @@
-const { findMany } = require("../models/quiz.model");
+const quizModel = require("../models/quiz.model");
 
 function fetchQuizzesController(request, response) {
-  findMany().then((quizzes) => {
+  quizModel.findMany().then((quizzes) => {
     return response.json({
       quizzes,
     });
