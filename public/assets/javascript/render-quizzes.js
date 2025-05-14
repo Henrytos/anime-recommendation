@@ -15,6 +15,7 @@ async function renderQuizzes() {
 
   for (let position = 0; position < quizzes.length; position++) {
     let quiz = quizzes[position];
+
     quizzesTexts += `
       <div class="quiz" id="quiz-${quiz.quiz_id}">
                     <img src="${quiz.thumb_url}"
@@ -22,7 +23,7 @@ async function renderQuizzes() {
                     <h3>${quiz.title}</h3>
                     <p>${quiz.description} (Há 3 dias)</p>
 
-                    <a href="./quiz.html?quiz_id='${quiz.quiz_id}'">
+                    <a href="./quiz.html?quiz_id=${quiz.quiz_id}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-square-arrow-out-up-right-icon lucide-square-arrow-out-up-right">
