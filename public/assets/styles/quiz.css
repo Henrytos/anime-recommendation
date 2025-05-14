@@ -49,6 +49,7 @@ a {
 .dark {
   color: var(--color-background-foreground);
   background-color: var(--color-background);
+  overflow: hidden;
 }
 
 /* LAYOUT */
@@ -368,13 +369,21 @@ a {
   font-weight: var(--font-semibold);
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
   -webkit-text-stroke-width: 2px; /* largura da borda */
   -webkit-text-stroke-color: hsla(0, 0%, 95%, 0.3);
   line-height: 107%;
-
   color: var(--color-background);
+  transition: 0.3s ease-out;
+}
+
+.inactive-title {
+  left: 100%; /* 50% */
+  transform: translate(0%, -50%);
+}
+.active-title {
+  left: 50%; /* 50% */
+  transform: translate(-50%, -50%);
 }
 
 /* images */
