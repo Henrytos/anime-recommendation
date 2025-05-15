@@ -1,8 +1,6 @@
-
-
-
 CREATE DATABASE anime_recommendation;
 USE anime_recommendation;
+DROP DATABASE anime_recommendation;
 DROP DATABASE anime_recommendation;
 
 CREATE TABLE users(
@@ -103,12 +101,7 @@ INSERT INTO quizzes (title, description, thumb_url,is_mapping)
 VALUES 
 ('Qual anime combina com você?', 'Responda para saber qual anime é a sua cara.','https://m.media-amazon.com/images/S/pv-target-images/1a28caac129bed86dbf1fe3d474c2017379e39f5aac7082123ecc39ed6ce16b5.jpg', TRUE);
 
-INSERT INTO mappings (target_audience, gender)
-VALUES 
-('shounen', 'ação'),
-('shounen', 'comédia'),
-('shounen', 'aventura'),
-('shounen', 'drama');
+
 
 INSERT INTO animes (anime_id, api_anime_id, fk_mapping_id, title, image_url, description, target_audience, gender)
 VALUES 
@@ -135,20 +128,62 @@ VALUES
 (4, 'SPORTS', 'Anime onde enredo principal gira entorno de um esporte', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wXgz45gUcu4fiG6L3jkMq0BTaUhoR4y49A&s', TRUE, 'shounen', 'ação', 1, 1000);
 
 
-
+INSERT INTO alternatives (alternative_id, title, description, image_url, is_correct, target_audience, gender, fk_question_id, fk_quiz_id)
+VALUES 
+(1, 'ISEKAI', 'histórias onde um protagonista é transportado para um mundo diferente, seja por teletransporte, reencarnação ou outros meios.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh5mrA2nP6KCjb4Hk2_gjZvwE7s8ED7xg6pg&s', TRUE, 'shounen', 'comédia', 2, 1000),
+(2, 'SHOUNEN', 'caracterizado por histórias de ação, aventura e luta, com personagens muitas vezes motivados por objetivos importantes e que destacam valores como amizade, lealdade e coragem', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsi1ZgWlAzBWWDc3KPWJNIuHVTIIRZ_wO9hg&s', TRUE,'shounen', 'ação', 2, 1000),
+(3, 'GORE', 'O gore é um dos subgêneros mais extremos do horror, proporcionando experiências chocantes e marcadas por um forte impacto visual e ..', 'https://m.media-amazon.com/images/S/pv-target-images/286a0e266e2521f56a810653db79e2dfa4de7e9f80286b321085bcf9e75f43fb._SX1080_FMjpg_.jpg', TRUE, 'shounen', 'drama', 2, 1000),
+(4, 'SPORTS', 'Anime onde enredo principal gira entorno de um esporte', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wXgz45gUcu4fiG6L3jkMq0BTaUhoR4y49A&s', TRUE, 'shounen', 'ação', 2, 1000);
 
  
 
-INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id, fk_mapping_id)
+INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
 VALUES 
-(1, 1000, 1, 2000),
-(2, 1000, 2, 2001);
+(1, 1000, 1),
+(2, 1000, 2);
 
 
 SELECT * FROM questions;
-SELECT * FROM options;
-SELECT * FROM quizzes AS q JOIN questions AS qt ON q.quiz_id = qt.fk_quiz_id JOIN alternatives AS a ON qt.question_id = a.fk_question_id;  
 
+SELECT * FROM options;
+SELECT 
+	q.quiz_id AS 'quiz_id', 
+  q.thumb_url AS 'quiz_thumb_url',	
+  qt.number AS 'question_number',
+  qt.question_id AS 'question_id', 
+  qt.title AS 'question_title', 
+  a.alternative_id AS 'alternative_id',
+  a.title AS 'alternative_title',
+  a.description AS 'alternative_description', 
+  a.image_url AS 'alternative_image_url'  
+ FROM quizzes AS q 
+ 	JOIN questions AS qt 
+  ON q.quiz_id = qt.fk_quiz_id 
+  JOIN alternatives AS a 
+  ON qt.question_id = a.fk_question_id
+  ORDER BY question_number;
+  
+  
+ CREATE VIEW quiz_with_questions AS SELECT 
+	q.quiz_id AS 'quiz_id', 
+  q.thumb_url AS 'quiz_thumb_url',	
+  qt.number AS 'question_number',
+  qt.question_id AS 'question_id', 
+  qt.title AS 'question_title', 
+  a.alternative_id AS 'alternative_id',
+  a.title AS 'alternative_title',
+  a.description AS 'alternative_description', 
+  a.image_url AS 'alternative_image_url'  
+ FROM quizzes AS q 
+ 	JOIN questions AS qt 
+  ON q.quiz_id = qt.fk_quiz_id 
+  JOIN alternatives AS a 
+  ON qt.question_id = a.fk_question_id
+  ORDER BY question_number;
+  
+ SELECT * FROM quiz_with_questions WHERE quiz_id = 1000; 
+ 
+ SELECT * FROM quizzes;
 
 
 

@@ -19,6 +19,12 @@ function authenticateWithPasswordController(request, response) {
         });
       }
 
+      if (user[0].password_hash != password) {
+        return response.status(400).send({
+          message: "invalid credentials",
+        });
+      }
+
       return response.status(200).json({
         user_id: user[0].user_id,
         username: user[0].username,

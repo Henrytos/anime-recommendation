@@ -53,8 +53,8 @@ function renderQuestions(questions) {
     const TIME_TWO_SECONDS = 2000;
     setTimeout(() => {
       section_container.classList.add("background");
-      questionsSection[0].classList.remove("slide-new");
       content.innerHTML = "";
+      questionsSection[0].classList.remove("slide-new");
       questionsSection[0].classList.add("slide-show");
     }, TIME_TWO_SECONDS);
   });

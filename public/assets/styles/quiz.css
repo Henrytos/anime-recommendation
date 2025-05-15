@@ -406,9 +406,48 @@ a {
   height: 100%;
   transition: 0.3s ease-out;
   display: flex;
-  justify-content: start;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
   padding-left: 10%;
+}
+.question .left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.question h1 {
+  color: var(--color-red);
+  font-size: var(--size-4xl);
+  font-weight: var(--font-bold);
+  transform: translate(20px, 0px);
+}
+
+.question h1::before {
+  content: " ";
+  width: 10px;
+  height: 48px;
+  background-color: var(--color-red);
+  display: block;
+  position: absolute;
+  transform: translate(-20px, 5px);
+}
+
+.content-progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  background-color: var(--color-red-light);
+  position: relative;
+}
+
+.line-progress {
+  position: absolute;
+  height: 100%;
+  width: 10%;
+  background-color: var(--color-red);
+  left: 0;
+  border-radius: 10px;
 }
 
 .slide-new {
