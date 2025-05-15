@@ -188,6 +188,7 @@ a {
   width: 100%;
   height: 95%;
   padding-top: 30px;
+  transition: 0.2 ease-in-out;
 }
 
 .start .content .title {
@@ -367,22 +368,13 @@ a {
   text-align: center;
   font-weight: var(--font-semibold);
   position: absolute;
-  top: 50%;
+  padding: 100px 0px;
   /* transform: translate(-50%, -50%); */
   -webkit-text-stroke-width: 2px; /* largura da borda */
   -webkit-text-stroke-color: hsla(0, 0%, 95%, 0.3);
   line-height: 107%;
   color: var(--color-background);
   transition: 0.3s ease-out;
-}
-
-.inactive-title {
-  left: 100%; /* 50% */
-  transform: translate(0%, -50%);
-}
-.active-title {
-  left: 50%; /* 50% */
-  transform: translate(-50%, -50%);
 }
 
 /* images */
@@ -396,4 +388,56 @@ a {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.questions {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.3s ease-out;
+  pointer-events: none;
+}
+
+.question {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: 0.3s ease-out;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-left: 10%;
+}
+
+.slide-new {
+  left: 100%; /* 50% */
+  transition: 0.3s ease-out;
+}
+
+.slide-show {
+  left: 50%; /* 50% */
+  transform: translate(-50%, 0%);
+  transition: 0.3s ease-out;
+}
+
+.slide-old {
+  left: 0%; /* 50% */
+  transform: translate(-100%, 0%);
+  transition: 0.3s ease-out;
+}
+
+#character-makima {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+}
+
+.background {
+  background-image: url("../images/back-ground-quizzes.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

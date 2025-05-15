@@ -12,8 +12,9 @@ function getQuizWithQuestionsController(request, response) {
     }
 
     findManyByQuizId(quizId).then((questions) => {
+      const quiz = quizzes[0];
       return response.status(200).json({
-        quiz: quizzes[0],
+        ...quiz,
         questions,
       });
     });
