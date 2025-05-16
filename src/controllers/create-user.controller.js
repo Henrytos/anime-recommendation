@@ -13,21 +13,21 @@ function createUserController(request, response) {
   }
 
   userModel.findByEmail(email).then((user) => {
-    if (user) {
+    if (user.length != 0) {
       return response.status(409).send({
         message: "use with this email already exist",
       });
+    } else {
+      userModel
+        .create(username, email, password, avatar)
+        .then(() => {
+          response.json(200);
+        })
+        .catch((error) => {
+          response.status(500).json(error.sqlMessage);
+        });
     }
   });
-
-  userModel
-    .create(username, email, password, avatar)
-    .then(() => {
-      response.json(200);
-    })
-    .catch((error) => {
-      response.status(500).json(error.sqlMessage);
-    });
 }
 
 module.exports = {
