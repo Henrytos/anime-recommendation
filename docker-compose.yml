@@ -1,0 +1,22 @@
+
+services:
+
+  mysql2:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: docker
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_ROOT_PASSWORD: docker
+    ports:
+      - "3306:3306"
+  app2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql2
+    volumes:
+      - .:/home/app
