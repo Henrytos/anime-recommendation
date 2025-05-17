@@ -1,5 +1,5 @@
 async function renderQuizzes() {
-  const data = await fetch("http://localhost:3333/quiz/");
+  const data = await fetch("http://localhost:8080/quiz/");
   const response = await data.json();
 
   const quizzes = response.quizzes;

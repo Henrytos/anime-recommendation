@@ -27,6 +27,8 @@ app.use("/users", userRouter);
 app.use("/quiz", quizRouter);
 
 app.listen(PORT_APP, function () {
+  console.log("Conectando em:", process.env.DB_HOST);
+
   console.log(`
     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  
     ##   ##  ##       ##  ##            ## ##     ####      ##      ####             ##  ##     ##         ##  
