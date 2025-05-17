@@ -394,10 +394,10 @@ a {
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 100;
   top: 0;
   left: 0;
   transition: 0.3s ease-out;
-  pointer-events: none;
 }
 
 .question {
@@ -409,12 +409,15 @@ a {
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  padding-left: 10%;
 }
 .question .left {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 60%;
+  height: 100%;
+  padding-left: 10%;
+  padding-top: 5%;
 }
 .question h1 {
   color: var(--color-red);
@@ -435,7 +438,7 @@ a {
 
 .content-progress {
   width: 100%;
-  height: 10px;
+  height: 16px;
   border-radius: 10px;
   background-color: var(--color-red-light);
   position: relative;
@@ -479,4 +482,75 @@ a {
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.content-alternatives {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  height: 100%;
+}
+
+.alternative {
+  width: 100%;
+  height: 100%;
+  height: 265px;
+  border-radius: 5px;
+  border: 3px solid var(--color-purple-light);
+  position: relative;
+  cursor: pointer;
+}
+
+.alternative:hover .content-alternative {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.alternative:hover h2 {
+  color: transparent;
+  display: none;
+  visibility: hidden;
+}
+
+.alternative img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content-alternative {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+.content-alternative p {
+  font-size: var(--size-2xl);
+  font-weight: var(--font-normal);
+  text-align: center;
+  visibility: hidden;
+  width: 70%;
+  line-height: 24px;
+}
+
+.content-alternative:hover p {
+  visibility: visible;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content-alternative h2 {
+  font-size: var(--size-4xl);
+  text-align: center;
+  -webkit-text-stroke-width: 3px; /* largura da borda */
+  -webkit-text-stroke-color: var(--color-purple-light);
+  line-height: 107%;
+  color: transparent;
 }
