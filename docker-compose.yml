@@ -8,8 +8,11 @@ services:
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
       MYSQL_ROOT_PASSWORD: docker
+      MYSQL_PORT: 3306
     ports:
       - "3306:3306"
+    volumes: 
+      - mysql_data:/var/lib/mysql
   app2:
     build:
       context: .
@@ -20,3 +23,6 @@ services:
       - mysql2
     volumes:
       - .:/home/app
+
+volumes:
+  mysql_data:
