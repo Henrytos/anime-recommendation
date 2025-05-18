@@ -69,6 +69,8 @@
 
         </div>
 
+
+
         <div class="layout">
             <span class="boxes top-left">
                 <span class="box box-red-dark"></span>
@@ -153,7 +155,8 @@
     <script src="./assets/javascript/on-load-render-quiz.js" type="module" defer></script>
 
     <script>
-        let slide = 0
+        let slide = 1
+        let sizeSlide = 2
 
         function selectionAlternative(alternativeId, questionId) {
             console.log({
@@ -163,11 +166,34 @@
 
             const questionsSection = document.querySelectorAll(".question");
 
-            questionsSection[slide].classList.remove("slide-show");
-            questionsSection[slide].classList.add("slide-old");
+            if (slide < sizeSlide) {
+                let oldSlide = questionsSection[slide - 1]
+                let newSlide = questionsSection[slide]
+                nextSlide(newSlide, oldSlide)
+            } else {
 
-            questionsSection[slide + 1].classList.remove("slide-new");
-            questionsSection[slide + 1].classList.add("slide-show");
+
+                let oldSlide = questionsSection[slide - 1]
+                let newSlide = document.querySelector('.content-final')
+                nextSlide(newSlide, oldSlide)
+
+                const TIME_TWO_SECONDS = 2000;
+                setTimeout(() => {
+                    let finalSlide = document.querySelector('.content-final-anime')
+
+                    nextSlide(finalSlide, newSlide)
+                }, TIME_TWO_SECONDS);
+            }
+
+        }
+
+        function nextSlide(newElement, removeElement) {
+            removeElement.classList.remove("slide-show");
+            removeElement.classList.add("slide-old");
+
+            newElement.classList.remove("slide-new");
+            newElement.classList.add("slide-show");
+
             slide++
         }
 
