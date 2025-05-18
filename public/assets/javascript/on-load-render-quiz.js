@@ -181,7 +181,6 @@ function renderQuestions() {
 
   const TIME_TWO_SECONDS = 2000;
   setTimeout(() => {
-    section_container.classList.add("background");
     content.innerHTML = "";
     questionsSection[0].classList.remove("slide-new");
     questionsSection[0].classList.add("slide-show");

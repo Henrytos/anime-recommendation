@@ -1,3 +1,5 @@
+import { GetStorage, SetStorage } from "./manege-storage-session.js";
+
 const colors = {
   dark: {
     "--color-white": "#f3f3f3",
@@ -53,10 +55,36 @@ const background = {
 const buttonTheme = document.getElementById("button_theme");
 
 buttonTheme.addEventListener("click", () => {
-  let body = document.querySelector("body");
-  let theme = body.className == "dark" ? "light" : "dark";
+  let theme = GetStorage("theme");
 
-  body.className = theme;
+  let newTheme = "";
+
+  if (theme == "dark") {
+    newTheme = "light";
+  } else {
+    newTheme = "dark";
+  }
+
+  SetStorage("theme", newTheme);
+  setTheme(newTheme);
+});
+
+window.addEventListener("load", () => {
+  let theme = GetStorage("theme");
+
+  if (!theme) {
+    SetStorage("theme", "dark");
+    theme = "dark";
+  }
+
+  setTheme(theme);
+});
+
+function setTheme(theme) {
+  let body = document.querySelector("body");
+
+  SetStorage("theme", theme);
+
   const pallet = colors[theme];
 
   for (let key in pallet) {
@@ -65,13 +93,7 @@ buttonTheme.addEventListener("click", () => {
   }
 
   const path = window.location.pathname;
-  console.log(path);
   const elementBackground = document.querySelector(background[path].selector);
-  console.log(elementBackground);
   const filename = background[path][theme].file;
   elementBackground.style.backgroundImage = `url("./assets/images/${filename}")`;
-});
-
-// quizzes.html #section_container;
-// index.html .start
-// quiz.html .background
+}
