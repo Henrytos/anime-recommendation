@@ -45,7 +45,7 @@ a {
   background-repeat: no-repeat;
 }
 
-.dark {
+body {
   color: var(--color-background-foreground);
   background-color: var(--color-background);
   overflow: hidden;
@@ -374,7 +374,7 @@ a {
   position: absolute;
   /* transform: translate(-50%, -50%); */
   -webkit-text-stroke-width: 2px; /* largura da borda */
-  -webkit-text-stroke-color: hsla(0, 0%, 95%, 0.3);
+  -webkit-text-stroke-color: var(--color-background-foreground);
   line-height: 107%;
   color: var(--color-background);
   transition: 0.3s ease-out;
@@ -529,6 +529,7 @@ a {
 .content-alternative p {
   font-size: var(--size-2xl);
   font-weight: var(--font-normal);
+  color: white;
   text-align: center;
   visibility: hidden;
   width: 70%;

@@ -12,7 +12,7 @@ const colors = {
     "--color-white": "#141617",
     "--color-background": "#C6C6C7",
     "--color-background-foreground": "#141617",
-    "--color-purple-light": "#313646",
+    "--color-purple-light": "#a39fbf",
     "--color-purple-black": "#313646",
     "--color-red": "#cb4648",
     "--color-red-light": "#d97f77",
@@ -24,6 +24,25 @@ const background = {
     selector: ".start",
     dark: {
       file: "background-start.png",
+    },
+    light: {
+      file: "background-start-white.png",
+    },
+  },
+  "/quizzes.html": {
+    selector: ".container",
+    dark: {
+      file: "background-start.png",
+    },
+    light: {
+      file: "background-start-white.png",
+    },
+  },
+
+  "/quiz.html": {
+    selector: ".background",
+    dark: {
+      file: "back-ground-quizzes-opacity.png",
     },
     light: {
       file: "background-start-white.png",
@@ -46,7 +65,9 @@ buttonTheme.addEventListener("click", () => {
   }
 
   const path = window.location.pathname;
+  console.log(path);
   const elementBackground = document.querySelector(background[path].selector);
+  console.log(elementBackground);
   const filename = background[path][theme].file;
   elementBackground.style.backgroundImage = `url("./assets/images/${filename}")`;
 });
