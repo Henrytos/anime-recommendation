@@ -1,30 +1,31 @@
-const { createConnection } = require("mysql2/promise.js")
+const { createConnection } = require("mysql2/promise.js");
 
 async function createTablesInDatabase() {
-    const client = await createConnection({
-        host: "localhost",
-        user: "docker",
-        password: "docker",
-        database: "docker",
-        port: 3306,
-    })
-    const queryDropUserTable = "DROP TABLE IF EXISTS users;"
-    const queryDropQuizzesTable = "DROP TABLE IF EXISTS quizzes;"
-    const queryDropAnimesTable = "DROP TABLE IF EXISTS animes;"
-    const queryDropAlternativesTable = "DROP TABLE IF EXISTS alternatives;"
-    const queryDropCommentsTable = "DROP TABLE IF EXISTS comments;"
-    const queryDropQuestionsTable = "DROP TABLE IF EXISTS questions;"
+  const client = await createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT,
+  });
 
-    await client.query(queryDropAlternativesTable)
-    await client.query(queryDropQuestionsTable)
-    await client.query(queryDropCommentsTable)
-    await client.query(queryDropQuizzesTable)
-    await client.query(queryDropAnimesTable)
-    await client.query(queryDropUserTable)
+  const queryToDropUserTable = "DROP TABLE IF EXISTS users;";
+  const queryToDropQuizzesTable = "DROP TABLE IF EXISTS quizzes;";
+  const queryToDropAnimesTable = "DROP TABLE IF EXISTS animes;";
+  const queryToDropAlternativesTable = "DROP TABLE IF EXISTS alternatives;";
+  const queryToDropCommentsTable = "DROP TABLE IF EXISTS comments;";
+  const queryToDropQuestionsTable = "DROP TABLE IF EXISTS questions;";
 
-    console.log("Tabelas removidas com sucesso!")
+  await client.query(queryToDropAlternativesTable);
+  await client.query(queryToDropQuestionsTable);
+  await client.query(queryToDropCommentsTable);
+  await client.query(queryToDropQuizzesTable);
+  await client.query(queryToDropAnimesTable);
+  await client.query(queryToDropUserTable);
 
-    const queryCreatedUserTable = `
+  console.log("remove tables in anime recommendation ✅");
+
+  const queryToCreateUserTable = `
     CREATE TABLE users(
         user_id INT PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(45) NOT NULL, 
@@ -35,8 +36,8 @@ async function createTablesInDatabase() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         CONSTRAINT chkEmail CHECK(email LIKE '%@%')
     );
-  `
-    const queryCreatedQuizzesTable = `
+  `;
+  const queryToCreateQuizzesTable = `
     CREATE TABLE quizzes(
         quiz_id INT PRIMARY KEY AUTO_INCREMENT,
         thumb_url VARCHAR(255) NOT NULL,
@@ -45,8 +46,8 @@ async function createTablesInDatabase() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         is_mapping BOOLEAN
     )AUTO_INCREMENT = 1000;
-  `
-    const queryCreatedAnimesTable = `
+  `;
+  const queryToCreateAnimesTable = `
     CREATE TABLE animes(
         anime_id INT PRIMARY KEY AUTO_INCREMENT,
         api_anime_id INT, 
@@ -55,12 +56,12 @@ async function createTablesInDatabase() {
         description VARCHAR(255),
         target_audience VARCHAR(45) NOT NULL,
         gender VARCHAR(45) NOT NULL,
-        CONSTRAINT chk_target_audience CHECK(target_audience IN ('kodomo', 'shounen', 'shoujo', 'seinen', 'josei')),
-        CONSTRAINT chk_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama'))
+        CONSTRAINT chk_target_audience CHECK(target_audience IN ('kodomo', 'Shounen', 'shoujo', 'seinen', 'josei')),
+        CONSTRAINT chk_gender CHECK(gender IN ('Action', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama'))
       );
-    `
+    `;
 
-    const queryCreatedCommentsTable = `
+  const queryToCreateCommentsTable = `
     CREATE TABLE comments(
         comment_id INT,
         fk_anime_id INT,
@@ -70,9 +71,9 @@ async function createTablesInDatabase() {
         CONSTRAINT pk_composite PRIMARY KEY(comment_id, fk_anime_id, fk_user_id),
         CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
         CONSTRAINT fk_comment_user FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
-    );`
+    );`;
 
-    const queryCreatedQuestionsTable = `
+  const queryToCreateQuestionsTable = `
     CREATE TABLE questions(
         question_id INT AUTO_INCREMENT,
         fk_quiz_id INT,
@@ -80,8 +81,8 @@ async function createTablesInDatabase() {
         number INT NOT NULL,
         CONSTRAINT pk_composite PRIMARY KEY(question_id, fk_quiz_id),
         CONSTRAINT fk_question_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes(quiz_id)
-    );`
-    const queryCreatedAlternativesTable = `
+    );`;
+  const queryToCreateAlternativesTable = `
     CREATE TABLE alternatives(
         alternative_id INT,
         title VARCHAR(45),
@@ -97,20 +98,20 @@ async function createTablesInDatabase() {
         CONSTRAINT chk_alternative_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama')),
         CONSTRAINT pk_composite PRIMARY KEY(alternative_id, fk_question_id, fk_quiz_id),
         CONSTRAINT fk_alternative_question FOREIGN KEY (fk_question_id, fk_quiz_id) REFERENCES questions (question_id, fk_quiz_id)
-    );`
+    );`;
 
-    await client.query(queryCreatedUserTable)
-    await client.query(queryCreatedQuizzesTable)
-    await client.query(queryCreatedAnimesTable)
-    await client.query(queryCreatedCommentsTable)
-    await client.query(queryCreatedQuestionsTable)
-    await client.query(queryCreatedAlternativesTable)
-    console.log("Tabelas criadas com sucesso!")
+  await client.query(queryToCreateUserTable);
+  await client.query(queryToCreateQuizzesTable);
+  await client.query(queryToCreateAnimesTable);
+  await client.query(queryToCreateCommentsTable);
+  await client.query(queryToCreateQuestionsTable);
+  await client.query(queryToCreateAlternativesTable);
+  console.log("create table to anime recommendation ✅");
 
-    await client.end()
-    console.log("Conexão encerrada com sucesso!")
+  await client.end();
+  console.log("end connection ✅");
 
-    return true
+  return true;
 }
 
-createTablesInDatabase()
+createTablesInDatabase();
