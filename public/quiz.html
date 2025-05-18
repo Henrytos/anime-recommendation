@@ -151,6 +151,27 @@
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
     <script src="./assets/javascript/on-load-render-quiz.js" type="module" defer></script>
+
+    <script>
+        let slide = 0
+
+        function selectionAlternative(alternativeId, questionId) {
+            console.log({
+                alternativeId,
+                questionId,
+            });
+
+            const questionsSection = document.querySelectorAll(".question");
+
+            questionsSection[slide].classList.remove("slide-show");
+            questionsSection[slide].classList.add("slide-old");
+
+            questionsSection[slide + 1].classList.remove("slide-new");
+            questionsSection[slide + 1].classList.add("slide-show");
+            slide++
+        }
+
+    </script>
 </body>
 
 </html>
