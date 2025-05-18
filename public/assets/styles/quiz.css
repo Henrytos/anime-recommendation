@@ -189,6 +189,9 @@ a {
   height: 95%;
   padding-top: 30px;
   transition: 0.2 ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .start .content .title {
@@ -368,7 +371,6 @@ a {
   text-align: center;
   font-weight: var(--font-semibold);
   position: absolute;
-  padding: 100px 0px;
   /* transform: translate(-50%, -50%); */
   -webkit-text-stroke-width: 2px; /* largura da borda */
   -webkit-text-stroke-color: hsla(0, 0%, 95%, 0.3);
@@ -392,33 +394,34 @@ a {
 
 .questions {
   width: 100%;
-  height: 100%;
+  height: 90vh;
   position: absolute;
-  z-index: 100;
-  top: 0;
+  bottom: 0;
   left: 0;
+  right: 0;
   transition: 0.3s ease-out;
 }
 
 .question {
   position: absolute;
   width: 100%;
-  height: 100%;
   transition: 0.3s ease-out;
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-between;
+  height: 100%;
 }
 .question .left {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  justify-content: space-between;
   width: 60%;
   height: 100%;
   padding-left: 10%;
-  padding-top: 5%;
+  padding-bottom: 30px;
 }
+
 .question h1 {
   color: var(--color-red);
   font-size: var(--size-4xl);
@@ -429,7 +432,7 @@ a {
 .question h1::before {
   content: " ";
   width: 10px;
-  height: 48px;
+  height: 100%;
   background-color: var(--color-red);
   display: block;
   position: absolute;
@@ -438,7 +441,7 @@ a {
 
 .content-progress {
   width: 100%;
-  height: 16px;
+  height: 8px !important;
   border-radius: 10px;
   background-color: var(--color-red-light);
   position: relative;
@@ -446,7 +449,7 @@ a {
 
 .line-progress {
   position: absolute;
-  height: 100%;
+  height: 8px;
   width: 10%;
   background-color: var(--color-red);
   left: 0;
@@ -470,15 +473,8 @@ a {
   transition: 0.3s ease-out;
 }
 
-#character-makima {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 30%;
-}
-
 .background {
-  background-image: url("../images/back-ground-quizzes.png");
+  background-image: url("../images/back-ground-quizzes-opacity.png");
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -488,14 +484,13 @@ a {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 320px);
   gap: 20px;
-  height: 100%;
 }
 
 .alternative {
   width: 100%;
   height: 100%;
-  height: 265px;
   border-radius: 5px;
   border: 3px solid var(--color-purple-light);
   position: relative;
@@ -528,6 +523,7 @@ a {
   flex-direction: column;
   justify-content: end;
   align-items: center;
+  transition: 0.4s all;
 }
 .content-alternative p {
   font-size: var(--size-2xl);
@@ -553,4 +549,36 @@ a {
   -webkit-text-stroke-color: var(--color-purple-light);
   line-height: 107%;
   color: transparent;
+  padding-bottom: 20px;
+}
+
+.question:nth-child(even) {
+  flex-direction: row-reverse !important;
+}
+
+.question:nth-child(even) .left {
+  padding-left: 0;
+  padding-right: 10%;
+}
+.question:nth-child(even) .left h1 {
+  text-align: right;
+  transform: translate(-20px, 0px);
+}
+.question:nth-child(even) .left h1::before {
+  content: " ";
+  width: 10px;
+  height: 100%;
+  background-color: var(--color-red);
+  display: block;
+  position: absolute;
+  right: 0;
+  transform: translate(20px, 5px);
+}
+
+.right {
+  width: 30%;
+}
+.right img {
+  width: 100%;
+  height: auto;
 }
