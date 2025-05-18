@@ -4,7 +4,7 @@ DROP DATABASE anime_recommendation;
 DROP DATABASE anime_recommendation;
 
 CREATE TABLE users(
-		user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(45) NOT NULL, 
     email VARCHAR(45) NOT NULL UNIQUE,
     password_hash VARCHAR(45) NOT NULL,
@@ -15,67 +15,64 @@ CREATE TABLE users(
 );
 
 CREATE TABLE quizzes(
-  quiz_id INT PRIMARY KEY AUTO_INCREMENT,
-  thumb_url VARCHAR(255) NOT NULL,
-  title VARCHAR(45) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  is_mapping BOOLEAN
+    quiz_id INT PRIMARY KEY AUTO_INCREMENT,
+    thumb_url VARCHAR(255) NOT NULL,
+    title VARCHAR(45) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_mapping BOOLEAN
 )AUTO_INCREMENT = 1000;
 
 
 
 CREATE TABLE animes(
-  anime_id INT,
-  api_anime_id INT, 
-  fk_mapping_id INT,
-  title VARCHAR(45),
-  image_url VARCHAR(500),
-  description VARCHAR(255),
-  target_audience VARCHAR(45) NOT NULL,
-  gender VARCHAR(45) NOT NULL,
-  CONSTRAINT chk_target_audience CHECK(target_audience IN ('kodomo', 'shounen', 'shoujo', 'seinen', 'josei')),
-  CONSTRAINT chk_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama')),
-  CONSTRAINT pk_composite PRIMARY KEY(anime_id, api_anime_id, fk_mapping_id)
+    anime_id INT PRIMARY KEY AUTO_INCREMENT,
+    api_anime_id INT, 
+    title VARCHAR(45),
+    image_url VARCHAR(500),
+    description VARCHAR(255),
+    target_audience VARCHAR(45) NOT NULL,
+    gender VARCHAR(45) NOT NULL,
+    CONSTRAINT chk_target_audience CHECK(target_audience IN ('kodomo', 'shounen', 'shoujo', 'seinen', 'josei')),
+    CONSTRAINT chk_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama'))
 );
 
 
 CREATE TABLE comments(
-	comment_id INT,
-  fk_anime_id INT,
-  fk_user_id INT, 
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  description VARCHAR(255) NOT NULL,
-  CONSTRAINT pk_composite PRIMARY KEY(comment_id, fk_anime_id, fk_user_id),
-  CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
-  CONSTRAINT fk_comment_user FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
+    comment_id INT,
+    fk_anime_id INT,
+    fk_user_id INT, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    description VARCHAR(255) NOT NULL,
+    CONSTRAINT pk_composite PRIMARY KEY(comment_id, fk_anime_id, fk_user_id),
+    CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
+    CONSTRAINT fk_comment_user FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE questions(
-  question_id INT AUTO_INCREMENT,
-  fk_quiz_id INT,
-  title VARCHAR(45) NOT NULL,
-  number INT NOT NULL,
-  CONSTRAINT pk_composite PRIMARY KEY(question_id, fk_quiz_id),
-  CONSTRAINT fk_question_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes(quiz_id)
+    question_id INT AUTO_INCREMENT,
+    fk_quiz_id INT,
+    title VARCHAR(45) NOT NULL,
+    number INT NOT NULL,
+    CONSTRAINT pk_composite PRIMARY KEY(question_id, fk_quiz_id),
+    CONSTRAINT fk_question_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes(quiz_id)
 );
 
 CREATE TABLE alternatives(
-  alternative_id INT,
-  title VARCHAR(45),
-  description VARCHAR(255),
-  image_url VARCHAR(500),
-  is_correct BOOLEAN,
-  target_audience VARCHAR(45) NOT NULL,
-  gender VARCHAR(45) NOT NULL,
-  fk_question_id INT,
-  fk_quiz_id INT,
-  
-  CONSTRAINT chk_alternative_audience CHECK(target_audience IN ('kodomo', 'shounen', 'shoujo', 'seinen', 'josei')),
-  CONSTRAINT chk_alternative_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama')),
-  CONSTRAINT pk_composite PRIMARY KEY(alternative_id, fk_question_id, fk_quiz_id),
-  CONSTRAINT fk_alternative_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes (quiz_id),
-  CONSTRAINT fk_alternative_question FOREIGN KEY (fk_question_id) REFERENCES questions (question_id)
+    alternative_id INT,
+    title VARCHAR(45),
+    description VARCHAR(255),
+    image_url VARCHAR(500),
+    is_correct BOOLEAN,
+    target_audience VARCHAR(45) NOT NULL,
+    gender VARCHAR(45) NOT NULL,
+    fk_question_id INT,
+    fk_quiz_id INT,
+    
+    CONSTRAINT chk_alternative_audience CHECK(target_audience IN ('kodomo', 'shounen', 'shoujo', 'seinen', 'josei')),
+    CONSTRAINT chk_alternative_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama')),
+    CONSTRAINT pk_composite PRIMARY KEY(alternative_id, fk_question_id, fk_quiz_id),
+    CONSTRAINT fk_alternative_question FOREIGN KEY (fk_question_id, fk_quiz_id) REFERENCES questions (question_id, fk_quiz_id)
 );
 
 
