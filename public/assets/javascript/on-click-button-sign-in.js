@@ -52,4 +52,11 @@ async function fetchSignUser(email, password) {
     alert("senha incorreta");
     input_password.type = "text";
   }
+
+  const isNotFoundUser = data.status == "404";
+  if (isNotFoundUser) {
+    alert("este usuario não existe");
+    input_email.value = "";
+    input_password.value = "";
+  }
 }
