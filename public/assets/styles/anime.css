@@ -331,14 +331,14 @@ html {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 150px;
+  padding-top: 200px;
 }
 
 .anime {
   margin-top: 24px;
   width: 100%;
-  height: 600px;
-  max-height: 600px;
+  height: 650px;
+  max-height: 650px;
   display: grid;
   position: relative;
   grid-template-columns: repeat(12, 1fr);
@@ -355,7 +355,7 @@ html {
 }
 
 .anime .details p {
-  font-size: var(--size-2xl);
+  font-size: var(--size-lg);
   font-weight: var(--font-normal);
   color: var(--color-background-foreground);
 }
@@ -386,7 +386,7 @@ html {
     200,
     7%,
     8%,
-    0.4
+    0.2
   ); /* padrão para todos ao passar mouse em algum */
   transition: 0.2s all;
   cursor: pointer;
@@ -433,12 +433,12 @@ html {
 .anime .anime-cover {
   grid-column-start: 9;
   grid-column-end: 13;
-  height: 600px;
+  height: 650px;
 }
 
 .anime .anime-cover img {
   width: 100%;
-  height: 600px;
+  height: 650px;
   object-fit: cover;
   position: relative;
   position: sticky;
