@@ -169,12 +169,6 @@ function renderQuestions() {
       <img id="image-question-2" src="./assets/images/loli-congratulations.png" alt="imagem da loli da duvida 2">
 
   </div>
-
-    <div class="content-final-anime slide-new">
-      <h1  id="result-final">
-          boku no hero
-      </h1>
-  </div>
   `;
 
   const questionsSection = document.querySelectorAll(".question");

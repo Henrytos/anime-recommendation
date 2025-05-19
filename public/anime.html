@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizzes</title>
-    <link rel="stylesheet" href="./assets/styles/quiz.css">
+    <title>Home</title>
+    <link rel="stylesheet" href="./assets/styles/anime.css">
     <link rel="shortcut icon" href="./assets/icons/logo.png" type="image/x-icon">
 </head>
 
-<body class="dark">
-
-
-    <section class="start container background" id="section_container">
+<body>
+    <section class="start container">
         <nav class="nav-bar">
             <a href="./index.html">
                 <img src="../assets/images/logo-home.png" alt="logo" width="292" height="64">
@@ -55,21 +53,65 @@
             </div>
         </nav>
 
-        <div class="content" id="content">
-            <h1 id="title-quiz" class="slide-new">
 
-            </h1>
+        <div class="anime">
+            <div class='details'>
+                <div>
+                    <h1 class='title'>
+                        Boku no Hero Academia
+                    </h1>
+                    <p>
+                        The appearance of "quirks," newly discovered super powers, has been steadily increasing over the
+                        years, with 80 percent
+                        of humanity possessing various abilities from manipulation of elements to shapeshifting. This
+                        leaves the remainder of
+                        the world completely powerless, and Izuku Midoriya is one such individual.
 
-
-            <img id="image-question-1" src="./assets/images/image-quetion-1.png" alt="imagem da loli da duvida">
-            <img id="image-question-2" src="./assets/images/image-quetion-2.png" alt="imagem da loli da duvida 2">
-
+                        Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero.
+                        Izuku's unfair fate
+                        leaves him admiring heroes and taking notes on them whenever he can. But it seems that his
+                        persistence has borne some
+                    </p>
+                </div>
+                <div class='characters'>
+                    <div class='character'>
+                        <img src='https://cdn.myanimelist.net/images/characters/7/299404.jpg?s=6a448d3702c1d3185ed7ad8f0b8484f0'
+                            alt='thumb url de konosuba' />
+                        <span></span>
+                        <h2>
+                            Izuko midoraya
+                        </h2>
+                    </div>
+                    <div class='character'>
+                        <img src='https://cdn.myanimelist.net/images/characters/14/310613.jpg?s=2bb273c38247c38003176367645e6488'
+                            alt='thumb url de konosuba' />
+                        <span></span>
+                        <h2>
+                            All Might
+                        </h2>
+                    </div>
+                    <div class='character'>
+                        <img src='https://cdn.myanimelist.net/images/characters/12/332527.jpg?s=575a733f7d22b2b94a12194e051932de'
+                            alt='thumb url de konosuba' />
+                        <span></span>
+                        <h2>
+                            Todoroki, Shouto
+                        </h2>
+                    </div>
+                    <div class='character'>
+                        <img src='https://cdn.myanimelist.net/images/characters/12/299406.jpg?s=7ce7f3b38b2ebe0fd31b3a313fa14fe9'
+                            alt='thumb url de konosuba' />
+                        <span></span>
+                        <h2>
+                            Bakugou, Katsuki
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div class='anime-cover'>
+                <img src='https://cdn.myanimelist.net/images/anime/1089/121748l.jpg' alt='cover anime' />
+            </div>
         </div>
-
-        <div class="questions" id="div_questions">
-
-        </div>
-
 
 
         <div class="layout">
@@ -96,8 +138,35 @@
         </div>
     </section>
 
-    <!-- expand -->
 
+
+    <section class="second container">
+        <div class="layout">
+            <span class="boxes top-left">
+                <span class="box box-red-dark"></span>
+                <span class="box box-red-light"></span>
+                <span class="box box-red-light"></span>
+            </span>
+            <span class="boxes top-right">
+                <span class="box box-purple-dark"></span>
+                <span class="box box-purple-light"></span>
+                <span class="box box-purple-light"></span>
+            </span>
+            <span class="boxes bottom-left">
+                <span class="box box-purple-dark"></span>
+                <span class="box box-purple-light"></span>
+                <span class="box box-purple-light"></span>
+            </span>
+            <span class="boxes bottom-right">
+                <span class="box box-red-dark"></span>
+                <span class="box box-red-light"></span>
+                <span class="box box-red-light"></span>
+            </span>
+        </div>
+    </section>
+
+
+    <!-- expand -->
     <div class="sheet" id="sheet">
         <span id="button_close_menu">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
@@ -110,10 +179,10 @@
         <div class="links">
 
             <span class="link">
-                <a href="./index.html">Home</a>
+                <a href="./index.html" class="active">Home</a>
             </span>
             <span class="link">
-                <a href="./quizzes.html" class="active">Quizzes</a>
+                <a href="./quizzes.html">Quizzes</a>
             </span>
             <span class="link">
                 <a href="./index.html">Populares</a>
@@ -147,56 +216,15 @@
     </div>
 
     <script src="./assets/javascript/redirects.js" type="module" defer></script>
+    <script src="./assets/javascript/manege-storage-session.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-theme.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-toggle-menu.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-in-link-in-sheet.js" type="module" defer></script>
     <script src="./assets/javascript/remove-item-in-page.js" type="module" defer></script>
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
+
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
-    <script src="./assets/javascript/on-load-render-quiz.js" type="module" defer></script>
 
-    <script>
-        let slide = 1
-        let sizeSlide = 2
-
-        function selectionAlternative(alternativeId, questionId) {
-            console.log({
-                alternativeId,
-                questionId,
-            });
-
-            const questionsSection = document.querySelectorAll(".question");
-
-            if (slide < sizeSlide) {
-                let oldSlide = questionsSection[slide - 1]
-                let newSlide = questionsSection[slide]
-                nextSlide(newSlide, oldSlide)
-            } else {
-
-
-                let oldSlide = questionsSection[slide - 1]
-                let newSlide = document.querySelector('.content-final')
-                nextSlide(newSlide, oldSlide)
-
-                const TIME_TWO_SECONDS = 2000;
-                setTimeout(() => {
-                    window.location.href = './anime.html'
-                }, TIME_TWO_SECONDS);
-            }
-
-        }
-
-        function nextSlide(newElement, removeElement) {
-            removeElement.classList.remove("slide-show");
-            removeElement.classList.add("slide-old");
-
-            newElement.classList.remove("slide-new");
-            newElement.classList.add("slide-show");
-
-            slide++
-        }
-
-    </script>
 </body>
 
 </html>
