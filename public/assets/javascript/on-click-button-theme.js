@@ -22,52 +22,82 @@ const colors = {
 };
 
 const background = {
-  "/": {
-    selector: ".start",
-    dark: {
-      file: "background-start.png",
+  "/": [
+    {
+      selector: ".start",
+      dark: {
+        file: "background-start.png",
+      },
+      light: {
+        file: "background-start-white.png",
+      },
     },
-    light: {
-      file: "background-start-white.png",
+  ],
+  "/index.html": [
+    {
+      selector: ".start",
+      dark: {
+        file: "background-start.png",
+      },
+      light: {
+        file: "background-start-white.png",
+      },
     },
-  },
-  "/index.html": {
-    selector: ".start",
-    dark: {
-      file: "background-start.png",
+  ],
+  "/quizzes.html": [
+    {
+      selector: ".container",
+      dark: {
+        file: "background-start.png",
+      },
+      light: {
+        file: "background-start-white.png",
+      },
     },
-    light: {
-      file: "background-start-white.png",
-    },
-  },
-  "/quizzes.html": {
-    selector: ".container",
-    dark: {
-      file: "background-start.png",
-    },
-    light: {
-      file: "background-start-white.png",
-    },
-  },
+  ],
 
-  "/quiz.html": {
-    selector: ".background",
-    dark: {
-      file: "back-ground-quizzes-opacity.png",
+  "/quiz.html": [
+    {
+      selector: ".background",
+      dark: {
+        file: "back-ground-quizzes-opacity.png",
+      },
+      light: {
+        file: "background-start-white.png",
+      },
     },
-    light: {
-      file: "background-start-white.png",
+  ],
+  "/anime.html": [
+    {
+      selector: ".start",
+      dark: {
+        file: "background-start.png",
+      },
+      light: {
+        file: "background-start-white.png",
+      },
     },
-  },
-  "/dashboard.html": {
-    selector: ".start",
-    dark: {
-      file: "back-ground-quizzes-opacity.png",
+    {
+      selector: ".second",
+      dark: {
+        file: "background-2.png",
+      },
+      light: {
+        file: "background-2-light.png",
+      },
     },
-    light: {
-      file: "background-start-white.png",
+  ],
+  "/dashboard.html": [
+    {
+      selector: ".start",
+      dark: {
+        file: "back-ground-quizzes-opacity.png",
+      },
+      light: {
+        file: "background-start-white.png",
+      },
     },
-  },
+  ],
 };
 
 const images = {
@@ -133,6 +163,17 @@ const images = {
       },
     },
   ],
+  "/anime.html": [
+    {
+      selector: "#logo",
+      dark: {
+        file: "logo-home.png",
+      },
+      light: {
+        file: "logo-home-light.png",
+      },
+    },
+  ],
 };
 
 const buttonTheme = document.getElementById("button_theme");
@@ -177,9 +218,14 @@ function setTheme(theme) {
   }
 
   const path = window.location.pathname;
-  const elementBackground = document.querySelector(background[path].selector);
-  const filename = background[path][theme].file;
-  elementBackground.style.backgroundImage = `url("./assets/images/${filename}")`;
+
+  for (let position = 0; position < background[path].length; position++) {
+    let elementBackground = document.querySelector(
+      background[path][position].selector
+    );
+    const filename = background[path][position][theme].file;
+    elementBackground.style.backgroundImage = `url("./assets/images/${filename}")`;
+  }
 
   const elements = images[path];
   for (let position = 0; position < elements.length; position++) {

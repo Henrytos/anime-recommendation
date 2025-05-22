@@ -5,7 +5,9 @@ const quizModel = require("../models/quiz.model.js");
 function createResultQuizController(request, response) {
   const { quizId, userId, animeId } = request.body;
 
-  const isBadRequestData = quizId == "" || userId == "" || animeId == "";
+  const isBadRequestData =
+    quizId == undefined || userId == undefined || animeId == undefined;
+
   if (isBadRequestData) {
     return response.status(400).json({
       message: "invalid data",
