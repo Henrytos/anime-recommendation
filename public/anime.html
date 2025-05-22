@@ -57,10 +57,10 @@
         <div class="anime">
             <div class='details'>
                 <div>
-                    <h1 class='title'>
+                    <h1 class='title' id="h1_anime_title">
                         Boku no Hero Academia
                     </h1>
-                    <p>
+                    <p id="p_anime_description">
                         The appearance of "quirks," newly discovered super powers, has been steadily increasing over the
                         years, with 80 percent
                         of humanity possessing various abilities from manipulation of elements to shapeshifting. This
@@ -82,107 +82,21 @@
                     <h3 class='title'>
                         Personagens
                     </h3>
-                    <div class='characters'>
-                        <div class='character'>
-                            <img src='https://cdn.myanimelist.net/images/characters/7/299404.jpg?s=6a448d3702c1d3185ed7ad8f0b8484f0'
-                                alt='thumb url de konosuba' />
-                            <span></span>
-                            <h2>
-                                Izuko midoraya
-                            </h2>
-                        </div>
-                        <div class='character'>
-                            <img src='https://cdn.myanimelist.net/images/characters/14/310613.jpg?s=2bb273c38247c38003176367645e6488'
-                                alt='thumb url de konosuba' />
-                            <span></span>
-                            <h2>
-                                All Might
-                            </h2>
-                        </div>
-                        <div class='character'>
-                            <img src='https://cdn.myanimelist.net/images/characters/12/332527.jpg?s=575a733f7d22b2b94a12194e051932de'
-                                alt='thumb url de konosuba' />
-                            <span></span>
-                            <h2>
-                                Todoroki, Shouto
-                            </h2>
-                        </div>
-                        <div class='character'>
-                            <img src='https://cdn.myanimelist.net/images/characters/12/299406.jpg?s=7ce7f3b38b2ebe0fd31b3a313fa14fe9'
-                                alt='thumb url de konosuba' />
-                            <span></span>
-                            <h2>
-                                Bakugou, Katsuki
-                            </h2>
-                        </div>
-
+                    <div class='characters' id="div_characters">
                     </div>
                 </div>
 
             </div>
             <div class='anime-cover'>
-                <img src='https://cdn.myanimelist.net/images/anime/1089/121748l.jpg' alt='cover anime' />
+                <img src='https://cdn.myanimelist.net/images/anime/1089/121748l.jpg' alt='cover anime'
+                    id="img_anime_preview_cover" />
             </div>
 
             <h3 class='title'>
                 Similares
             </h3>
-            <div class="posters">
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/12/76049.jpg' alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        Izuko midoraya
-                    </h2>
-                </div>
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/1795/95088l.jpg?s=9e24a139603a4e0ea8ea055a230b54d5'
-                        alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        All Might
-                    </h2>
-                </div>
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/1880/118484l.jpg?s=73b91a0146dfa5fadc5ff9f870c72741'
-                        alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        Todoroki, Shouto
-                    </h2>
-                </div>
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/11/89556l.jpg?s=c81e5bf28128120f3ebe27b03bb2e527'
-                        alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        Bakugou, Katsuki
-                    </h2>
-                </div>
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/1711/142478l.jpg?s=8c432fe78ec9dd1b3219f3c5faf4308f'
-                        alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        Bakugou, Katsuki
-                    </h2>
-                </div>
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/1802/108501l.jpg?s=243c441d14fa25619a8c97e64b859bfe'
-                        alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        Bakugou, Katsuki
-                    </h2>
-                </div>
-                <div class='poster'>
-                    <img src='https://cdn.myanimelist.net/images/anime/1530/117776l.jpg?s=66e9881567062ce45eddd8330bd9cc30'
-                        alt='thumb url de konosuba' />
-                    <span></span>
-                    <h2>
-                        Bakugou, Katsuki
-                    </h2>
-                </div>
+            <div class="posters" id="div_recommendations">
+
             </div>
         </div>
 
@@ -453,6 +367,92 @@
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
 
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
+
+
+    <script>
+        async function renderAnime() {
+
+            const url = new URL(window.location.href)
+            const animeId = url.searchParams.get('animeId')
+
+            if (!animeId) {
+                alert('requisição mal feita')
+            }
+
+
+            const responseAnime = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/full`)
+            if (!responseAnime.ok) {
+                alert('não foi possivel encontrar este anime')
+            }
+
+            const anime = await responseAnime.json()
+
+
+            const responseCharacters = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/characters`)
+            const characters = await responseCharacters.json()
+
+
+            const charactersOrderByFavorites = characters.data.sort((characterA, characterB) => {
+                if (characterA.favorites > characterB.favorites) {
+                    return -1
+                } else {
+                    return 1
+                }
+            }).slice(0, 4)
+
+
+            const responseRecommendations = await fetch(`https://api.jikan.moe/v4/anime/${animeId}/recommendations`)
+            const recommendations = await responseRecommendations.json()
+            const sevenRecommendations = recommendations.data.slice(0, 7)
+
+            /*
+                ids: 
+                h1_anime_title
+                p_anime_description
+                img_anime_preview_cover
+                
+                div_characters
+                div_recommendations
+            */
+
+            h1_anime_title.innerHTML = anime.data.title
+            p_anime_description.innerHTML = anime.data.synopsis.slice(0, 800) + "..."
+            img_anime_preview_cover.src = anime.data.images.jpg.large_image_url
+
+            console.log(charactersOrderByFavorites)
+            for (let position = 0; position < charactersOrderByFavorites.length; position++) {
+                let { character } = charactersOrderByFavorites[position]
+
+                div_characters.innerHTML += `
+                        <div class='character'>
+                            <img src='${character.images.jpg.image_url}'
+                                alt='thumb url de konosuba' />
+                            <span></span>
+                            <h2>
+                                ${character.name}
+                            </h2>
+                        </div>
+                        `
+            }
+
+
+            for (let position = 0; position < sevenRecommendations.length; position++) {
+                let recommendation = sevenRecommendations[position]
+                div_recommendations.innerHTML += `
+                 <a href='./anime.html?animeId=${recommendation.entry.mal_id}' class='poster'>
+                    <img src='${recommendation.entry.images.jpg.large_image_url}' alt='thumb url de konosuba' />
+                    <span></span>
+                    <h2>
+                    ${recommendation.entry.title}
+                    </h2>
+                </a>
+                `
+            }
+
+
+        }
+        renderAnime()
+    </script>
 
 </body>
 
