@@ -5,8 +5,16 @@ const quizModel = require("../models/quiz.model.js");
 function createResultQuizController(request, response) {
   const { quizId, userId, animeId } = request.body;
 
+  const isBadRequestData = quizId == "" || userId == "" || animeId == "";
+  if (isBadRequestData) {
+    return response.status(400).json({
+      message: "invalid data",
+    });
+  }
+
   userModel.findByUserId(userId).then((users) => {
-    if (users.length == 0) {
+    const isNotExistsUser = users.length == 0;
+    if (isNotExistsUser) {
       return response.status(401).json({
         message: "unauthorized user",
       });
@@ -14,7 +22,8 @@ function createResultQuizController(request, response) {
   });
 
   animeModel.findByAnimeId(animeId).then((animes) => {
-    if (animes.length == 0) {
+    const isNotExistsAnime = animes.length == 0;
+    if (isNotExistsAnime) {
       return response.status(404).json({
         message: "not found anime",
       });
@@ -22,7 +31,8 @@ function createResultQuizController(request, response) {
   });
 
   quizModel.findById(quizId).then((quizzes) => {
-    if (quizzes.length == 0) {
+    const isNotExistsQuiz = quizzes.length == 0;
+    if (isNotExistsQuiz) {
       return response.status(404).json({
         message: "not found quiz",
       });

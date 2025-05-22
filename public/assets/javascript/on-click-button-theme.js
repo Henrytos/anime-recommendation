@@ -70,6 +70,71 @@ const background = {
   },
 };
 
+const images = {
+  "/": [
+    {
+      selector: "#cards",
+      dark: {
+        file: "cards-dark.svg",
+      },
+      light: {
+        file: "card-light.svg",
+      },
+    },
+    {
+      selector: "#logo",
+      dark: {
+        file: "logo-home.png",
+      },
+      light: {
+        file: "logo-home-light.png",
+      },
+    },
+  ],
+  "/index.html": [
+    {
+      selector: "#cards",
+      dark: {
+        file: "cards-dark.svg",
+      },
+      light: {
+        file: "card-light.svg",
+      },
+    },
+    {
+      selector: "#logo",
+      dark: {
+        file: "logo-home.png",
+      },
+      light: {
+        file: "logo-home-light.png",
+      },
+    },
+  ],
+  "/quizzes.html": [
+    {
+      selector: "#logo",
+      dark: {
+        file: "logo-home.png",
+      },
+      light: {
+        file: "logo-home-light.png",
+      },
+    },
+  ],
+  "/quiz.html": [
+    {
+      selector: "#logo",
+      dark: {
+        file: "logo-home.png",
+      },
+      light: {
+        file: "logo-home-light.png",
+      },
+    },
+  ],
+};
+
 const buttonTheme = document.getElementById("button_theme");
 
 buttonTheme.addEventListener("click", () => {
@@ -115,4 +180,12 @@ function setTheme(theme) {
   const elementBackground = document.querySelector(background[path].selector);
   const filename = background[path][theme].file;
   elementBackground.style.backgroundImage = `url("./assets/images/${filename}")`;
+
+  const elements = images[path];
+  for (let position = 0; position < elements.length; position++) {
+    let element = elements[position];
+    let image = document.querySelector(element.selector);
+
+    image.src = `./assets/images/${element[theme].file}`;
+  }
 }
