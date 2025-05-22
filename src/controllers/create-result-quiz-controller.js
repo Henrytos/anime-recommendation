@@ -16,6 +16,7 @@ function createResultQuizController(request, response) {
 
   userModel.findByUserId(userId).then((users) => {
     const isNotExistsUser = users.length == 0;
+
     if (isNotExistsUser) {
       return response.status(401).json({
         message: "unauthorized user",
@@ -25,6 +26,7 @@ function createResultQuizController(request, response) {
 
   animeModel.findByAnimeId(animeId).then((animes) => {
     const isNotExistsAnime = animes.length == 0;
+
     if (isNotExistsAnime) {
       return response.status(404).json({
         message: "not found anime",
@@ -34,6 +36,7 @@ function createResultQuizController(request, response) {
 
   quizModel.findById(quizId).then((quizzes) => {
     const isNotExistsQuiz = quizzes.length == 0;
+
     if (isNotExistsQuiz) {
       return response.status(404).json({
         message: "not found quiz",
