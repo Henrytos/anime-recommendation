@@ -340,16 +340,16 @@ a {
 
 .chart-quizzes {
   grid-column-start: 1;
-  grid-column-end: 8;
+  grid-column-end: 6;
 }
 
 .indicators {
-  grid-column-start: 8;
-  grid-column-end: 9;
+  grid-column-start: 6;
+  grid-column-end: 10;
 }
 
 .chart-mapping {
-  grid-column-start: 9;
+  grid-column-start: 10;
   grid-column-end: 13;
 }
 
@@ -393,11 +393,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  opacity: 0.8;
-}
-
-.recommendation:nth-child(1) {
-  opacity: 1;
+  border-radius: 5px;
 }
 
 .recommendation h4 {
@@ -409,26 +405,32 @@ a {
 
 .recommendation-image-preview {
   width: 100%;
-  height: 220px;
+  height: 190px;
   object-fit: cover;
   border-radius: 2px;
+}
+.comments {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .comment {
   width: 100%;
   padding: 12px;
   display: flex;
+  align-items: center;
   gap: 20px;
   border-radius: 5px;
   border: 1px solid var(--color-background-foreground);
   color: var(--color-background-foreground);
-  background-color: hsla(0, 0%, 95%, 0.1);
-  filter: blur();
+  background-color: hsla(0, 0%, 95%, 0.05);
+  backdrop-filter: blur(20px);
 }
 
 .comment img {
-  width: 62px;
-  height: 62px;
+  width: 70px;
+  height: 70px;
   border-radius: 100%;
   border: 1px solid var(--color-background-foreground);
 }
@@ -440,7 +442,7 @@ a {
 
 .title-comment {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-background-foreground);
 }
 
@@ -453,4 +455,36 @@ a {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.details {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.mapping-1 {
+  background-color: var(--color-red);
+}
+
+.mapping-2 {
+  background-color: var(--color-purple-light);
+}
+.mapping-2 h4 {
+  color: var(--color-background);
+}
+
+.mapping-3 {
+  background-color: var(--color-purple-black);
+}
+
+.mapping-3 h4 {
+  color: var(--color-background-foreground);
+}
+
+.light .mapping-2 h4 {
+  color: var(--color-background-foreground);
+}
+
+.light .mapping-3 h4 {
+  color: var(--color-background);
 }

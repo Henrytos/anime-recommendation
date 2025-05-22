@@ -22,6 +22,15 @@ const colors = {
 };
 
 const background = {
+  "/": {
+    selector: ".start",
+    dark: {
+      file: "background-start.png",
+    },
+    light: {
+      file: "background-start-white.png",
+    },
+  },
   "/index.html": {
     selector: ".start",
     dark: {
@@ -43,6 +52,15 @@ const background = {
 
   "/quiz.html": {
     selector: ".background",
+    dark: {
+      file: "back-ground-quizzes-opacity.png",
+    },
+    light: {
+      file: "background-start-white.png",
+    },
+  },
+  "/dashboard.html": {
+    selector: ".start",
     dark: {
       file: "back-ground-quizzes-opacity.png",
     },
@@ -83,6 +101,7 @@ window.addEventListener("load", () => {
 function setTheme(theme) {
   let body = document.querySelector("body");
 
+  body.classList.add(theme);
   SetStorage("theme", theme);
 
   const pallet = colors[theme];

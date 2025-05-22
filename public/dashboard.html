@@ -7,6 +7,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="./assets/styles/dashboard.css">
     <link rel="shortcut icon" href="./assets/icons/logo.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -16,7 +17,7 @@
                 <img src="../assets/images/logo-home.png" alt="logo" width="292" height="64">
             </a>
             <div class="buttons">
-                <button class="button button-foreground icon" id="button_theme">
+                <button class="button button-foreground icon" id="button_theme" onclick="updateChart()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-sun-moon-icon lucide-sun-moon">
@@ -75,7 +76,7 @@
                     </h2>
 
                     <div class="div-content-chart">
-                        <canvas id="chart_pie_quizzes"></canvas>
+                        <canvas id="chart_pie_mapping"></canvas>
                     </div>
                 </div>
             </div>
@@ -87,7 +88,7 @@
                     </h2>
 
                     <div class="recommendations">
-                        <div class="recommendation">
+                        <div class="recommendation mapping-1">
                             <a href="./anime.html" class="recommendation">
                                 <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
                                     alt="image preview anime" class="recommendation-image-preview">
@@ -97,9 +98,9 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-1">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://br.web.img3.acsta.net/pictures/20/09/14/10/31/4875617.jpg"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -107,9 +108,9 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-1">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://a.storyblok.com/f/178900/1000x1413/8038a06220/solo-leveling-key-visual.jpg/m/filters:quality(95)format(webp)"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -117,9 +118,9 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-1">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://cdn.selectgame.net/wp-content/uploads/2023/05/One-Piece-Capa-Anime-001-Luffy-Nami-Zoro-Usopp-Sanji.webp"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -127,9 +128,9 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-1">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://br.web.img3.acsta.net/pictures/20/09/14/10/31/4875617.jpg"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -137,9 +138,9 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-2">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://a.storyblok.com/f/178900/1280x1809/68550494ec/frieren-beyond-journey-s-end-key-visual.jpg/m/filters:quality(95)format(webp)"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -147,9 +148,27 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-2">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://i0.wp.com/www.otakupt.com/wp-content/uploads/2019/03/Poster-do-filme-anime-de-KonoSuba-1.jpg?resize=640%2C904&ssl=1"
+                                    alt="image preview anime" class="recommendation-image-preview">
+                                <h4 class="recommendation-title">
+                                    Konosubarashi
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="recommendation mapping-2">
+                            <a href="./anime.html" class="recommendation">
+                                <img src="https://upload.wikimedia.org/wikipedia/pt/d/dd/Re_Zero_poster.jpg"
+                                    alt="image preview anime" class="recommendation-image-preview">
+                                <h4 class="recommendation-title">
+                                    Souso no frieren
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="recommendation mapping-2">
+                            <a href="./anime.html" class="recommendation">
+                                <img src="https://i.pinimg.com/474x/cd/c6/4d/cdc64d90dbdeb8b5dfeacdaa0593f007.jpg"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -157,29 +176,9 @@
                                 </h4>
                             </a>
                         </div>
-                        <div class="recommendation">
+                        <div class="recommendation mapping-3">
                             <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
-                                    alt="image preview anime" class="recommendation-image-preview">
-                                <h4 class="recommendation-title">
-                                    Boku no hero
-                                    Academia
-                                </h4>
-                            </a>
-                        </div>
-                        <div class="recommendation">
-                            <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
-                                    alt="image preview anime" class="recommendation-image-preview">
-                                <h4 class="recommendation-title">
-                                    Boku no hero
-                                    Academia
-                                </h4>
-                            </a>
-                        </div>
-                        <div class="recommendation">
-                            <a href="./anime.html" class="recommendation">
-                                <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
+                                <img src="https://i.pinimg.com/736x/8a/5c/64/8a5c64d3c75222a7e84dca8f7a231f3f.jpg"
                                     alt="image preview anime" class="recommendation-image-preview">
                                 <h4 class="recommendation-title">
                                     Boku no hero
@@ -195,6 +194,54 @@
                     <h2 class="title">Histórico de comentários</h2>
 
                     <div class="comments">
+                        <div class="comment">
+                            <img src="./assets/uploads/henry-profile.png" alt="">
+                            <div class="content">
+                                <div class="content-text">
+                                    <h3 class="title-comment">HENRY FRANZ</h3>
+                                    <p class="time">Há 8 minutos.</p>
+                                </div>
+                                <p class="details">
+                                    The appearance of "quirks," newly discovered super powers, has been steadily......
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img src="./assets/uploads/henry-profile.png" alt="">
+                            <div class="content">
+                                <div class="content-text">
+                                    <h3 class="title-comment">HENRY FRANZ</h3>
+                                    <p class="time">Há 8 minutos.</p>
+                                </div>
+                                <p class="details">
+                                    The appearance of "quirks," newly discovered super powers, has been steadily......
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img src="./assets/uploads/henry-profile.png" alt="">
+                            <div class="content">
+                                <div class="content-text">
+                                    <h3 class="title-comment">HENRY FRANZ</h3>
+                                    <p class="time">Há 8 minutos.</p>
+                                </div>
+                                <p class="details">
+                                    The appearance of "quirks," newly discovered super powers, has been steadily......
+                                </p>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img src="./assets/uploads/henry-profile.png" alt="">
+                            <div class="content">
+                                <div class="content-text">
+                                    <h3 class="title-comment">HENRY FRANZ</h3>
+                                    <p class="time">Há 8 minutos.</p>
+                                </div>
+                                <p class="details">
+                                    The appearance of "quirks," newly discovered super powers, has been steadily......
+                                </p>
+                            </div>
+                        </div>
                         <div class="comment">
                             <img src="./assets/uploads/henry-profile.png" alt="">
                             <div class="content">
@@ -298,6 +345,98 @@
 
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
 
+
+    <script>
+
+
+
+        const optionsChartBarQuizzes = {
+            type: 'bar',
+            data: {
+                labels: ['Domingo', 'Segunda Feira', 'Terça Feira', 'Quarta Feira', 'Quinta Feira', 'Sexta Feira', 'Hoje'],
+                datasets: [
+                    {
+                        label: 'Quantidade',
+                        data: [3, 4, 4, 5, 6, 4, 5, 4, 3, 3],
+                        borderColor: '#cb4648',
+                        backgroundColor: '#cb4648'
+                    },
+                ]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#fff'
+                        }
+                    },
+                    datalabels: {
+                        color: '#fff'
+
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            color: '#fff',
+                            beginAtZero: true,
+
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#fff',
+                            beginAtZero: true,
+
+                        }
+                    },
+
+                }
+            }
+        }
+
+
+        const optionsChartPieMapping = {
+            type: 'pie',
+            data: {
+                labels: ['Shounen', 'Aventura', 'Romance'],
+                datasets: [
+                    {
+                        label: 'Quantidade',
+                        data: [5, 4, 3],
+                        borderColor: ['#cb4648', '#a39fbf', '#313646'],
+                        backgroundColor: ['#cb4648', '#a39fbf', '#313646']
+                    },
+                ]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#fff'
+                        },
+                        position: 'right'
+                    }
+                },
+            }
+        }
+
+        const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
+        const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
+
+        function updateChart() {
+            // TODO: error is not defined char
+            chartBarQuizzes.options.plugins.legend.label.color = "#000"
+            chartPieMapping.options.plugins.legend.label.color = "#000"
+
+            chartBarQuizzes.update()
+            chartPieMapping.update()
+        }
+
+
+    </script>
 </body>
 
 </html>
