@@ -9,13 +9,15 @@ async function createTablesInDatabase() {
     port: process.env.DB_PORT,
   });
 
-  const queryToDropUserTable = "DROP TABLE IF EXISTS users;";
+  const queryToDropQuizResultsTable = "DROP TABLE IF EXISTS quiz_result;";
+  const queryToDropAlternativesTable = "DROP TABLE IF EXISTS alternatives;";
+  const queryToDropQuestionsTable = "DROP TABLE IF EXISTS questions;";
+  const queryToDropCommentsTable = "DROP TABLE IF EXISTS comments;";
   const queryToDropQuizzesTable = "DROP TABLE IF EXISTS quizzes;";
   const queryToDropAnimesTable = "DROP TABLE IF EXISTS animes;";
-  const queryToDropAlternativesTable = "DROP TABLE IF EXISTS alternatives;";
-  const queryToDropCommentsTable = "DROP TABLE IF EXISTS comments;";
-  const queryToDropQuestionsTable = "DROP TABLE IF EXISTS questions;";
+  const queryToDropUserTable = "DROP TABLE IF EXISTS users;";
 
+  await client.query(queryToDropQuizResultsTable);
   await client.query(queryToDropAlternativesTable);
   await client.query(queryToDropQuestionsTable);
   await client.query(queryToDropCommentsTable);
@@ -49,8 +51,7 @@ async function createTablesInDatabase() {
   `;
   const queryToCreateAnimesTable = `
     CREATE TABLE animes(
-        anime_id INT PRIMARY KEY AUTO_INCREMENT,
-        api_anime_id INT, 
+        api_anime_id INT PRIMARY KEY, 
         title VARCHAR(45),
         image_url VARCHAR(500),
         description VARCHAR(255),
@@ -69,7 +70,7 @@ async function createTablesInDatabase() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         description VARCHAR(255) NOT NULL,
         CONSTRAINT pk_composite PRIMARY KEY(comment_id, fk_anime_id, fk_user_id),
-        CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
+        CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (api_anime_id),
         CONSTRAINT fk_comment_user FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
     );`;
 
@@ -100,12 +101,28 @@ async function createTablesInDatabase() {
         CONSTRAINT fk_alternative_question FOREIGN KEY (fk_question_id, fk_quiz_id) REFERENCES questions (question_id, fk_quiz_id)
     );`;
 
+  const queryToCreateQuizResult = `
+    CREATE TABLE quiz_result(
+      quiz_result_id INT AUTO_INCREMENT,
+      fk_user_id INT,
+      fk_quiz_id INT,
+      fk_anime_id INT,
+      CONSTRAINT pk_composite PRIMARY KEY(quiz_result_id,fk_user_id, fk_quiz_id, fk_anime_id),
+      CONSTRAINT quiz_result_user FOREIGN KEY (fk_user_id) REFERENCES users (user_id),
+      CONSTRAINT quiz_result_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes (quiz_id),
+      CONSTRAINT quiz_result_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (api_anime_id)
+    );
+
+`;
+
   await client.query(queryToCreateUserTable);
   await client.query(queryToCreateQuizzesTable);
   await client.query(queryToCreateAnimesTable);
   await client.query(queryToCreateCommentsTable);
   await client.query(queryToCreateQuestionsTable);
   await client.query(queryToCreateAlternativesTable);
+  await client.query(queryToCreateQuizResult);
+
   console.log("create table to anime recommendation ✅");
 
   await client.end();

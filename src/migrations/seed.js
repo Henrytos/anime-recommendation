@@ -41,7 +41,6 @@ async function seedInDatabase() {
 
   const animes = [
     {
-      animeId: 1,
       apiAnimeId: 40748,
       title: "Jujutsu Kaisen",
       imageUrl: "https://cdn.myanimelist.net/images/anime/1171/109222l.jpg",
@@ -55,8 +54,8 @@ async function seedInDatabase() {
   for (let position = 0; position < animes.length; position++) {
     let anime = animes[position];
 
-    let queryToCreateAnime = `INSERT INTO animes (anime_id, api_anime_id, title, image_url, description, target_audience, gender)
-        VALUES (${anime.animeId}, ${anime.apiAnimeId}, '${anime.title}', '${anime.imageUrl}', '${anime.description}', '${anime.targetAudience}', '${anime.gender}');
+    let queryToCreateAnime = `INSERT INTO animes ( api_anime_id, title, image_url, description, target_audience, gender)
+        VALUES (${anime.apiAnimeId}, '${anime.title}', '${anime.imageUrl}', '${anime.description}', '${anime.targetAudience}', '${anime.gender}');
 `;
 
     await client.query(queryToCreateAnime);
