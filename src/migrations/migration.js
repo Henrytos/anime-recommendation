@@ -58,13 +58,13 @@ async function createTablesInDatabase() {
         target_audience VARCHAR(45) NOT NULL,
         gender VARCHAR(45) NOT NULL,
         CONSTRAINT chk_target_audience CHECK(target_audience IN ('kodomo', 'Shounen', 'shoujo', 'seinen', 'josei')),
-        CONSTRAINT chk_gender CHECK(gender IN ('Action', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama'))
+        CONSTRAINT chk_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama'))
       );
     `;
 
   const queryToCreateCommentsTable = `
     CREATE TABLE comments(
-        comment_id INT,
+        comment_id INT AUTO_INCREMENT,
         fk_anime_id INT,
         fk_user_id INT, 
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

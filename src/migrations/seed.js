@@ -1,4 +1,4 @@
-const { createConnection } = require("mysql2/promise.js");
+const { createConnection } = require("mysql2/promise");
 
 async function seedInDatabase() {
   const client = await createConnection({
@@ -9,89 +9,273 @@ async function seedInDatabase() {
     port: process.env.DB_PORT,
   });
 
-  const queryToDeleteUsers = "DELETE FROM users;";
-  await client.query(queryToDeleteUsers);
+  await client.query("DELETE FROM quiz_result;");
+  await client.query("DELETE FROM alternatives;");
+  await client.query("DELETE FROM questions;");
+  await client.query("DELETE FROM comments;");
+  await client.query("DELETE FROM animes;");
+  await client.query("DELETE FROM quizzes;");
+  await client.query("DELETE FROM users;");
 
+  // USERS
   const users = [
     {
       username: "henry_dev",
-      email: "henry@gmail.com",
-      password: "123456",
-      avatarUrl: "henry-profile.png",
+      email: "henry@example.com",
+      password: "hashedpass123",
+      avatarUrl: "https://example.com/avatar1.png",
     },
     {
-      username: "nathalia",
-      email: "nathalia@gmail.com",
-      password: "123456",
-      avatarUrl: "nathalia-profile.png",
+      username: "nathalia_art",
+      email: "nathalia@example.com",
+      password: "securepass456",
+      avatarUrl: "https://example.com/avatar2.png",
     },
   ];
-
-  for (let position = 0; position < users.length; position++) {
-    let user = users[position];
-    let queryToCreateUser = `INSERT INTO users (username, email, password_hash, avatar_url)
-    VALUES ('${user.username}', '${user.email}', '${user.password}', '${user.avatarUrl}');`;
-
-    await client.query(queryToCreateUser);
-    console.log(`insert user ${user.username} ✅`);
+  for (const user of users) {
+    await client.query(
+      `INSERT INTO users (username, email, password_hash, avatar_url)
+      VALUES (?, ?, ?, ?)`,
+      [user.username, user.email, user.password, user.avatarUrl]
+    );
   }
 
-  const queryToDeleteAnimes = "DELETE FROM animes;";
-  await client.query(queryToDeleteAnimes);
+  // QUIZZES
+  await client.query(
+    `INSERT INTO quizzes (title, description, thumb_url, is_mapping)
+    VALUES (?, ?, ?, ?)`,
+    [
+      "Qual anime combina com você?",
+      "Responda para saber qual anime é a sua cara.",
+      "https://m.media-amazon.com/images/S/pv-target-images/1a28caac129bed86dbf1fe3d474c2017379e39f5aac7082123ecc39ed6ce16b5.jpg",
+      true,
+    ]
+  );
 
+  // ANIMES
   const animes = [
     {
-      apiAnimeId: 40748,
+      api_anime_id: 101,
       title: "Jujutsu Kaisen",
-      imageUrl: "https://cdn.myanimelist.net/images/anime/1171/109222l.jpg",
-      description:
-        "Idly indulging in baseless paranormal activities with the Occult Club, high schooler Yuuji Itadori spends his days at..",
-      targetAudience: "Shounen",
-      gender: "Action",
+      image_url: "https://example.com/jjk.jpg",
+      description: "Feiticeiros enfrentam maldições com ação intensa.",
+      target_audience: "shounen",
+      gender: "ação",
     },
-  ];
-
-  for (let position = 0; position < animes.length; position++) {
-    let anime = animes[position];
-
-    let queryToCreateAnime = `INSERT INTO animes ( api_anime_id, title, image_url, description, target_audience, gender)
-        VALUES (${anime.apiAnimeId}, '${anime.title}', '${anime.imageUrl}', '${anime.description}', '${anime.targetAudience}', '${anime.gender}');
-`;
-
-    await client.query(queryToCreateAnime);
-    console.log(`insert anime ${anime.title} ✅`);
-  }
-
-  const queryToDeleteQUizzes = "DELETE FROM quizzes;";
-  await client.query(queryToDeleteQUizzes);
-
-  const quizzes = [
     {
-      title: "Qual anime combina com você?",
-      description: "Responda para saber qual anime é a sua cara.",
-      thumbUrl:
-        "https://m.media-amazon.com/images/S/pv-target-images/1a28caac129bed86dbf1fe3d474c2017379e39f5aac7082123ecc39ed6ce16b5.jpg",
-      isMapping: true,
+      api_anime_id: 102,
+      title: "Kimi ni Todoke",
+      image_url: "https://example.com/knt.jpg",
+      description: "Romance delicado entre adolescentes.",
+      target_audience: "shoujo",
+      gender: "romance",
     },
   ];
-
-  for (let position = 0; position < animes.length; position++) {
-    let quiz = quizzes[position];
-
-    let queryToCreateQUiz = `
-    INSERT INTO quizzes (title, description, thumb_url,is_mapping)
-      VALUES 
-      ('${quiz.title}', '${quiz.description}','${quiz.thumbUrl}', ${quiz.isMapping});
-
-`;
-
-    await client.query(queryToCreateQUiz);
-    console.log(`insert quiz ${quiz.title} ✅`);
+  for (const anime of animes) {
+    await client.query(
+      `INSERT INTO animes (api_anime_id, title, image_url, description, target_audience, gender)
+      VALUES (?, ?, ?, ?, ?, ?)`,
+      [
+        anime.api_anime_id,
+        anime.title,
+        anime.image_url,
+        anime.description,
+        anime.target_audience,
+        anime.gender,
+      ]
+    );
   }
 
-  console.log("closing database connection ✅");
+  // COMMENTS
+  const comments = [
+    {
+      comment_id: 1,
+      fk_anime_id: 101,
+      fk_user_id: 1,
+      description: "Anime incrível, cheio de ação!",
+    },
+    {
+      comment_id: 2,
+      fk_anime_id: 102,
+      fk_user_id: 2,
+      description: "Muito fofo e emocionante.",
+    },
+  ];
+  for (const comment of comments) {
+    await client.query(
+      `INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
+      VALUES (?, ?, ?, ?)`,
+      [
+        comment.comment_id,
+        comment.fk_anime_id,
+        comment.fk_user_id,
+        comment.description,
+      ]
+    );
+  }
+
+  // QUESTIONS
+  const questions = [
+    {
+      fk_quiz_id: 1000,
+      title: "Qual estilo de anime você prefere?",
+      number: 1,
+    },
+    {
+      fk_quiz_id: 1000,
+      title: "Prefere ação ou romance?",
+      number: 2,
+    },
+  ];
+  for (const question of questions) {
+    await client.query(
+      `INSERT INTO questions (fk_quiz_id, title, number)
+      VALUES (?, ?, ?)`,
+      [question.fk_quiz_id, question.title, question.number]
+    );
+  }
+
+  // ALTERNATIVES
+  const alternatives = [
+    {
+      alternative_id: 1,
+      title: "ISEKAI",
+      description:
+        "histórias onde um protagonista é transportado para um mundo diferente, seja por teletransporte, reencarnação ou outros meios.",
+      image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh5mrA2nP6KCjb4Hk2_gjZvwE7s8ED7xg6pg&s",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "comédia",
+      fk_question_id: 1,
+      fk_quiz_id: 1000,
+    },
+    {
+      alternative_id: 2,
+      title: "SHOUNEN",
+      description:
+        "caracterizado por histórias de ação, aventura e luta, com personagens muitas vezes motivados por objetivos importantes e que destacam valores como amizade, lealdade e coragem",
+      image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsi1ZgWlAzBWWDc3KPWJNIuHVTIIRZ_wO9hg&s",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "ação",
+      fk_question_id: 1,
+      fk_quiz_id: 1000,
+    },
+    {
+      alternative_id: 3,
+      title: "GORE",
+      description:
+        "O gore é um dos subgêneros mais extremos do horror, proporcionando experiências chocantes e marcadas por um forte impacto visual e ..",
+      image_url:
+        "https://m.media-amazon.com/images/S/pv-target-images/286a0e266e2521f56a810653db79e2dfa4de7e9f80286b321085bcf9e75f43fb._SX1080_FMjpg_.jpg",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "drama",
+      fk_question_id: 1,
+      fk_quiz_id: 1000,
+    },
+    {
+      alternative_id: 4,
+      title: "SPORTS",
+      description:
+        "Anime onde enredo principal gira entorno de um esporte",
+      image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wXgz45gUcu4fiG6L3jkMq0BTaUhoR4y49A&s",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "ação",
+      fk_question_id: 1,
+      fk_quiz_id: 1000,
+    },
+    // Repete para question_id 2
+    {
+      alternative_id: 1,
+      title: "ISEKAI",
+      description:
+        "histórias onde um protagonista é transportado para um mundo diferente, seja por teletransporte, reencarnação ou outros meios.",
+      image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh5mrA2nP6KCjb4Hk2_gjZvwE7s8ED7xg6pg&s",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "comédia",
+      fk_question_id: 2,
+      fk_quiz_id: 1000,
+    },
+    {
+      alternative_id: 2,
+      title: "SHOUNEN",
+      description:
+        "caracterizado por histórias de ação, aventura e luta, com personagens muitas vezes motivados por objetivos importantes e que destacam valores como amizade, lealdade e coragem",
+      image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsi1ZgWlAzBWWDc3KPWJNIuHVTIIRZ_wO9hg&s",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "ação",
+      fk_question_id: 2,
+      fk_quiz_id: 1000,
+    },
+    {
+      alternative_id: 3,
+      title: "GORE",
+      description:
+        "O gore é um dos subgêneros mais extremos do horror, proporcionando experiências chocantes e marcadas por um forte impacto visual e ..",
+      image_url:
+        "https://m.media-amazon.com/images/S/pv-target-images/286a0e266e2521f56a810653db79e2dfa4de7e9f80286b321085bcf9e75f43fb._SX1080_FMjpg_.jpg",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "drama",
+      fk_question_id: 2,
+      fk_quiz_id: 1000,
+    },
+    {
+      alternative_id: 4,
+      title: "SPORTS",
+      description:
+        "Anime onde enredo principal gira entorno de um esporte",
+      image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wXgz45gUcu4fiG6L3jkMq0BTaUhoR4y49A&s",
+      is_correct: true,
+      target_audience: "shounen",
+      gender: "ação",
+      fk_question_id: 2,
+      fk_quiz_id: 1000,
+    },
+  ];
+  for (const alt of alternatives) {
+    await client.query(
+      `INSERT INTO alternatives (alternative_id, title, description, image_url, is_correct, target_audience, gender, fk_question_id, fk_quiz_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        alt.alternative_id,
+        alt.title,
+        alt.description,
+        alt.image_url,
+        alt.is_correct,
+        alt.target_audience,
+        alt.gender,
+        alt.fk_question_id,
+        alt.fk_quiz_id,
+      ]
+    );
+  }
+
+  // QUIZ RESULT
+  const quizResults = [
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101 },
+    { fk_user_id: 2, fk_quiz_id: 1000, fk_anime_id: 102 },
+  ];
+  for (const result of quizResults) {
+    await client.query(
+      `INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
+      VALUES (?, ?, ?)`,
+      [result.fk_user_id, result.fk_quiz_id, result.fk_anime_id]
+    );
+  }
+
+  console.log("seed database ✅");
   await client.end();
-  return;
 }
 
 seedInDatabase();
