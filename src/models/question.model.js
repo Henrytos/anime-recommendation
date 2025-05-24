@@ -1,7 +1,9 @@
-var database = require("../database/config");
+const database = require("../database/config");
 
 function findManyByQuizId(quizId) {
-  var query = `SELECT * FROM questions WHERE fk_quiz_id =${quizId}`;
+  const query = `SELECT * FROM questions WHERE fk_quiz_id =${quizId}`;
+  console.log(query);
+
   return database.execute(query);
 }
 

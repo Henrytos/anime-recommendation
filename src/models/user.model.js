@@ -1,30 +1,38 @@
-var database = require("../database/config");
+const database = require("../database/config");
 
 function auth(email, password) {
-  var query = `
+  const query = `
         SELECT * FROM users WHERE email = '${email}' AND password_hash = '${password}';
     `;
+  console.log(query);
+
   return database.execute(query);
 }
 
 function findByEmail(email) {
-  var query = `
+  const query = `
         SELECT * FROM users WHERE email = '${email}';
     `;
+  console.log(query);
+
   return database.execute(query);
 }
 
 function findByUserId(userId) {
-  var query = `
+  const query = `
         SELECT * FROM users WHERE user_id = '${userId}';
     `;
+  console.log(query);
+
   return database.execute(query);
 }
 
 function create(username, email, password, avatar) {
-  var query = `
+  const query = `
     INSERT INTO users(username, email, password_hash, avatar_url) VALUES ('${username}', '${email}', '${password}', '${avatar}');
     `;
+  console.log(query);
+
   return database.execute(query);
 }
 

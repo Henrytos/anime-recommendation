@@ -7,7 +7,7 @@ buttonSignUp.addEventListener("click", () => {
   const passwordRepeat = input_password_repeat.value;
   const avatarUrl = input_avatar_url.files[0];
 
-  var fields = "";
+  let fields = "";
   if (!username) {
     fields += "nome";
   }

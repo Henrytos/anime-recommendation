@@ -2,7 +2,7 @@ const userModel = require("../models/user.model.js");
 const recommendationsModel = require("../models/recommendations.model.js");
 
 function fetchRecommendationsController(request, response) {
-  const userId = request.headers.userId;
+  const userId = request.headers.userid;
 
   const isBadRequestData = userId == undefined;
   if (isBadRequestData) {

@@ -1,8 +1,8 @@
 const userModel = require("../models/user.model.js");
 
 function authenticateWithPasswordController(request, response) {
-  var email = request.body.email;
-  var password = request.body.password;
+  const email = request.body.email;
+  const password = request.body.password;
 
   if (!email || !password) {
     return response.status(400).send({

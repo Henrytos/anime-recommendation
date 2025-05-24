@@ -6,7 +6,7 @@ function findManyComments(userId) {
         users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id  
         FROM users_comments WHERE user_id = ${userId};
     `;
-    console.log("query", query);
+    console.log(query);
 
     return database.execute(query);
 }

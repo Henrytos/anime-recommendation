@@ -1,6 +1,6 @@
-var mysql = require("mysql2");
+const mysql = require("mysql2");
 
-var mySqlConfig = {
+const mySqlConfig = {
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   user: process.env.DB_USER,
@@ -20,7 +20,7 @@ function execute(query) {
   }
 
   return new Promise(function (resolve, reject) {
-    var connection = mysql.createConnection(mySqlConfig);
+    const connection = mysql.createConnection(mySqlConfig);
     connection.connect();
     console.log(query);
     connection.query(query, function (error, results) {

@@ -1,10 +1,10 @@
 const userModel = require("../models/user.model.js");
 
 function createUserController(request, response) {
-  var username = request.body.username;
-  var email = request.body.email;
-  var password = request.body.password;
-  var avatar = request.file?.filename;
+  const username = request.body.username;
+  const email = request.body.email;
+  const password = request.body.password;
+  const avatar = request.file?.filename;
 
   if (!username || !email || !password || !avatar) {
     return response.status(400).send({

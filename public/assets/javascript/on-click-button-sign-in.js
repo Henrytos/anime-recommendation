@@ -6,7 +6,7 @@ buttonSignIn.addEventListener("click", () => {
   const email = input_email.value;
   const password = input_password.value;
 
-  var fields = "";
+  let fields = "";
 
   if (!email) {
     fields = "email";
