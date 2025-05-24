@@ -128,7 +128,6 @@ VALUES
 (1, 1000, 1),
 (2, 1000, 2);
 
-  
 SELECT * FROM questions;
 
 SELECT * FROM alternatives;
@@ -201,3 +200,27 @@ ALTER VIEW users_comments AS SELECT users.user_id ,users.username, users.avatar_
 
 SELECT * FROM users_comments;
 SELECT  users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id  FROM users_comments WHERE user_id = 1;
+
+
+SELECT quiz_result.fk_user_id AS 'user_id',COUNT(fk_user_id) AS 'quantity', DAY(quiz_result.created_at) AS 'date' FROM quiz_result GROUP BY quiz_result.fk_user_id, DAY(quiz_result.created_at);
+
+CREATE VIEW users_recommendations_last_week AS SELECT quiz_result.fk_user_id AS 'user_id',COUNT(fk_user_id) AS 'quantity', DAY(quiz_result.created_at) AS 'date' FROM quiz_result GROUP BY quiz_result.fk_user_id, DAY(quiz_result.created_at);
+
+SELECT quantity, date FROM users_recommendations_last_week WHERE user_id = 1 LIMIT 7; 
+
+SELECT * FROM users;
+SELECT * FROM quizzes;
+SELECT * FROM animes;
+
+DESC quiz_result;
+
+INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
+VALUES (1, 1000, 102);
+
+SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.api_anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender;
+CREATE VIEW users_mappings AS SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.api_anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender;
+ALTER VIEW users_mappings AS SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.api_anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender; 
+DROP VIEW users_mappings;
+
+SELECT * FROM users_mappings;
+SELECT * FROM users_mappings WHERE user_id = 1;
