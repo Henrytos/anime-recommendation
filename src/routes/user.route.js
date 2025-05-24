@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
 const {
   createUserController,
@@ -7,9 +7,22 @@ const {
 const {
   authenticateWithPasswordController,
 } = require("../controllers/authenticate-with-password.controller.js");
+const {
+  fetchRecommendationsController,
+} = require("../controllers/fetch-recommendations.controller.js");
+const {
+  fetchCommentsController,
+} = require("../controllers/fetch-comments.controller.js");
+const {
+  getUserMetricsController,
+} = require("../controllers/fetch-metrics.controller.js");
+
 const upload = require("../config/configUpload");
 
 router.post("/", upload.single("avatarUrl"), createUserController);
 router.post("/auth", authenticateWithPasswordController);
+router.get("/recommendations", fetchRecommendationsController);
+router.get("/comments", fetchCommentsController);
+router.get("/metrics", getUserMetricsController);
 
 module.exports = router;
