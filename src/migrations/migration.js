@@ -107,6 +107,7 @@ async function createTablesInDatabase() {
       fk_user_id INT,
       fk_quiz_id INT,
       fk_anime_id INT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT pk_composite PRIMARY KEY(quiz_result_id,fk_user_id, fk_quiz_id, fk_anime_id),
       CONSTRAINT quiz_result_user FOREIGN KEY (fk_user_id) REFERENCES users (user_id),
       CONSTRAINT quiz_result_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes (quiz_id),
