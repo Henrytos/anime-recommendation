@@ -207,7 +207,7 @@ window.addEventListener("load", () => {
 function setTheme(theme) {
   let body = document.querySelector("body");
 
-  body.classList.add(theme);
+  body.className = theme;
   SetStorage("theme", theme);
 
   const pallet = colors[theme];

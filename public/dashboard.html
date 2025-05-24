@@ -17,7 +17,7 @@
                 <img src="../assets/images/logo-home.png" alt="logo" width="292" height="64">
             </a>
             <div class="buttons">
-                <button class="button button-foreground icon" id="button_theme" onclick="updateChart()">
+                <button class="button button-foreground icon" id="button_theme">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-sun-moon-icon lucide-sun-moon">
@@ -425,15 +425,30 @@
 
         const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
         const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
+        const buttonTheme = document.getElementById('button_theme')
 
-        function updateChart() {
-            // TODO: error is not defined char
-            chartBarQuizzes.options.plugins.legend.label.color = "#000"
-            chartPieMapping.options.plugins.legend.label.color = "#000"
+        buttonTheme.addEventListener("click", () => {
+            const isDarkMode = document.body.className == 'dark'
+
+            const color = isDarkMode ? '#000' : '#fff'
+            console.log({
+                chartBarQuizzes, chartPieMapping
+            })
+            console.log({
+                color,
+                isDarkMode
+            })
+            chartBarQuizzes.options.scales.x.ticks.color = color
+            chartBarQuizzes.options.scales.y.ticks.color = color
+
+            chartPieMapping.options.plugins.legend.labels.color = color
+            chartPieMapping.options.plugins.legend.labels.color = color
 
             chartBarQuizzes.update()
             chartPieMapping.update()
-        }
+        })
+
+
 
 
     </script>

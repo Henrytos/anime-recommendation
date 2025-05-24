@@ -25,6 +25,30 @@
   --font-bold: 700;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--color-background);
+  z-index: 1000;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+/* Estiliza o track (trilho da barra) */
+::-webkit-scrollbar-track {
+  background: var(--color-background-foreground);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-purple-light);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -318,8 +342,9 @@ a {
   font-size: var(--size-3xl);
   color: var(--color-red);
   font-weight: var(--font-bold);
-  transform: translate(10px, 0px);
+  position: relative;
   margin-bottom: 20px;
+  animation: leftAnimate 0.5s ease-in-out;
 }
 
 .title::before {
@@ -394,6 +419,29 @@ a {
   flex-direction: column;
   gap: 8px;
   border-radius: 5px;
+  animation: upAnimate 0.5s ease-in-out;
+  opacity: 1;
+}
+
+@keyframes upAnimate {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes leftAnimate {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .recommendation h4 {
@@ -405,7 +453,7 @@ a {
 
 .recommendation-image-preview {
   width: 100%;
-  height: 190px;
+  height: 200px;
   object-fit: cover;
   border-radius: 2px;
 }
@@ -426,6 +474,7 @@ a {
   color: var(--color-background-foreground);
   background-color: hsla(0, 0%, 95%, 0.05);
   backdrop-filter: blur(20px);
+  animation: upAnimate 0.5s ease-in-out;
 }
 
 .comment img {
@@ -487,4 +536,12 @@ a {
 
 .light .mapping-3 h4 {
   color: var(--color-background);
+}
+
+@media only screen and (min-width: 2000px) {
+  .recommendations {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
 }
