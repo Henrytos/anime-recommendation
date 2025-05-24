@@ -1,5 +1,5 @@
 CREATE DATABASE anime_recommendation;
-    USE anime_recommendation;
+USE anime_recommendation;
 
 DROP DATABASE anime_recommendation;
 DROP DATABASE anime_recommendation;
@@ -34,7 +34,6 @@ CREATE TABLE quizzes(
 CREATE TABLE animes(
     anime_id INT PRIMARY KEY AUTO_INCREMENT,
     api_anime_id INT,
-    fk_mapping_id INT,
     title VARCHAR(45),
     image_url VARCHAR(500),
     description VARCHAR(255),
@@ -98,10 +97,10 @@ INSERT INTO quizzes (title, description, thumb_url, is_mapping)
 VALUES 
 ('Qual anime combina com você?', 'Responda para saber qual anime é a sua cara.','https://m.media-amazon.com/images/S/pv-target-images/1a28caac129bed86dbf1fe3d474c2017379e39f5aac7082123ecc39ed6ce16b5.jpg', TRUE);
 
-INSERT INTO animes (api_anime_id, fk_mapping_id, title, image_url, description, target_audience, gender)
+INSERT INTO animes (api_anime_id, title, image_url, description, target_audience, gender)
 VALUES 
-(101, 2000, 'Jujutsu Kaisen', 'https://example.com/jjk.jpg', 'Feiticeiros enfrentam maldições com ação intensa.', 'shounen', 'ação'),
-(102, 2001, 'Kimi ni Todoke', 'https://example.com/knt.jpg', 'Romance delicado entre adolescentes.', 'shoujo', 'romance');
+(101, 'Jujutsu Kaisen', 'https://example.com/jjk.jpg', 'Feiticeiros enfrentam maldições com ação intensa.', 'shounen', 'ação'),
+(102, 'Kimi ni Todoke', 'https://example.com/knt.jpg', 'Romance delicado entre adolescentes.', 'shoujo', 'romance');
 
 INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
 VALUES 
@@ -128,6 +127,8 @@ INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
 VALUES 
 (1, 1000, 1),
 (2, 1000, 2);
+
+  
 SELECT * FROM questions;
 
 SELECT * FROM alternatives;
@@ -149,6 +150,8 @@ FROM quizzes AS q
         ON qt.question_id = a.fk_question_id AND qt.fk_quiz_id = a.fk_quiz_id
 ORDER BY question_number;
 
+DROP VIEW quiz_with_questions;
+
 CREATE VIEW quiz_with_questions AS 
 SELECT 
     q.quiz_id AS quiz_id, 
@@ -167,6 +170,34 @@ FROM quizzes AS q
         ON qt.question_id = a.fk_question_id AND qt.fk_quiz_id = a.fk_quiz_id
 ORDER BY question_number;
 
+
 SELECT * FROM quiz_with_questions WHERE quiz_id = 1000;
 
 SELECT * FROM quizzes;
+
+SELECT * FROM users;
+
+SELECT quiz_result.fk_user_id as user_id,title, image_url, api_anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.api_anime_id WHERE quiz_result.fk_user_id = 1;
+
+CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, api_anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.api_anime_id;
+DROP VIEW users_recommendations;
+
+SELECT * FROM users_recommendations WHERE user_id = 1;
+
+
+INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
+VALUES
+(DEFAULT, 40748, 1, 'Esse anime superou minhas expectativas!'),
+(DEFAULT, 40748, 1, 'A animação e trilha sonora são incríveis.'),
+(DEFAULT, 40748, 1, 'Gostei muito do desenvolvimento dos personagens.'),
+(DEFAULT, 40748, 1, 'Recomendo para todos que curtem ação e aventura!');
+
+SELECT * FROM comments;
+SELECT users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;
+
+CREATE VIEW users_comments AS SELECT users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;
+DROP VIEW users_comments;
+ALTER VIEW users_comments AS SELECT users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;
+
+SELECT * FROM users_comments;
+SELECT  users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id  FROM users_comments WHERE user_id = 1;
