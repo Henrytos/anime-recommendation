@@ -28,6 +28,7 @@ function create(username, email, password, avatar) {
   return database.execute(query);
 }
 
+
 module.exports = {
   create,
   findByEmail,
