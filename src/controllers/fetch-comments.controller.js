@@ -2,8 +2,8 @@ const userModel = require("../models/user.model.js");
 const commentsModel = require("../models/comments.model.js");
 
 function fetchCommentsController(request, response) {
-    const userId = request.headers.userId;
-
+    const userId = request.headers.userid;
+    console.log({ userId })
     const isBadRequestData = userId == undefined;
     if (isBadRequestData) {
         return response.status(400).json({
