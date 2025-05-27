@@ -32,7 +32,7 @@ async function createTablesInDatabase() {
         user_id INT PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(45) NOT NULL, 
         email VARCHAR(45) NOT NULL UNIQUE,
-        password_hash VARCHAR(45) NOT NULL,
+        password_hash VARCHAR(512) NOT NULL,
         avatar_url VARCHAR(255) NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

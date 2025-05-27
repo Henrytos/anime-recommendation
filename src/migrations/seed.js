@@ -32,11 +32,12 @@ async function seedInDatabase() {
       avatarUrl: "https://example.com/avatar2.png",
     },
   ];
-  for (const user of users) {
+  for (let position = 0; position < users.length; position++) {
+    let user = users[position]
+
     await client.query(
       `INSERT INTO users (username, email, password_hash, avatar_url)
-      VALUES (?, ?, ?, ?)`,
-      [user.username, user.email, user.password, user.avatarUrl]
+      VALUES ('${user.username}', '${user.email}', SHA2('${user.password}', 512), '${user.avatarUrl}')`
     );
   }
 
