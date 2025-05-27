@@ -101,16 +101,12 @@ async function seedInDatabase() {
       description: "Muito fofo e emocionante.",
     },
   ];
-  for (const comment of comments) {
+  for (let position = 0; position < comments.length; position++) {
+    let comment = comments[position]
+
     await client.query(
       `INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
-      VALUES (?, ?, ?, ?)`,
-      [
-        comment.comment_id,
-        comment.fk_anime_id,
-        comment.fk_user_id,
-        comment.description,
-      ]
+      VALUES (DEFAULT, ${comment.fk_anime_id}, ${comment.fk_user_id}, '${comment.description}')`,
     );
   }
 

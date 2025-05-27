@@ -18,11 +18,12 @@ function execute(query) {
     );
     return Promise.reject("AMBIENTE NÃO CONFIGURADO EM .env");
   }
+  console.log(query)
 
   return new Promise(function (resolve, reject) {
     const connection = mysql.createConnection(mySqlConfig);
     connection.connect();
-    console.log(query);
+    ;
     connection.query(query, function (error, results) {
       connection.end();
       if (error) {

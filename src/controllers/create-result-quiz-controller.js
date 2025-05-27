@@ -48,6 +48,10 @@ function createResultQuizController(request, response) {
     return response.status(200).json({
       message: "create result quiz to user",
     });
+  }).catch(() => {
+    return response.status(500).json({
+      message: "internal server error"
+    })
   });
 }
 

@@ -21,10 +21,10 @@ function createUserController(request, response) {
       userModel
         .create(username, email, password, avatar)
         .then(() => {
-          response.json(200);
+          return response.json(200);
         })
         .catch((error) => {
-          response.status(500).json(error.sqlMessage);
+          return response.status(500).json(error.sqlMessage);
         });
     }
   });
