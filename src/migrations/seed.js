@@ -72,7 +72,9 @@ async function seedInDatabase() {
       gender: "romance",
     },
   ];
-  for (const anime of animes) {
+  for (let position = 0; position < animes.length; position++) {
+    let anime = animes[position]
+
     await client.query(
       `INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender)
       VALUES (?, ?, ?, ?, ?, ?)`,
@@ -124,7 +126,9 @@ async function seedInDatabase() {
       number: 2,
     },
   ];
-  for (const question of questions) {
+  for (let position = 0; position < questions.length; position++) {
+    let question = questions[position]
+
     await client.query(
       `INSERT INTO questions (fk_quiz_id, title, number)
       VALUES (?, ?, ?)`,
@@ -240,7 +244,9 @@ async function seedInDatabase() {
       fk_quiz_id: 1000,
     },
   ];
-  for (const alt of alternatives) {
+  for (let position = 0; position < alternatives.length; position++) {
+    let alt = alternatives[position]
+
     await client.query(
       `INSERT INTO alternatives (alternative_id, title, description, image_url, is_correct, target_audience, gender, fk_question_id, fk_quiz_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -263,7 +269,9 @@ async function seedInDatabase() {
     { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101 },
     { fk_user_id: 2, fk_quiz_id: 1000, fk_anime_id: 102 },
   ];
-  for (const result of quizResults) {
+  for (let position = 0; position < quizResults.length; position++) {
+    let result = quizResults[position]
+
     await client.query(
       `INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
       VALUES (?, ?, ?)`,
