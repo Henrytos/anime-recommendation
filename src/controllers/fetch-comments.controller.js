@@ -1,9 +1,9 @@
 const userModel = require("../models/user.model.js");
 const commentsModel = require("../models/comments.model.js");
 
-function fetchCommentsController(request, response) {
+async function fetchCommentsController(request, response) {
     const userId = request.headers.userid;
-    console.log({ userId })
+
     const isBadRequestData = userId == undefined;
     if (isBadRequestData) {
         return response.status(400).json({
@@ -11,20 +11,19 @@ function fetchCommentsController(request, response) {
         });
     }
 
-    userModel.findByUserId(userId).then((users) => {
-        const isNotExistsUser = users.length == 0;
+    const users = await userModel.findByUserId(userId)
+    const usersNotFound = users.length === 0
 
-        if (isNotExistsUser) {
-            return response.status(401).json({
-                message: "unauthorized user",
-            });
-        }
-    });
-
-    commentsModel.findManyComments(userId).then((comments) => {
-        return response.status(200).json({
-            comments,
+    if (usersNotFound) {
+        return response.status(401).json({
+            message: "unauthorized user",
         });
+    }
+
+    const comments = await commentsModel.findManyComments(userId)
+
+    return response.status(200).json({
+        comments,
     });
 }
 

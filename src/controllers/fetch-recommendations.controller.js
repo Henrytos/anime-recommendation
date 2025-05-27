@@ -1,7 +1,7 @@
 const userModel = require("../models/user.model.js");
 const recommendationsModel = require("../models/recommendations.model.js");
 
-function fetchRecommendationsController(request, response) {
+async function fetchRecommendationsController(request, response) {
   const userId = request.headers.userid;
 
   const isBadRequestData = userId == undefined;
@@ -11,23 +11,20 @@ function fetchRecommendationsController(request, response) {
     });
   }
 
-  userModel.findByUserId(userId).then((users) => {
-    const isNotExistsUser = users.length == 0;
+  const users = await userModel.findByUserId(userId)
+  const usersNotFound = users.length === 0
 
-    if (isNotExistsUser) {
-      return response.status(401).json({
-        message: "unauthorized user",
-      });
-    }
-  });
-
-  recommendationsModel
-    .findManyRecommendations(userId)
-    .then((recommendations) => {
-      return response.status(200).json({
-        recommendations,
-      });
+  if (usersNotFound) {
+    return response.status(401).json({
+      message: "unauthorized user",
     });
+  }
+
+  const recommendations = await recommendationsModel.findManyRecommendations(userId)
+
+  return response.status(200).json({
+    recommendations,
+  });
 }
 
 module.exports = { fetchRecommendationsController };

@@ -1,9 +1,7 @@
 const userModel = require("../models/user.model.js");
 
 function createUserController(request, response) {
-  const username = request.body.username;
-  const email = request.body.email;
-  const password = request.body.password;
+  const { username, email, password } = request.body;
   const avatar = request.file?.filename;
 
   if (!username || !email || !password || !avatar) {

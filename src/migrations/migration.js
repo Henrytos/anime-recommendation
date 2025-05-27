@@ -51,7 +51,7 @@ async function createTablesInDatabase() {
   `;
   const queryToCreateAnimesTable = `
     CREATE TABLE animes(
-        api_anime_id INT PRIMARY KEY, 
+        anime_id INT PRIMARY KEY, 
         title VARCHAR(45),
         image_url VARCHAR(500),
         description VARCHAR(255),
@@ -70,7 +70,7 @@ async function createTablesInDatabase() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         description VARCHAR(255) NOT NULL,
         CONSTRAINT pk_composite PRIMARY KEY(comment_id, fk_anime_id, fk_user_id),
-        CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (api_anime_id),
+        CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
         CONSTRAINT fk_comment_user FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
     );`;
 
@@ -111,7 +111,7 @@ async function createTablesInDatabase() {
       CONSTRAINT pk_composite PRIMARY KEY(quiz_result_id,fk_user_id, fk_quiz_id, fk_anime_id),
       CONSTRAINT quiz_result_user FOREIGN KEY (fk_user_id) REFERENCES users (user_id),
       CONSTRAINT quiz_result_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes (quiz_id),
-      CONSTRAINT quiz_result_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (api_anime_id)
+      CONSTRAINT quiz_result_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id)
     );
 
 `;

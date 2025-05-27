@@ -55,7 +55,7 @@ async function seedInDatabase() {
   // ANIMES
   const animes = [
     {
-      api_anime_id: 101,
+      anime_id: 101,
       title: "Jujutsu Kaisen",
       image_url: "https://example.com/jjk.jpg",
       description: "Feiticeiros enfrentam maldições com ação intensa.",
@@ -63,7 +63,7 @@ async function seedInDatabase() {
       gender: "ação",
     },
     {
-      api_anime_id: 102,
+      anime_id: 102,
       title: "Kimi ni Todoke",
       image_url: "https://example.com/knt.jpg",
       description: "Romance delicado entre adolescentes.",
@@ -73,10 +73,10 @@ async function seedInDatabase() {
   ];
   for (const anime of animes) {
     await client.query(
-      `INSERT INTO animes (api_anime_id, title, image_url, description, target_audience, gender)
+      `INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender)
       VALUES (?, ?, ?, ?, ?, ?)`,
       [
-        anime.api_anime_id,
+        anime.anime_id,
         anime.title,
         anime.image_url,
         anime.description,
@@ -281,13 +281,13 @@ async function seedInDatabase() {
   const queryToDeleteViewRecommendationsLastWeekUsers = `DROP VIEW users_recommendations_last_week`
   await client.query(queryToDeleteViewRecommendationsLastWeekUsers)
 
-  const queryToCreateViewCommentsUses = `CREATE VIEW users_comments AS SELECT users.user_id, users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;`
+  const queryToCreateViewCommentsUses = `CREATE VIEW users_comments AS SELECT users.user_id, users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;`
   await client.query(queryToCreateViewCommentsUses)
 
   const queryToCreateViewRecommendationsLastWeekUsers = `CREATE VIEW users_recommendations_last_week AS SELECT quiz_result.fk_user_id AS 'user_id',COUNT(fk_user_id) AS 'quantity', DAY(quiz_result.created_at) AS 'date' FROM quiz_result GROUP BY quiz_result.fk_user_id, DAY(quiz_result.created_at);`
   await client.query(queryToCreateViewRecommendationsLastWeekUsers)
 
-  const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, api_anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.api_anime_id;`
+  const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id;`
   await client.query(queryToCreateViewRecommendationsUsers)
 
   console.log("create views ✅")

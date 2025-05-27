@@ -4,7 +4,6 @@ function getQuizWithQuestionsController(request, response) {
   const quizId = request.params.quizId;
 
   view.getQuizWithQuestionsAlternative(quizId).then((result) => {
-    console.log(result);
     return response.status(200).json();
   });
 }

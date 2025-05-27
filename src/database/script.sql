@@ -33,7 +33,7 @@ CREATE TABLE quizzes(
 
 CREATE TABLE animes(
     anime_id INT PRIMARY KEY AUTO_INCREMENT,
-    api_anime_id INT,
+    anime_id INT,
     title VARCHAR(45),
     image_url VARCHAR(500),
     description VARCHAR(255),
@@ -97,7 +97,7 @@ INSERT INTO quizzes (title, description, thumb_url, is_mapping)
 VALUES 
 ('Qual anime combina com você?', 'Responda para saber qual anime é a sua cara.','https://m.media-amazon.com/images/S/pv-target-images/1a28caac129bed86dbf1fe3d474c2017379e39f5aac7082123ecc39ed6ce16b5.jpg', TRUE);
 
-INSERT INTO animes (api_anime_id, title, image_url, description, target_audience, gender)
+INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender)
 VALUES 
 (101, 'Jujutsu Kaisen', 'https://example.com/jjk.jpg', 'Feiticeiros enfrentam maldições com ação intensa.', 'shounen', 'ação'),
 (102, 'Kimi ni Todoke', 'https://example.com/knt.jpg', 'Romance delicado entre adolescentes.', 'shoujo', 'romance');
@@ -176,9 +176,9 @@ SELECT * FROM quizzes;
 
 SELECT * FROM users;
 
-SELECT quiz_result.fk_user_id as user_id,title, image_url, api_anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.api_anime_id WHERE quiz_result.fk_user_id = 1;
+SELECT quiz_result.fk_user_id as user_id,title, image_url, anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id WHERE quiz_result.fk_user_id = 1;
 
-CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, api_anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.api_anime_id;
+CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id;
 DROP VIEW users_recommendations;
 
 SELECT * FROM users_recommendations WHERE user_id = 1;
@@ -192,11 +192,11 @@ VALUES
 (DEFAULT, 40748, 1, 'Recomendo para todos que curtem ação e aventura!');
 
 SELECT * FROM comments;
-SELECT users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;
+SELECT users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;
 
-CREATE VIEW users_comments AS SELECT users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;
+CREATE VIEW users_comments AS SELECT users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;
 DROP VIEW users_comments;
-ALTER VIEW users_comments AS SELECT users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.api_anime_id = comments.fk_anime_id;
+ALTER VIEW users_comments AS SELECT users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;
 
 SELECT * FROM users_comments;
 SELECT  users.user_id ,users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id  FROM users_comments WHERE user_id = 1;
@@ -217,9 +217,9 @@ DESC quiz_result;
 INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
 VALUES (1, 1000, 102);
 
-SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.api_anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender;
-CREATE VIEW users_mappings AS SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.api_anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender;
-ALTER VIEW users_mappings AS SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.api_anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender; 
+SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender;
+CREATE VIEW users_mappings AS SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender;
+ALTER VIEW users_mappings AS SELECT quiz_result.fk_user_id AS 'user_id', COUNT(quiz_result.fk_user_id) AS total, animes.gender FROM animes JOIN quiz_result ON animes.anime_id = quiz_result.fk_anime_id GROUP BY quiz_result.fk_user_id, animes.gender; 
 DROP VIEW users_mappings;
 
 SELECT * FROM users_mappings;
