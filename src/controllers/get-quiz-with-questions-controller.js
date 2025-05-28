@@ -8,19 +8,21 @@ async function getQuizWithQuestionsController(request, response) {
 
   const questionsWithAlternatives = []
 
-  let quantityQuestions = []
+  let quizzesIds = []
+  let quizzesTitles = []
 
   for (let row = 0; row < quizWithQuestionsAlternative.length; row++) {
     let result = quizWithQuestionsAlternative[row]
 
-    if (!quantityQuestions.includes(result.question_id)) {
-      quantityQuestions.push(result.question_id)
+    if (!quizzesIds.includes(result.question_id)) {
+      quizzesIds.push(result.question_id)
+      quizzesTitles.push(result.question_title)
     }
   }
 
-
-  for (let row = 0; row < quantityQuestions.length; row++) {
-    let questionId = quantityQuestions[row]
+  for (let row = 0; row < quizzesIds.length; row++) {
+    let questionId = quizzesIds[row]
+    let questionTitle = quizzesTitles[row]
     let alternatives = []
 
     for (let rowAlternative = 0; rowAlternative < quizWithQuestionsAlternative.length; rowAlternative++) {
@@ -45,8 +47,8 @@ async function getQuizWithQuestionsController(request, response) {
     }
 
     questionsWithAlternatives.push({
-      // id: result.question_id,
-      // title: result.quiz_title,
+      id: questionId,
+      title: questionTitle,
       alternatives
     })
 
