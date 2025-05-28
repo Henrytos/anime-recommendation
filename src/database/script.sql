@@ -226,7 +226,8 @@ SELECT * FROM users_mappings;
 SELECT * FROM users_mappings WHERE user_id = 1;
 
 
-SELECT 
+CREATE VIEW users_metrics_quizzes_week AS SELECT 
+	fk_user_id AS user_id,
 	COUNT(*) AS 'quantity', 
   CASE
   	WHEN DAY(created_at) = DAY(NOW()) THEN "hoje"
@@ -239,12 +240,12 @@ SELECT
     WHEN DAYNAME(created_at) = "Sunday" THEN "domingo"
   END AS date
   FROM quiz_result 
-  WHERE fk_user_id = 1 AND TIMESTAMPDIFF(DAY,created_at, NOW()) < 7 
-  GROUP BY DAY(created_at), MONTH(created_at), date
+  WHERE TIMESTAMPDIFF(DAY,created_at, NOW()) < 7 
+  GROUP BY DAY(created_at), MONTH(created_at), date, fk_user_id 
   ORDER BY MONTH(created_at) DESC, DAY(created_at) DESC
   LIMIT 7;
 
-SELECT 
+CREATE VIEW users_metrics_mappings AS SELECT 
 	quiz_result.fk_user_id AS 'user_id',
   COUNT(quiz_result.fk_anime_id) AS 'number' ,
   animes.target_audience, animes.gender, 
@@ -268,5 +269,5 @@ SELECT
    	WHERE quiz_result.fk_user_id = 1) AS total  
   FROM animes JOIN quiz_result 
   ON animes.anime_id = quiz_result.fk_anime_id 
-  WHERE TIMESTAMPDIFF(DAY,quiz_result.created_at, NOW()) < 7
+  WHERE TIMESTAMPDIFF(DAY,quiz_result.created_at, NOW()) < 7 AND quiz_result.fk_user_id = 1
   GROUP BY animes.target_audience, animes.gender, quiz_result.fk_user_id;
