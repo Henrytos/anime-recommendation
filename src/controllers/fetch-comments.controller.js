@@ -1,4 +1,4 @@
-const userModel = require("../models/user.model.js");
+const userModel = require("../models/users.model.js");
 const commentsModel = require("../models/comments.model.js");
 
 async function fetchCommentsController(request, response) {

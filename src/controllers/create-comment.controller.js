@@ -1,4 +1,4 @@
-const userModel = require("../models/user.model.js")
+const userModel = require("../models/users.model.js")
 const commentModel = require("../models/comments.model.js")
 
 function createCommentController(request, response) {

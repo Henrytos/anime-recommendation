@@ -1,4 +1,4 @@
-const userModel = require("../models/user.model.js");
+const userModel = require("../models/users.model.js");
 
 async function authenticateWithPasswordController(request, response) {
   const email = request.body.email;

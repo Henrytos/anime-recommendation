@@ -15,7 +15,7 @@ const {
 } = require("../controllers/fetch-comments.controller.js");
 const {
   getUserMetricsController,
-} = require("../controllers/fetch-metrics.controller.js");
+} = require("../controllers/get-user-metrics.controller.js");
 
 const upload = require("../config/configUpload");
 

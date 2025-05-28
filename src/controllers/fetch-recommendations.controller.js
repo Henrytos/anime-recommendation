@@ -1,4 +1,4 @@
-const userModel = require("../models/user.model.js");
+const userModel = require("../models/users.model.js");
 const recommendationsModel = require("../models/recommendations.model.js");
 
 async function fetchRecommendationsController(request, response) {

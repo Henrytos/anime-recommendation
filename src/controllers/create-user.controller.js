@@ -1,4 +1,4 @@
-const userModel = require("../models/user.model.js");
+const userModel = require("../models/users.model.js");
 
 function createUserController(request, response) {
   const { username, email, password } = request.body;
