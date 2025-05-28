@@ -224,3 +224,49 @@ DROP VIEW users_mappings;
 
 SELECT * FROM users_mappings;
 SELECT * FROM users_mappings WHERE user_id = 1;
+
+
+SELECT 
+	COUNT(*) AS 'quantity', 
+  CASE
+  	WHEN DAY(created_at) = DAY(NOW()) THEN "hoje"
+  	WHEN DAYNAME(created_at) = "Monday" THEN "segunda-feira"
+    WHEN DAYNAME(created_at) = "Tuesday" THEN "quinta-feira"
+    WHEN DAYNAME(created_at) = "Wednesday" THEN "quinta-feira"
+    WHEN DAYNAME(created_at) = "Thursday" THEN "quinta-feira"
+    WHEN DAYNAME(created_at) = "Friday" THEN "sexta-feira"
+    WHEN DAYNAME(created_at) = "Saturday" THEN "sábado"
+    WHEN DAYNAME(created_at) = "Sunday" THEN "domingo"
+  END AS date
+  FROM quiz_result 
+  WHERE fk_user_id = 1 AND TIMESTAMPDIFF(DAY,created_at, NOW()) < 7 
+  GROUP BY DAY(created_at), MONTH(created_at), date
+  ORDER BY MONTH(created_at) DESC, DAY(created_at) DESC
+  LIMIT 7;
+
+SELECT 
+	quiz_result.fk_user_id AS 'user_id',
+  COUNT(quiz_result.fk_anime_id) AS 'number' ,
+  animes.target_audience, animes.gender, 
+  (SELECT 
+   	COUNT(animes.anime_id) 
+   	FROM animes JOIN quiz_result 
+   	ON animes.anime_id = quiz_result.fk_anime_id 
+   	WHERE quiz_result.fk_user_id = 1) AS total  
+  FROM animes JOIN quiz_result 
+  ON animes.anime_id = quiz_result.fk_anime_id 
+  GROUP BY animes.target_audience, animes.gender, quiz_result.fk_user_id;
+  
+SELECT 
+	quiz_result.fk_user_id AS 'user_id',
+  COUNT(quiz_result.fk_anime_id) AS 'number' ,
+  animes.target_audience, animes.gender, 
+  (SELECT 
+   	COUNT(animes.anime_id) 
+   	FROM animes JOIN quiz_result 
+   	ON animes.anime_id = quiz_result.fk_anime_id 
+   	WHERE quiz_result.fk_user_id = 1) AS total  
+  FROM animes JOIN quiz_result 
+  ON animes.anime_id = quiz_result.fk_anime_id 
+  WHERE TIMESTAMPDIFF(DAY,quiz_result.created_at, NOW()) < 7
+  GROUP BY animes.target_audience, animes.gender, quiz_result.fk_user_id;
