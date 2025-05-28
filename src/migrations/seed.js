@@ -281,13 +281,13 @@ async function seedInDatabase() {
 
   console.log("seed database ✅");
 
-  const queryToDeleteViewCommentsUsers = `DROP VIEW users_comments`
+  const queryToDeleteViewCommentsUsers = `DROP VIEW IF EXISTS users_comments`
   await client.query(queryToDeleteViewCommentsUsers)
 
-  const queryToDeleteViewRecommendationsUsers = `DROP VIEW users_recommendations`
+  const queryToDeleteViewRecommendationsUsers = `DROP VIEW IF EXISTS users_recommendations`
   await client.query(queryToDeleteViewRecommendationsUsers)
 
-  const queryToDeleteViewRecommendationsLastWeekUsers = `DROP VIEW users_recommendations_last_week`
+  const queryToDeleteViewRecommendationsLastWeekUsers = `DROP VIEW IF EXISTS users_recommendations_last_week`
   await client.query(queryToDeleteViewRecommendationsLastWeekUsers)
 
   const queryToCreateViewCommentsUses = `CREATE VIEW users_comments AS SELECT users.user_id, users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;`
