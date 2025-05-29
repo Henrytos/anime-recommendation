@@ -14,7 +14,7 @@
     <section class="start container">
         <nav class="nav-bar">
             <a href="./index.html">
-                <img src="../assets/images/logo-home.png" alt="logo" width="292" height="64">
+                <img src="../assets/images/logo-home.png" id="logo" alt="logo" width="292" height="64">
             </a>
             <div class="buttons">
                 <button class="button button-foreground icon" id="button_theme">
@@ -335,6 +335,151 @@
 
     </div>
 
+    <script>
+
+
+        window.addEventListener("DOMContentLoaded", async () => {
+
+            const userId = sessionStorage.getItem("user_id")
+            console.log({ userId })
+
+            const headers = new Headers()
+            headers.append("userId", userId)
+            console.log(headers)
+
+            const response = await fetch("http://localhost:3333/users/metrics", {
+                headers,
+            })
+
+            const data = await response.json()
+            console.log(data)
+            const quizzes = data.quizzes
+
+            const quizzesDates = []
+            const quizzesQuantities = []
+
+            for (let count = 0; count < quizzes.length; count++) {
+                let quiz = quizzes[count]
+
+                quizzesDates.push(quiz.date)
+                quizzesQuantities.push(quiz.quantity)
+            }
+
+            const mappings = data.mappings
+            const mappingsTarget = []
+            const mappingsQuantities = []
+
+            for (let count = 0; count < mappings.length; count++) {
+                let mapping = mappings[count]
+
+                mappingsTarget.push(mapping.target_audience)
+                mappingsQuantities.push(mapping.number)
+            }
+
+            const optionsChartBarQuizzes = {
+                type: 'bar',
+                data: {
+                    labels: quizzesDates,
+                    datasets: [
+                        {
+                            label: 'Quantidade',
+                            data: quizzesQuantities,
+                            borderColor: '#cb4648',
+                            backgroundColor: '#cb4648'
+                        },
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#fff'
+                            }
+                        },
+                        datalabels: {
+                            color: '#fff'
+
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#fff',
+                                beginAtZero: true,
+
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#fff',
+                                beginAtZero: true,
+
+                            }
+                        },
+
+                    }
+                }
+            }
+
+
+            const optionsChartPieMapping = {
+                type: 'pie',
+                data: {
+                    labels: mappingsTarget,
+                    datasets: [
+                        {
+                            label: 'Quantidade',
+                            data: mappingsQuantities,
+                            borderColor: ['#cb4648', '#a39fbf', '#313646'],
+                            backgroundColor: ['#cb4648', '#a39fbf', '#313646']
+                        },
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#fff'
+                            },
+                            position: 'right'
+                        }
+                    },
+                }
+            }
+
+            const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
+            const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
+            const buttonTheme = document.getElementById('button_theme')
+
+            buttonTheme.addEventListener("click", () => {
+                const isDarkMode = document.body.className == 'dark'
+
+                const color = isDarkMode ? '#000' : '#fff'
+                console.log({
+                    chartBarQuizzes, chartPieMapping
+                })
+                console.log({
+                    color,
+                    isDarkMode
+                })
+                chartBarQuizzes.options.scales.x.ticks.color = color
+                chartBarQuizzes.options.scales.y.ticks.color = color
+
+                chartPieMapping.options.plugins.legend.labels.color = color
+                chartPieMapping.options.plugins.legend.labels.color = color
+
+                chartBarQuizzes.update()
+                chartPieMapping.update()
+            })
+
+
+
+        })
+
+    </script>
+
     <script src="./assets/javascript/redirects.js" type="module" defer></script>
     <script src="./assets/javascript/manege-storage-session.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-theme.js" type="module" defer></script>
@@ -346,112 +491,7 @@
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
 
 
-    <script>
 
-
-
-        const optionsChartBarQuizzes = {
-            type: 'bar',
-            data: {
-                labels: ['Domingo', 'Segunda Feira', 'Terça Feira', 'Quarta Feira', 'Quinta Feira', 'Sexta Feira', 'Hoje'],
-                datasets: [
-                    {
-                        label: 'Quantidade',
-                        data: [3, 4, 4, 5, 6, 4, 5, 4, 3, 3],
-                        borderColor: '#cb4648',
-                        backgroundColor: '#cb4648'
-                    },
-                ]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#fff'
-                        }
-                    },
-                    datalabels: {
-                        color: '#fff'
-
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            color: '#fff',
-                            beginAtZero: true,
-
-                        }
-                    },
-                    y: {
-                        ticks: {
-                            color: '#fff',
-                            beginAtZero: true,
-
-                        }
-                    },
-
-                }
-            }
-        }
-
-
-        const optionsChartPieMapping = {
-            type: 'pie',
-            data: {
-                labels: ['Shounen', 'Aventura', 'Romance'],
-                datasets: [
-                    {
-                        label: 'Quantidade',
-                        data: [5, 4, 3],
-                        borderColor: ['#cb4648', '#a39fbf', '#313646'],
-                        backgroundColor: ['#cb4648', '#a39fbf', '#313646']
-                    },
-                ]
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            color: '#fff'
-                        },
-                        position: 'right'
-                    }
-                },
-            }
-        }
-
-        const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
-        const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
-        const buttonTheme = document.getElementById('button_theme')
-
-        buttonTheme.addEventListener("click", () => {
-            const isDarkMode = document.body.className == 'dark'
-
-            const color = isDarkMode ? '#000' : '#fff'
-            console.log({
-                chartBarQuizzes, chartPieMapping
-            })
-            console.log({
-                color,
-                isDarkMode
-            })
-            chartBarQuizzes.options.scales.x.ticks.color = color
-            chartBarQuizzes.options.scales.y.ticks.color = color
-
-            chartPieMapping.options.plugins.legend.labels.color = color
-            chartPieMapping.options.plugins.legend.labels.color = color
-
-            chartBarQuizzes.update()
-            chartPieMapping.update()
-        })
-
-
-
-
-    </script>
 </body>
 
 </html>
