@@ -1,7 +1,17 @@
-const view = require("../models/view.model");
+const quizModel = require("../models/quiz.model.js")
+const view = require("../models/view.model.js");
 
 async function getQuizWithQuestionsController(request, response) {
   const quizId = request.params.quizId;
+
+  const quiz = await quizModel.findById(quizId)
+  const quizNotFound = quiz.length == 0
+
+  if (quizNotFound) {
+    return response.status(400).json({
+      message: "invalid quiz id",
+    });
+  }
 
   const quizWithQuestionsAlternative = await view.getQuizWithQuestionsAlternative(quizId)
 
@@ -53,8 +63,12 @@ async function getQuizWithQuestionsController(request, response) {
     })
 
   }
+  const quizTitle = quiz[0].title
 
   return response.status(200).json({
+    id: quizId,
+    title: quizTitle,
+    title: 'Qual anime combina com você?',
     questions: questionsWithAlternatives,
   });
 }
