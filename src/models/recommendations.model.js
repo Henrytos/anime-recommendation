@@ -28,18 +28,18 @@ function findByUserMetricsQuizzes(userId) {
 function findByUserMetricsMappings(userId) {
   const query = `
     SELECT
-      COUNT(quiz_result.fk_anime_id) AS 'number' ,
+      COUNT(quiz_result.fk_anime_id) AS 'number',
       animes.target_audience, animes.gender,
       (
         SELECT
           COUNT(animes.anime_id)
         FROM animes JOIN quiz_result
         ON animes.anime_id = quiz_result.fk_anime_id
-        WHERE quiz_result.fk_user_id = 1
+        WHERE quiz_result.fk_user_id = ${userId}
       ) AS total
     FROM animes JOIN quiz_result
     ON animes.anime_id = quiz_result.fk_anime_id
-    WHERE TIMESTAMPDIFF(DAY,quiz_result.created_at, NOW()) < 7 AND quiz_result.fk_user_id = 1
+    WHERE TIMESTAMPDIFF(DAY,quiz_result.created_at, NOW()) < 7 AND quiz_result.fk_user_id = ${userId}
     GROUP BY animes.target_audience, animes.gender, quiz_result.fk_user_id;`;
 
   return database.execute(query);

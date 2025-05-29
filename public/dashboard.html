@@ -87,7 +87,7 @@
                         Histórico de Recomendações
                     </h2>
 
-                    <div class="recommendations">
+                    <div class="recommendations" id="div_recommendations">
                         <div class="recommendation mapping-1">
                             <a href="./anime.html" class="recommendation">
                                 <img src="https://m.media-amazon.com/images/I/71bELfIWTDL._AC_UF1000,1000_QL80_.jpg"
@@ -193,7 +193,7 @@
                 <div class="history-comments">
                     <h2 class="title">Histórico de comentários</h2>
 
-                    <div class="comments">
+                    <div class="comments" id="div_comments">
                         <div class="comment">
                             <img src="./assets/uploads/henry-profile.png" alt="">
                             <div class="content">
@@ -347,13 +347,13 @@
             headers.append("userId", userId)
             console.log(headers)
 
-            const response = await fetch("http://localhost:3333/users/metrics", {
+            const responseMetrics = await fetch("http://localhost:3333/users/metrics", {
                 headers,
             })
 
-            const data = await response.json()
-            console.log(data)
-            const quizzes = data.quizzes
+            const dataMetrics = await responseMetrics.json()
+            console.log(dataMetrics)
+            const quizzes = dataMetrics.quizzes
 
             const quizzesDates = []
             const quizzesQuantities = []
@@ -365,7 +365,7 @@
                 quizzesQuantities.push(quiz.quantity)
             }
 
-            const mappings = data.mappings
+            const mappings = dataMetrics.mappings
             const mappingsTarget = []
             const mappingsQuantities = []
 
@@ -474,6 +474,61 @@
                 chartPieMapping.update()
             })
 
+
+            const responseRecommendations = await fetch("http://localhost:3333/users/recommendations", {
+                headers,
+            })
+            const dataRecommendations = await responseRecommendations.json()
+            const recommendations = dataRecommendations.recommendations
+            let contentRecommendations = ''
+
+            for (let count = 0; count < recommendations.length; count++) {
+                let recommendation = recommendations[count]
+
+                contentRecommendations += `
+                  <div class="recommendation mapping-1">
+                        <a href="./anime.html?anime_id=${recommendation.anime_id}" class="recommendation">
+                            <img src="${recommendation.image_url}"
+                                alt="image preview anime" class="recommendation-image-preview">
+                            <h4 class="recommendation-title">
+                                ${recommendation.title}
+                            </h4>
+                        </a>
+                    </div>
+                `
+            }
+            div_recommendations.innerHTML = contentRecommendations
+
+
+
+            const responseComments = await fetch("http://localhost:3333/users/comments", {
+                headers,
+            })
+            const dataComments = await responseComments.json()
+            const comments = dataComments.comments
+            console.log(comments)
+            let contentComments = ''
+
+            for (let count = 0; count < comments.length; count++) {
+                let comment = comments[count]
+
+                contentComments += `
+                    <div class="comment">
+                        <img src="./assets/uploads/henry-profile.png" alt="">
+                        <div class="content">
+                            <div class="content-text">
+                            <h3 class="title-comment">${comment.username}</h3>
+                            <p class="time">Há 8 minutos.</p>
+                        </div>
+                        <p class="details">
+                        ${comment.description}
+                        </p>
+                        </div>
+                    </div>
+                `
+            }
+
+            div_comments.innerHTML = contentComments
 
 
         })

@@ -58,7 +58,7 @@ async function seedInDatabase() {
     {
       anime_id: 101,
       title: "Jujutsu Kaisen",
-      image_url: "https://example.com/jjk.jpg",
+      image_url: "https://upload.wikimedia.org/wikipedia/pt/thumb/4/4b/Jujutsu_Kaisen_Cover.png/250px-Jujutsu_Kaisen_Cover.png",
       description: "Feiticeiros enfrentam maldições com ação intensa.",
       target_audience: "shounen",
       gender: "ação",
@@ -66,7 +66,7 @@ async function seedInDatabase() {
     {
       anime_id: 102,
       title: "Kimi ni Todoke",
-      image_url: "https://example.com/knt.jpg",
+      image_url: "https://imusic.b-cdn.net/images/item/original/550/9781421527550.jpg?karuho-shiina-2009-kimi-ni-todoke-from-me-to-you-vol-1-kimi-ni-todoke-from-me-to-you-paperback-book&class=scaled&v=1398257494",
       description: "Romance delicado entre adolescentes.",
       target_audience: "shoujo",
       gender: "romance",
@@ -264,18 +264,36 @@ async function seedInDatabase() {
     );
   }
 
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minutes = date.getMinutes()
+  const seconds = date.getSeconds()
   // QUIZ RESULT
+
+
   const quizResults = [
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101 },
-    { fk_user_id: 2, fk_quiz_id: 1000, fk_anime_id: 102 },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day} ${hour}-${minutes}-${seconds}` },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 102, created_at: `${year}-${month}-${day - 1} ${hour}-${minutes}-${seconds}` },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 2} ${hour}-${minutes}-${seconds}` },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 3} ${hour}-${minutes}-${seconds}` },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 102, created_at: `${year}-${month}-${day - 4} ${hour}-${minutes}-${seconds}` },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 5} ${hour}-${minutes}-${seconds}` },
+    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 6} ${hour}-${minutes}-${seconds}` },
   ];
-  for (let position = 0; position < quizResults.length; position++) {
-    let result = quizResults[position]
+  for (let position = 0; position < 10; position++) {
+
+    let min = 0, max = quizResults.length
+    let inteval = max - min
+    let randomPosition = Math.floor(Math.random() * inteval)
+    let result = quizResults[randomPosition]
 
     await client.query(
-      `INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id)
-      VALUES (?, ?, ?)`,
-      [result.fk_user_id, result.fk_quiz_id, result.fk_anime_id]
+      `INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id, created_at)
+      VALUES (?, ?, ?, ?)`,
+      [result.fk_user_id, result.fk_quiz_id, result.fk_anime_id, result.created_at]
     );
   }
 
@@ -290,6 +308,9 @@ async function seedInDatabase() {
   const queryToDeleteViewRecommendationsLastWeekUsers = `DROP VIEW IF EXISTS users_recommendations_last_week`
   await client.query(queryToDeleteViewRecommendationsLastWeekUsers)
 
+  const queryToDeleteViewUserMetricsQuizzesWeek = `DROP VIEW IF EXISTS users_metrics_quizzes_week`
+  await client.query(queryToDeleteViewUserMetricsQuizzesWeek)
+
   const queryToCreateViewCommentsUses = `CREATE VIEW users_comments AS SELECT users.user_id, users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;`
   await client.query(queryToCreateViewCommentsUses)
 
@@ -298,6 +319,27 @@ async function seedInDatabase() {
 
   const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id;`
   await client.query(queryToCreateViewRecommendationsUsers)
+
+  const querytoCreateViewuUserMetricsQuizzesWeek = `
+    CREATE VIEW users_metrics_quizzes_week AS SELECT
+    fk_user_id AS user_id,
+    COUNT(*) AS 'quantity',
+    CASE
+      WHEN DAY(created_at) = DAY(NOW()) THEN "hoje"
+      WHEN DAYNAME(created_at) = "Monday" THEN "segunda-feira"
+      WHEN DAYNAME(created_at) = "Tuesday" THEN "terça-feira"
+      WHEN DAYNAME(created_at) = "Wednesday" THEN "quarta-feira"
+      WHEN DAYNAME(created_at) = "Thursday" THEN "quinta-feira"
+      WHEN DAYNAME(created_at) = "Friday" THEN "sexta-feira"
+      WHEN DAYNAME(created_at) = "Saturday" THEN "sábado"
+      WHEN DAYNAME(created_at) = "Sunday" THEN "domingo"
+    END AS date
+    FROM quiz_result
+    WHERE TIMESTAMPDIFF(DAY,created_at, NOW()) < 7
+    GROUP BY DAY(created_at), MONTH(created_at), date, fk_user_id
+    ORDER BY MONTH(created_at) ASC, DAY(created_at) ASC;
+  `
+  await client.query(querytoCreateViewuUserMetricsQuizzesWeek)
 
   console.log("create views ✅")
 

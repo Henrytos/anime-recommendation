@@ -504,6 +504,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex-grow: 1;
 }
 
 .details {
