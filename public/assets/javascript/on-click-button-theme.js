@@ -174,6 +174,17 @@ const images = {
       },
     },
   ],
+  "/dashboard.html": [
+    {
+      selector: "#logo",
+      dark: {
+        file: "logo-home.png",
+      },
+      light: {
+        file: "logo-home-light.png",
+      },
+    },
+  ],
 };
 
 const buttonTheme = document.getElementById("button_theme");
