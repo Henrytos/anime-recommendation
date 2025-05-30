@@ -104,12 +104,16 @@ async function seedInDatabase() {
       description: "Muito fofo e emocionante.",
     },
   ];
-  for (let position = 0; position < comments.length; position++) {
-    let comment = comments[position]
+  for (let position = 0; position < 30; position++) {
+
+    let min = 0, max = comments.length
+    let interval = max - min
+    let randomPosition = Math.floor(Math.random() * interval)
+    let result = comments[randomPosition]
 
     await client.query(
       `INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
-      VALUES (DEFAULT, ${comment.fk_anime_id}, ${comment.fk_user_id}, '${comment.description}')`,
+      VALUES (DEFAULT, ${result.fk_anime_id}, ${result.fk_user_id}, '${result.description}')`,
     );
   }
 
@@ -283,11 +287,11 @@ async function seedInDatabase() {
     { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 5} ${hour}-${minutes}-${seconds}` },
     { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 6} ${hour}-${minutes}-${seconds}` },
   ];
-  for (let position = 0; position < 10; position++) {
+  for (let position = 0; position < 40; position++) {
 
     let min = 0, max = quizResults.length
-    let inteval = max - min
-    let randomPosition = Math.floor(Math.random() * inteval)
+    let interval = max - min
+    let randomPosition = Math.floor(Math.random() * interval)
     let result = quizResults[randomPosition]
 
     await client.query(

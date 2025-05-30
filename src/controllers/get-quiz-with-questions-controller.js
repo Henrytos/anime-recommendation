@@ -68,7 +68,6 @@ async function getQuizWithQuestionsController(request, response) {
   return response.status(200).json({
     id: quizId,
     title: quizTitle,
-    title: 'Qual anime combina com você?',
     questions: questionsWithAlternatives,
   });
 }
