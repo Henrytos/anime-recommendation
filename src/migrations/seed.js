@@ -41,6 +41,8 @@ async function seedInDatabase() {
     );
   }
 
+
+
   // QUIZZES
   await client.query(
     `INSERT INTO quizzes (title, description, thumb_url, is_mapping)
@@ -54,26 +56,61 @@ async function seedInDatabase() {
   );
 
   // ANIMES
-  const animes = [
-    {
-      anime_id: 101,
-      title: "Jujutsu Kaisen",
-      image_url: "https://upload.wikimedia.org/wikipedia/pt/thumb/4/4b/Jujutsu_Kaisen_Cover.png/250px-Jujutsu_Kaisen_Cover.png",
-      description: "Feiticeiros enfrentam maldições com ação intensa.",
-      target_audience: "shounen",
-      gender: "ação",
-    },
-    {
-      anime_id: 102,
-      title: "Kimi ni Todoke",
-      image_url: "https://imusic.b-cdn.net/images/item/original/550/9781421527550.jpg?karuho-shiina-2009-kimi-ni-todoke-from-me-to-you-vol-1-kimi-ni-todoke-from-me-to-you-paperback-book&class=scaled&v=1398257494",
-      description: "Romance delicado entre adolescentes.",
-      target_audience: "shoujo",
-      gender: "romance",
-    },
-  ];
-  for (let position = 0; position < animes.length; position++) {
-    let anime = animes[position]
+  const animes = [];
+
+  for (let page = 1; page <= 10; page++) {
+    const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`)
+    const result = await response.json()
+
+    if (page % 3 == 0) {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+    }
+
+    const animesResponse = result.data
+
+    for (let position = 0; position < animesResponse.length; position++) {
+      const anime = animesResponse[position]
+      const anime_id = anime.mal_id
+      const title = anime.title
+      const description = anime.synopsis
+      const image_url = anime.images.jpg.large_image_url
+      const target_audience = anime.demographics[0]?.name
+      const gender = anime.genres[0]?.name
+
+
+      if (anime && anime_id && title && image_url && gender && description && target_audience) {
+        animes.push({
+          anime_id,
+          title,
+          image_url,
+          description,
+          target_audience,
+          gender,
+        })
+      }
+
+    }
+  }
+
+  const animesOrder = animes.reduce((accumulator, currentValue) => {
+    console.log({
+      currentValue
+    })
+    console.log({ accumulator })
+    const valueExists = accumulator.filter(item => item.anime_id == currentValue.anime_id)
+    console.log(valueExists.length)
+    if (valueExists.length == 0) {
+      accumulator.push(currentValue)
+    }
+
+    return accumulator
+  }, [])
+
+  console.log("animesOrder", animesOrder)
+
+
+  for (let position = 0; position < animesOrder.length; position++) {
+    let anime = animesOrder[position]
 
     await client.query(
       `INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender)
@@ -93,13 +130,13 @@ async function seedInDatabase() {
   const comments = [
     {
       comment_id: 1,
-      fk_anime_id: 101,
+      fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
       fk_user_id: 1,
       description: "Anime incrível, cheio de ação!",
     },
     {
       comment_id: 2,
-      fk_anime_id: 102,
+      fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
       fk_user_id: 2,
       description: "Muito fofo e emocionante.",
     },
@@ -289,7 +326,7 @@ async function seedInDatabase() {
   const quizResults = Array.from({ length: 7 }, (_, i) => ({
     fk_user_id: 1,
     fk_quiz_id: 1000,
-    fk_anime_id: i % 2 === 0 ? 101 : 102,
+    fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
     created_at: formatDate(new Date(year, month, day - i, hour, minutes, seconds)),
   }));
 
