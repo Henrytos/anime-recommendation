@@ -212,7 +212,7 @@
             for (let count = 0; count < mappings.length; count++) {
                 let mapping = mappings[count]
 
-                mappingsTarget.push(mapping.target_audience)
+                mappingsTarget.push(mapping.gender)
                 mappingsQuantities.push(mapping.number)
             }
 
@@ -320,18 +320,35 @@
             })
             const dataRecommendations = await responseRecommendations.json()
             const recommendations = dataRecommendations.recommendations
+            console.log({
+                recommendations
+            })
             let contentRecommendations = ''
 
             for (let count = 0; count < recommendations.length; count++) {
                 let recommendation = recommendations[count]
+                let color = ""
+
+                if (recommendation.gender == mappingsTarget[0]) {
+                    color = '#cb4648'
+                }
+                else if (recommendation.gender == mappingsTarget[1]) {
+                    color = '#a39fbf'
+                }
+                else if (recommendation.gender == mappingsTarget[2]) {
+                    color = '#313646'
+                }
+                else if (recommendation.gender == mappingsTarget[3]) {
+                    color = '#754946'
+                }
 
                 contentRecommendations += `
-                  <div class="recommendation mapping-1">
+                  <div class="recommendation mapping-1" style="background-color:${color}">
                         <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
                             <img src="${recommendation.image_url}"
                                 alt="image preview anime" class="recommendation-image-preview">
                             <h4 class="recommendation-title">
-                                ${recommendation.title}
+                                ${recommendation.title.length > 15 ? recommendation.title.slice(0, 15).concat("...") : recommendation.title}
                             </h4>
                         </a>
                     </div>
@@ -358,7 +375,7 @@
                         <div class="content">
                             <div class="content-text">
                             <h3 class="title-comment">${comment.username}</h3>
-                            <p class="time">Há 8 minutos.</p>
+                            <p class="time">${comment.time_relative}</p>
                         </div>
                         <p class="details">
                         ${comment.description}

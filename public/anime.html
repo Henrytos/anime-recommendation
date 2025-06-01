@@ -258,10 +258,11 @@
                     <h3>HENRY FRANZ</h3>
                 </div>
 
-                <textarea name="" id="" class="content-comment" placeholder="The appearance of " quirks," newly
-                    discovered super powers, has been steadily increasing over the years, with 80 percent o"></textarea>
+                <textarea name="comment-content" id="comment-content" class="content-comment"
+                    placeholder="The appearance of " quirks," newly discovered super powers, has been steadily
+                    increasing over the years, with 80 percent o"></textarea>
                 <div class="buttons-comment">
-                    <button>
+                    <button onclick="cleanComment()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-trash-icon lucide-trash">
@@ -272,7 +273,7 @@
                         <span>Limpar</span>
                     </button>
 
-                    <button>
+                    <button onclick="registerComment()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-check-icon lucide-check">
@@ -368,6 +369,43 @@
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
     <script src="./assets/javascript/on-load-anime.js" type="module" defer></script>
+
+    <script>
+        function cleanComment() {
+
+        }
+
+        function registerComment() {
+            const url = new URL(window.location.href)
+            const animeId = url.searchParams.get("animeId")
+            const comment = document.getElementById("comment-content").value
+            const userId = sessionStorage.user_id
+            if (comment == "") {
+                alert("preencha o comentario!!")
+                return
+            }
+
+
+            fetch("/comments", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    description: comment,
+                    animeId,
+                    userId
+                })
+            }).then(response => {
+                if (response.ok) {
+
+                } else {
+                    alert("deu tudo errado")
+                }
+            })
+        }
+
+    </script>
 
 </body>
 

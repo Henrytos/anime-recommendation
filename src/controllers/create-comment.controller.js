@@ -2,8 +2,7 @@ const userModel = require("../models/users.model.js")
 const commentModel = require("../models/comments.model.js")
 
 function createCommentController(request, response) {
-    const userId = request.headers.userid;
-    const { animeId, description } = request.body
+    const { userId, animeId, description } = request.body
 
     const isBadRequest = userId == undefined || animeId == undefined || description == undefined
     if (isBadRequest) {

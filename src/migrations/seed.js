@@ -328,13 +328,41 @@ async function seedInDatabase() {
   const queryToDeleteViewUserMetricsQuizzesWeek = `DROP VIEW IF EXISTS users_metrics_quizzes_week`
   await client.query(queryToDeleteViewUserMetricsQuizzesWeek)
 
-  const queryToCreateViewCommentsUses = `CREATE VIEW users_comments AS SELECT users.user_id, users.username, users.avatar_url, comments.description, comments.created_at, comments.fk_anime_id as anime_id FROM users JOIN comments ON users.user_id = comments.fk_user_id JOIN animes ON animes.anime_id = comments.fk_anime_id;`
+  const queryToCreateViewCommentsUses = `CREATE VIEW users_comments AS SELECT 
+        users.user_id,
+        users.username,
+        users.avatar_url,
+        comments.description,
+        comments.fk_anime_id AS anime_id,
+        CASE
+            WHEN TIMESTAMPDIFF(SECOND, comments.created_at, NOW()) < 60 THEN CONCAT('Há ', TIMESTAMPDIFF(SECOND, comments.created_at, NOW()), ' segundos')
+            WHEN TIMESTAMPDIFF(MINUTE, comments.created_at, NOW()) < 60 THEN CONCAT('Há ', TIMESTAMPDIFF(MINUTE, comments.created_at, NOW()), ' minutos')
+            WHEN TIMESTAMPDIFF(HOUR, comments.created_at, NOW()) < 24 THEN CONCAT('Há ', TIMESTAMPDIFF(HOUR, comments.created_at, NOW()), ' horas')
+            WHEN TIMESTAMPDIFF(DAY, comments.created_at, NOW()) < 7 THEN CONCAT('Há ', TIMESTAMPDIFF(DAY, comments.created_at, NOW()), ' dias')
+            WHEN TIMESTAMPDIFF(WEEK, comments.created_at, NOW()) < 4 THEN CONCAT('Há ', TIMESTAMPDIFF(WEEK, comments.created_at, NOW()), ' semanas')
+            WHEN TIMESTAMPDIFF(MONTH, comments.created_at, NOW()) < 12 THEN CONCAT('Há ', TIMESTAMPDIFF(MONTH, comments.created_at, NOW()), ' meses')
+            ELSE CONCAT('Há ', TIMESTAMPDIFF(YEAR, comments.created_at, NOW()), ' anos')
+        END AS time_relative
+        FROM users
+        JOIN comments ON users.user_id = comments.fk_user_id
+        JOIN animes ON animes.anime_id = comments.fk_anime_id
+        ORDER BY comments.created_at DESC;`
   await client.query(queryToCreateViewCommentsUses)
 
   const queryToCreateViewRecommendationsLastWeekUsers = `CREATE VIEW users_recommendations_last_week AS SELECT quiz_result.fk_user_id AS 'user_id',COUNT(fk_user_id) AS 'quantity', DAY(quiz_result.created_at) AS 'date' FROM quiz_result GROUP BY quiz_result.fk_user_id, DAY(quiz_result.created_at);`
   await client.query(queryToCreateViewRecommendationsLastWeekUsers)
 
-  const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, quiz_result.created_at ,anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id;`
+  const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT 
+    quiz_result.fk_user_id as user_id,
+    title,
+    image_url,
+    quiz_result.created_at ,
+    anime_id,
+    animes.gender
+  FROM quiz_result 
+  JOIN animes 
+  ON quiz_result.fk_anime_id = animes.anime_id
+  ORDER BY created_at DESC;`
   await client.query(queryToCreateViewRecommendationsUsers)
 
   const querytoCreateViewuUserMetricsQuizzesWeek = `
