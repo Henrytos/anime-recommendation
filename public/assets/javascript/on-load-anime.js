@@ -83,26 +83,11 @@ async function renderAnime(animeId) {
   }
 }
 
-async function createResult(quizId, userId, animeId) {
-  const result = await fetch("/quiz/result", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ quizId, userId, animeId }),
-  });
 
-  if (result.ok) {
-    alert("cadastrado com sucesso");
-  }
-}
 
 window.addEventListener("load", () => {
   const url = new URL(window.location.href);
-  const quizId = url.searchParams.get("quizId");
   const animeId = url.searchParams.get("animeId");
-  const { userId } = auth();
 
   renderAnime(animeId);
-  createResult(quizId, userId, animeId);
 });

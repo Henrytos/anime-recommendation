@@ -93,20 +93,13 @@ async function seedInDatabase() {
   }
 
   const animesOrder = animes.reduce((accumulator, currentValue) => {
-    console.log({
-      currentValue
-    })
-    console.log({ accumulator })
     const valueExists = accumulator.filter(item => item.anime_id == currentValue.anime_id)
-    console.log(valueExists.length)
     if (valueExists.length == 0) {
       accumulator.push(currentValue)
     }
 
     return accumulator
   }, [])
-
-  console.log("animesOrder", animesOrder)
 
 
   for (let position = 0; position < animesOrder.length; position++) {
@@ -156,17 +149,18 @@ async function seedInDatabase() {
 
   // QUESTIONS
   const questions = [
-    {
-      fk_quiz_id: 1000,
-      title: "Qual estilo de anime você prefere?",
-      number: 1,
-    },
-    {
-      fk_quiz_id: 1000,
-      title: "Prefere ação ou romance?",
-      number: 2,
-    },
+    { fk_quiz_id: 1000, title: "Qual estilo de anime você prefere?", number: 1 },
+    { fk_quiz_id: 1000, title: "Prefere ação ou romance?", number: 2 },
+    { fk_quiz_id: 1000, title: "Você gosta de histórias com elementos sobrenaturais?", number: 3 },
+    { fk_quiz_id: 1000, title: "Prefere mundos futuristas ou cenários do cotidiano?", number: 4 },
+    { fk_quiz_id: 1000, title: "Você se interessa por histórias premiadas ou populares?", number: 5 },
+    { fk_quiz_id: 1000, title: "Prefere histórias de mistério ou de aventura?", number: 6 },
+    { fk_quiz_id: 1000, title: "Curte mais animes de comédia ou dramas emocionantes?", number: 7 },
+    { fk_quiz_id: 1000, title: "Histórias que focam no amadurecimento dos personagens te agradam?", number: 8 },
+    { fk_quiz_id: 1000, title: "Você gosta de acompanhar esportes em animes?", number: 9 },
+    { fk_quiz_id: 1000, title: "Prefere protagonistas femininas ou masculinos?", number: 10 }
   ];
+
   for (let position = 0; position < questions.length; position++) {
     let question = questions[position]
 
@@ -179,112 +173,67 @@ async function seedInDatabase() {
 
   // ALTERNATIVES
   const alternatives = [
-    {
-      alternative_id: 1,
-      title: "ISEKAI",
-      description:
-        "histórias onde um protagonista é transportado para um mundo diferente, seja por teletransporte, reencarnação ou outros meios.",
-      image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh5mrA2nP6KCjb4Hk2_gjZvwE7s8ED7xg6pg&s",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "comédia",
-      fk_question_id: 1,
-      fk_quiz_id: 1000,
-    },
-    {
-      alternative_id: 2,
-      title: "SHOUNEN",
-      description:
-        "caracterizado por histórias de ação, aventura e luta, com personagens muitas vezes motivados por objetivos importantes e que destacam valores como amizade, lealdade e coragem",
-      image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsi1ZgWlAzBWWDc3KPWJNIuHVTIIRZ_wO9hg&s",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "ação",
-      fk_question_id: 1,
-      fk_quiz_id: 1000,
-    },
-    {
-      alternative_id: 3,
-      title: "GORE",
-      description:
-        "O gore é um dos subgêneros mais extremos do horror, proporcionando experiências chocantes e marcadas por um forte impacto visual e ..",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/286a0e266e2521f56a810653db79e2dfa4de7e9f80286b321085bcf9e75f43fb._SX1080_FMjpg_.jpg",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "drama",
-      fk_question_id: 1,
-      fk_quiz_id: 1000,
-    },
-    {
-      alternative_id: 4,
-      title: "SPORTS",
-      description:
-        "Anime onde enredo principal gira entorno de um esporte",
-      image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wXgz45gUcu4fiG6L3jkMq0BTaUhoR4y49A&s",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "ação",
-      fk_question_id: 1,
-      fk_quiz_id: 1000,
-    },
-    // Repete para question_id 2
-    {
-      alternative_id: 1,
-      title: "ISEKAI",
-      description:
-        "histórias onde um protagonista é transportado para um mundo diferente, seja por teletransporte, reencarnação ou outros meios.",
-      image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh5mrA2nP6KCjb4Hk2_gjZvwE7s8ED7xg6pg&s",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "comédia",
-      fk_question_id: 2,
-      fk_quiz_id: 1000,
-    },
-    {
-      alternative_id: 2,
-      title: "SHOUNEN",
-      description:
-        "caracterizado por histórias de ação, aventura e luta, com personagens muitas vezes motivados por objetivos importantes e que destacam valores como amizade, lealdade e coragem",
-      image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsi1ZgWlAzBWWDc3KPWJNIuHVTIIRZ_wO9hg&s",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "ação",
-      fk_question_id: 2,
-      fk_quiz_id: 1000,
-    },
-    {
-      alternative_id: 3,
-      title: "GORE",
-      description:
-        "O gore é um dos subgêneros mais extremos do horror, proporcionando experiências chocantes e marcadas por um forte impacto visual e ..",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/286a0e266e2521f56a810653db79e2dfa4de7e9f80286b321085bcf9e75f43fb._SX1080_FMjpg_.jpg",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "drama",
-      fk_question_id: 2,
-      fk_quiz_id: 1000,
-    },
-    {
-      alternative_id: 4,
-      title: "SPORTS",
-      description:
-        "Anime onde enredo principal gira entorno de um esporte",
-      image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_wXgz45gUcu4fiG6L3jkMq0BTaUhoR4y49A&s",
-      is_correct: true,
-      target_audience: "shounen",
-      gender: "ação",
-      fk_question_id: 2,
-      fk_quiz_id: 1000,
-    },
+    // Question 1
+    { alternative_id: 1, title: "Action", description: "Batalhas eletrizantes e muita adrenalina.", image_url: "https://i.imgur.com/HBErK0Z.jpg", is_correct: true, target_audience: "Shounen", gender: "Action", fk_question_id: 1, fk_quiz_id: 1000 },
+    { alternative_id: 2, title: "Romance", description: "Histórias de amor, emoção e superação.", image_url: "https://i.imgur.com/jtPTwEv.jpg", is_correct: true, target_audience: "Shoujo", gender: "Romance", fk_question_id: 1, fk_quiz_id: 1000 },
+    { alternative_id: 3, title: "Comedy", description: "Animes leves, divertidos e engraçados.", image_url: "https://i.imgur.com/vIL2hpo.jpg", is_correct: true, target_audience: "Josei", gender: "Comedy", fk_question_id: 1, fk_quiz_id: 1000 },
+    { alternative_id: 4, title: "Mystery", description: "Suspense, investigações e revelações.", image_url: "https://i.imgur.com/5Z0Y7eM.jpg", is_correct: true, target_audience: "Seinen", gender: "Mystery", fk_question_id: 1, fk_quiz_id: 1000 },
+
+    // Question 2
+    { alternative_id: 5, title: "Ação", description: "Lutas intensas e heróis destemidos.", image_url: "https://i.imgur.com/4pcr1iG.jpg", is_correct: true, target_audience: "Shounen", gender: "Action", fk_question_id: 2, fk_quiz_id: 1000 },
+    { alternative_id: 6, title: "Romance", description: "Relacionamentos emocionantes e cativantes.", image_url: "https://i.imgur.com/jtPTwEv.jpg", is_correct: true, target_audience: "Shoujo", gender: "Romance", fk_question_id: 2, fk_quiz_id: 1000 },
+    { alternative_id: 7, title: "Supernatural", description: "Poderes místicos e mundos além da realidade.", image_url: "https://i.imgur.com/2tvnWke.jpg", is_correct: true, target_audience: "Seinen", gender: "Supernatural", fk_question_id: 2, fk_quiz_id: 1000 },
+    { alternative_id: 8, title: "Adventure", description: "Explorações e jornadas épicas.", image_url: "https://i.imgur.com/HeI3z1M.jpg", is_correct: true, target_audience: "Shounen", gender: "Adventure", fk_question_id: 2, fk_quiz_id: 1000 },
+
+    // Question 3
+    { alternative_id: 9, title: "Sim, adoro sobrenatural!", description: "Magia, mistérios e poderes ocultos.", image_url: "https://i.imgur.com/2tvnWke.jpg", is_correct: true, target_audience: "Seinen", gender: "Supernatural", fk_question_id: 3, fk_quiz_id: 1000 },
+    { alternative_id: 10, title: "Prefiro histórias mais realistas.", description: "Cenas do cotidiano, sem elementos mágicos.", image_url: "https://i.imgur.com/7nuwG1E.jpg", is_correct: true, target_audience: "Josei", gender: "Slice of Life", fk_question_id: 3, fk_quiz_id: 1000 },
+    { alternative_id: 11, title: "Gosto de ambos, dependendo da história.", description: "Se a história me prender, gosto dos dois.", image_url: "https://i.imgur.com/HeI3z1M.jpg", is_correct: true, target_audience: "Shounen", gender: "Adventure", fk_question_id: 3, fk_quiz_id: 1000 },
+    { alternative_id: 12, title: "Só se tiver um toque de comédia.", description: "Mistura de sobrenatural e humor.", image_url: "https://i.imgur.com/vIL2hpo.jpg", is_correct: true, target_audience: "Shoujo", gender: "Comedy", fk_question_id: 3, fk_quiz_id: 1000 },
+
+    // Question 4
+    { alternative_id: 13, title: "Futuristas (Sci-Fi)", description: "Tecnologia avançada, robôs e espaço.", image_url: "https://i.imgur.com/3BSlRtV.jpg", is_correct: true, target_audience: "Seinen", gender: "Sci-Fi", fk_question_id: 4, fk_quiz_id: 1000 },
+    { alternative_id: 14, title: "Cotidiano (Slice of Life)", description: "Histórias simples e emocionantes do dia a dia.", image_url: "https://i.imgur.com/7nuwG1E.jpg", is_correct: true, target_audience: "Josei", gender: "Slice of Life", fk_question_id: 4, fk_quiz_id: 1000 },
+    { alternative_id: 15, title: "Ambos, se tiver aventura.", description: "Aventura em qualquer cenário é o que importa.", image_url: "https://i.imgur.com/HeI3z1M.jpg", is_correct: true, target_audience: "Shounen", gender: "Adventure", fk_question_id: 4, fk_quiz_id: 1000 },
+    { alternative_id: 16, title: "Prefiro fantasia.", description: "Mundos mágicos, reinos e criaturas incríveis.", image_url: "https://i.imgur.com/2tvnWke.jpg", is_correct: true, target_audience: "Shoujo", gender: "Supernatural", fk_question_id: 4, fk_quiz_id: 1000 },
+
+    // Question 5
+    { alternative_id: 17, title: "Premiados", description: "Obras renomadas, com prêmios e altas avaliações.", image_url: "https://i.imgur.com/M7bqmkS.jpg", is_correct: true, target_audience: "Seinen", gender: "Award Winning", fk_question_id: 5, fk_quiz_id: 1000 },
+    { alternative_id: 18, title: "Populares", description: "Animes famosos, badalados e cheios de fãs.", image_url: "https://i.imgur.com/HBErK0Z.jpg", is_correct: true, target_audience: "Shounen", gender: "Action", fk_question_id: 5, fk_quiz_id: 1000 },
+    { alternative_id: 19, title: "Indie e alternativos", description: "Obras diferentes e criativas fora do mainstream.", image_url: "https://i.imgur.com/7nuwG1E.jpg", is_correct: true, target_audience: "Josei", gender: "Slice of Life", fk_question_id: 5, fk_quiz_id: 1000 },
+    { alternative_id: 20, title: "Não me importo, só quero me divertir.", description: "Qualquer anime bom me serve!", image_url: "https://i.imgur.com/vIL2hpo.jpg", is_correct: true, target_audience: "Shoujo", gender: "Comedy", fk_question_id: 5, fk_quiz_id: 1000 },
+
+    // Question 6
+    { alternative_id: 21, title: "Mistério", description: "Investigações, segredos e reviravoltas.", image_url: "https://i.imgur.com/5Z0Y7eM.jpg", is_correct: true, target_audience: "Seinen", gender: "Mystery", fk_question_id: 6, fk_quiz_id: 1000 },
+    { alternative_id: 22, title: "Aventura", description: "Explorações incríveis e desafios.", image_url: "https://i.imgur.com/HeI3z1M.jpg", is_correct: true, target_audience: "Shounen", gender: "Adventure", fk_question_id: 6, fk_quiz_id: 1000 },
+    { alternative_id: 23, title: "Mistério sobrenatural", description: "Casos envolvendo magia e forças ocultas.", image_url: "https://i.imgur.com/2tvnWke.jpg", is_correct: true, target_audience: "Seinen", gender: "Supernatural", fk_question_id: 6, fk_quiz_id: 1000 },
+    { alternative_id: 24, title: "Aventura romântica", description: "Explorações com foco em relacionamentos.", image_url: "https://i.imgur.com/jtPTwEv.jpg", is_correct: true, target_audience: "Shoujo", gender: "Romance", fk_question_id: 6, fk_quiz_id: 1000 },
+
+    // Question 7
+    { alternative_id: 25, title: "Comédia", description: "Histórias para dar boas risadas.", image_url: "https://i.imgur.com/vIL2hpo.jpg", is_correct: true, target_audience: "Josei", gender: "Comedy", fk_question_id: 7, fk_quiz_id: 1000 },
+    { alternative_id: 26, title: "Drama", description: "Enredos emocionantes que tocam o coração.", image_url: "https://i.imgur.com/M7bqmkS.jpg", is_correct: true, target_audience: "Seinen", gender: "Slice of Life", fk_question_id: 7, fk_quiz_id: 1000 },
+    { alternative_id: 27, title: "Comédia romântica", description: "Romances leves, cheios de humor.", image_url: "https://i.imgur.com/jtPTwEv.jpg", is_correct: true, target_audience: "Shoujo", gender: "Romance", fk_question_id: 7, fk_quiz_id: 1000 },
+    { alternative_id: 28, title: "Comédia de aventura", description: "Diversão em jornadas épicas.", image_url: "https://i.imgur.com/HeI3z1M.jpg", is_correct: true, target_audience: "Shounen", gender: "Adventure", fk_question_id: 7, fk_quiz_id: 1000 },
+
+    // Question 8
+    { alternative_id: 29, title: "Sim, gosto de amadurecimento pessoal", description: "Histórias que acompanham crescimento dos personagens.", image_url: "https://i.imgur.com/7nuwG1E.jpg", is_correct: true, target_audience: "Josei", gender: "Slice of Life", fk_question_id: 8, fk_quiz_id: 1000 },
+    { alternative_id: 30, title: "Prefiro batalhas e ação.", description: "Crescimento através de lutas e desafios.", image_url: "https://i.imgur.com/HBErK0Z.jpg", is_correct: true, target_audience: "Shounen", gender: "Action", fk_question_id: 8, fk_quiz_id: 1000 },
+    { alternative_id: 31, title: "Sim, principalmente romances que desenvolvem bem os personagens.", description: "Evolução emocional é importante.", image_url: "https://i.imgur.com/jtPTwEv.jpg", is_correct: true, target_audience: "Shoujo", gender: "Romance", fk_question_id: 8, fk_quiz_id: 1000 },
+    { alternative_id: 32, title: "Depende, se tiver aventura fica melhor.", description: "Desenvolvimento junto a grandes desafios.", image_url: "https://i.imgur.com/HeI3z1M.jpg", is_correct: true, target_audience: "Shounen", gender: "Adventure", fk_question_id: 8, fk_quiz_id: 1000 },
+
+    // Question 9
+    { alternative_id: 33, title: "Sim, amo animes de esportes!", description: "Superação, trabalho em equipe e competições emocionantes.", image_url: "https://i.imgur.com/IIG3KJJ.jpg", is_correct: true, target_audience: "Shounen", gender: "Sports", fk_question_id: 9, fk_quiz_id: 1000 },
+    { alternative_id: 34, title: "Não, prefiro outros gêneros.", description: "Esportes não me atraem tanto.", image_url: "https://i.imgur.com/M7bqmkS.jpg", is_correct: true, target_audience: "Josei", gender: "Slice of Life", fk_question_id: 9, fk_quiz_id: 1000 },
+    { alternative_id: 35, title: "Gosto, mas só se tiver drama também.", description: "Histórias esportivas com foco emocional.", image_url: "https://i.imgur.com/7nuwG1E.jpg", is_correct: true, target_audience: "Seinen", gender: "Drama", fk_question_id: 9, fk_quiz_id: 1000 },
+    { alternative_id: 36, title: "Gosto, mas só se for bem humorado.", description: "Animes esportivos com bastante comédia.", image_url: "https://i.imgur.com/vIL2hpo.jpg", is_correct: true, target_audience: "Shoujo", gender: "Comedy", fk_question_id: 9, fk_quiz_id: 1000 },
+
+    // Question 10
+    { alternative_id: 37, title: "Masculino", description: "Protagonistas masculinos determinados.", image_url: "https://i.imgur.com/HBErK0Z.jpg", is_correct: true, target_audience: "Shounen", gender: "Action", fk_question_id: 10, fk_quiz_id: 1000 },
+    { alternative_id: 38, title: "Feminino", description: "Protagonistas femininas fortes e inspiradoras.", image_url: "https://i.imgur.com/7nuwG1E.jpg", is_correct: true, target_audience: "Josei", gender: "Slice of Life", fk_question_id: 10, fk_quiz_id: 1000 },
+    { alternative_id: 39, title: "Tanto faz, depende da história.", description: "O enredo é o mais importante.", image_url: "https://i.imgur.com/M7bqmkS.jpg", is_correct: true, target_audience: "Seinen", gender: "Mystery", fk_question_id: 10, fk_quiz_id: 1000 },
+    { alternative_id: 40, title: "Prefiro casais como protagonistas.", description: "Foco em relações e desenvolvimento conjunto.", image_url: "https://i.imgur.com/jtPTwEv.jpg", is_correct: true, target_audience: "Shoujo", gender: "Romance", fk_question_id: 10, fk_quiz_id: 1000 },
   ];
+
   for (let position = 0; position < alternatives.length; position++) {
     let alt = alternatives[position]
 

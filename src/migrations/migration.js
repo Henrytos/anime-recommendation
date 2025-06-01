@@ -52,14 +52,12 @@ async function createTablesInDatabase() {
   const queryToCreateAnimesTable = `
     CREATE TABLE animes(
         anime_id INT PRIMARY KEY, 
-        title VARCHAR(45),
+        title VARCHAR(255),
         image_url VARCHAR(500),
-        description VARCHAR(255),
+        description TEXT,
         target_audience VARCHAR(45) NOT NULL,
-        gender VARCHAR(45) NOT NULL,
-        CONSTRAINT chk_target_audience CHECK(target_audience IN ('kodomo', 'Shounen', 'shoujo', 'seinen', 'josei')),
-        CONSTRAINT chk_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama'))
-      );
+        gender VARCHAR(45) NOT NULL
+        );
     `;
 
   const queryToCreateCommentsTable = `
@@ -78,7 +76,7 @@ async function createTablesInDatabase() {
     CREATE TABLE questions(
         question_id INT AUTO_INCREMENT,
         fk_quiz_id INT,
-        title VARCHAR(45) NOT NULL,
+        title VARCHAR(100) NOT NULL,
         number INT NOT NULL,
         CONSTRAINT pk_composite PRIMARY KEY(question_id, fk_quiz_id),
         CONSTRAINT fk_question_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes(quiz_id)
@@ -86,7 +84,7 @@ async function createTablesInDatabase() {
   const queryToCreateAlternativesTable = `
     CREATE TABLE alternatives(
         alternative_id INT,
-        title VARCHAR(45),
+        title VARCHAR(100),
         description VARCHAR(255),
         image_url VARCHAR(500),
         is_correct BOOLEAN,
@@ -95,8 +93,6 @@ async function createTablesInDatabase() {
         fk_question_id INT,
         fk_quiz_id INT,
         
-        CONSTRAINT chk_alternative_audience CHECK(target_audience IN ('kodomo', 'shounen', 'shoujo', 'seinen', 'josei')),
-        CONSTRAINT chk_alternative_gender CHECK(gender IN ('ação', 'aventura', 'romance', 'comédia', 'slice of Life', 'drama')),
         CONSTRAINT pk_composite PRIMARY KEY(alternative_id, fk_question_id, fk_quiz_id),
         CONSTRAINT fk_alternative_question FOREIGN KEY (fk_question_id, fk_quiz_id) REFERENCES questions (question_id, fk_quiz_id)
     );`;
