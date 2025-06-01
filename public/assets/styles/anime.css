@@ -498,7 +498,7 @@ h3 {
   display: flex;
   height: auto;
   width: 100%;
-  justify-content: space-between;
+  justify-content: start;
   gap: 20px;
   align-items: center;
   padding: 10px 14px;
@@ -509,7 +509,7 @@ h3 {
 
 .comment img {
   height: 80px;
-  width: 100px;
+  width: 80px;
   object-fit: cover;
   border-radius: 100%;
   border: 1px solid var(--color-purple-light);

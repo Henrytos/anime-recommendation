@@ -135,121 +135,8 @@
         </h1>
 
         <div class="content-comment">
-            <div class="comments">
-                <div class="comment">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbUvJQpkNm-m4qOhZPVS5oqHD6gZIdfv2BA&s"
-                        alt="" class="profile-comment">
-                    <div class="details-comment">
-                        <div class="top">
-                            <h3>
-                                HENRIQUE SHIMADA
-                            </h3>
-                            <p>
-                                Há 2 Dias.
-                            </p>
-                        </div>
-                        <p>
-                            The appearance of "quirks," newly discovered super powers, has been steadily increasing over
-                            the years, with 80 percent
-                            o
-                        </p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbUvJQpkNm-m4qOhZPVS5oqHD6gZIdfv2BA&s"
-                        alt="" class="profile-comment">
-                    <div class="details-comment">
-                        <div class="top">
-                            <h3>
-                                HENRIQUE SHIMADA
-                            </h3>
-                            <p>
-                                Há 2 Dias.
-                            </p>
-                        </div>
-                        <p>
-                            The appearance of "quirks," newly discovered super powers, has been steadily increasing over
-                            the years, with 80 percent
-                            o
-                        </p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbUvJQpkNm-m4qOhZPVS5oqHD6gZIdfv2BA&s"
-                        alt="" class="profile-comment">
-                    <div class="details-comment">
-                        <div class="top">
-                            <h3>
-                                HENRIQUE SHIMADA
-                            </h3>
-                            <p>
-                                Há 2 Dias.
-                            </p>
-                        </div>
-                        <p>
-                            The appearance of "quirks," newly discovered super powers, has been steadily increasing over
-                            the years, with 80 percent
-                            o
-                        </p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbUvJQpkNm-m4qOhZPVS5oqHD6gZIdfv2BA&s"
-                        alt="" class="profile-comment">
-                    <div class="details-comment">
-                        <div class="top">
-                            <h3>
-                                HENRIQUE SHIMADA
-                            </h3>
-                            <p>
-                                Há 2 Dias.
-                            </p>
-                        </div>
-                        <p>
-                            The appearance of "quirks," newly discovered super powers, has been steadily increasing over
-                            the years, with 80 percent
-                            o
-                        </p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbUvJQpkNm-m4qOhZPVS5oqHD6gZIdfv2BA&s"
-                        alt="" class="profile-comment">
-                    <div class="details-comment">
-                        <div class="top">
-                            <h3>
-                                HENRIQUE SHIMADA
-                            </h3>
-                            <p>
-                                Há 2 Dias.
-                            </p>
-                        </div>
-                        <p>
-                            The appearance of "quirks," newly discovered super powers, has been steadily increasing over
-                            the years, with 80 percent
-                            o
-                        </p>
-                    </div>
-                </div>
-                <div class="comment">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlbUvJQpkNm-m4qOhZPVS5oqHD6gZIdfv2BA&s"
-                        alt="" class="profile-comment">
-                    <div class="details-comment">
-                        <div class="top">
-                            <h3>
-                                HENRIQUE SHIMADA
-                            </h3>
-                            <p>
-                                Há 2 Dias.
-                            </p>
-                        </div>
-                        <p>
-                            The appearance of "quirks," newly discovered super powers, has been steadily increasing over
-                            the years, with 80 percent
-                            o
-                        </p>
-                    </div>
-                </div>
+            <div class="comments" id="div_comments">
+
             </div>
             <div class="create-comment">
 
@@ -277,7 +164,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-check-icon lucide-check">
-                            <path d="M20 6 9 17l-5-5" />
+                            <path d="M2j0 6 9 17l-5-5" />
                         </svg>
                         <span>Salvar</span>
                     </button>
@@ -372,7 +259,7 @@
 
     <script>
         function cleanComment() {
-
+            document.getElementById("comment-content").value = ""
         }
 
         function registerComment() {
@@ -385,7 +272,11 @@
                 return
             }
 
-
+            console.log({
+                description: comment,
+                animeId,
+                userId
+            })
             fetch("/comments", {
                 method: "POST",
                 headers: {
@@ -398,7 +289,7 @@
                 })
             }).then(response => {
                 if (response.ok) {
-
+                    alert("comentado")
                 } else {
                     alert("deu tudo errado")
                 }

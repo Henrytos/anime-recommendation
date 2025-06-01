@@ -49,7 +49,7 @@ async function renderAnime(animeId) {
   p_anime_description.innerHTML = anime.data.synopsis.slice(0, 800) + "...";
   img_anime_preview_cover.src = anime.data.images.jpg.large_image_url;
 
-  console.log(charactersOrderByFavorites);
+
   for (
     let position = 0;
     position < charactersOrderByFavorites.length;
@@ -84,10 +84,48 @@ async function renderAnime(animeId) {
 }
 
 
+async function renderComments(animeId) {
+  const response = await fetch(`/comments/${animeId}`)
+  const data = await response.json()
+
+  const comments = data.comments
+
+  console.log(comments)
+
+  let commentsContent = ''
+
+  for (let position = 0; position < comments.length; position++) {
+    let comment = comments[position]
+
+    commentsContent += `
+    <div class="comment">
+        <img src="./assets/uploads/${comment.avatar_url}"
+            alt="" class="profile-comment">
+        <div class="details-comment">
+            <div class="top">
+                <h3>
+                  ${comment.username}
+                </h3>
+                <p>
+                    ${comment.time_relative}
+                </p>
+            </div>
+            <p>
+                ${comment.description}
+            </p>
+        </div>
+    </div>
+    `
+  }
+
+
+  div_comments.innerHTML = commentsContent
+}
 
 window.addEventListener("load", () => {
   const url = new URL(window.location.href);
   const animeId = url.searchParams.get("animeId");
 
   renderAnime(animeId);
+  renderComments(animeId)
 });

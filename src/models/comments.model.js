@@ -5,9 +5,15 @@ function findManyComments(userId) {
         SELECT user_id ,username, avatar_url, description, time_relative, anime_id
         FROM users_comments WHERE user_id = ${userId} ;
     `;
-    ;
+
 
     return database.execute(query);
+}
+
+function findManyByAnimeId(animeId) {
+    const query = `SELECT user_id ,username, avatar_url, description, time_relative, anime_id FROM users_comments WHERE anime_id = ${animeId};`
+    return database.execute(query);
+
 }
 
 function createComment(userId, animeId, description) {
@@ -22,5 +28,6 @@ function createComment(userId, animeId, description) {
 
 module.exports = {
     findManyComments,
-    createComment
+    createComment,
+    findManyByAnimeId
 };
