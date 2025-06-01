@@ -18,6 +18,7 @@ async function fetchQuizById(quizId) {
 
   const questions = data.questions;
 
+  setSlide(questions.length)
   renderQuestions(questions);
 }
 
@@ -31,22 +32,19 @@ function renderQuestions(questions) {
 
 
     contentQuestionsHTML += `
-    <section class='question question-1 slide-new'>
-    <div class='left'>
-    <h1>${question.id} - ${question.title}</h1>
-
-    <div class='content-progress'>
-        <div class='line-progress'></div>
-        </div>
-
-        <div class='content-alternatives'>
-        
+      <section class='question question-1 slide-new'>
+      <div class='left'>
+      <h1>${question.id} - ${question.title}</h1>
+      <div class='content-progress'>
+          <div class='line-progress'></div>
+          </div>
+      <div class='content-alternatives'>      
         `
 
     for (let positionAlternative = 0; positionAlternative < question.alternatives.length; positionAlternative++) {
       let alternative = question.alternatives[positionAlternative]
       contentQuestionsHTML += `
-        <div class='alternative' onclick='selectionAlternative(1, 1)'>
+        <div class='alternative' onclick='selectionAlternative(${alternative.id}, ${question.id})'>
           <img src='https://gqcanimes.com.br/wp-content/uploads/2021/07/Konosuba-GQCA1.jpg' alt='thumb url de konosuba' />
           <div div class='content-alternative'>
             <p>
@@ -101,3 +99,5 @@ function renderQuestions(questions) {
     questionsSection[0].classList.add("slide-show");
   }, TIME_TWO_SECONDS);
 }
+
+
