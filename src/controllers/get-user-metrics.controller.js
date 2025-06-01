@@ -20,7 +20,6 @@ async function getUserMetricsController(request, response) {
             message: "unauthorized user",
         });
     }
-
     const userMetricsQuizzes = await recommendationsModel.findByUserMetricsQuizzes(userId)
     const userMetricsMappings = await recommendationsModel.findByUserMetricsMappings(userId)
 

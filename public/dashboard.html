@@ -187,7 +187,7 @@
             headers.append("userId", userId)
             console.log(headers)
 
-            const responseMetrics = await fetch("http://localhost:3333/users/metrics", {
+            const responseMetrics = await fetch("/users/metrics", {
                 headers,
             })
 
@@ -315,7 +315,7 @@
             })
 
 
-            const responseRecommendations = await fetch("http://localhost:3333/users/recommendations", {
+            const responseRecommendations = await fetch("/users/recommendations", {
                 headers,
             })
             const dataRecommendations = await responseRecommendations.json()
@@ -341,7 +341,7 @@
 
 
 
-            const responseComments = await fetch("http://localhost:3333/users/comments", {
+            const responseComments = await fetch("/users/comments", {
                 headers,
             })
             const dataComments = await responseComments.json()
