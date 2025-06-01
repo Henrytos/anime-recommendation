@@ -90,7 +90,6 @@ async function renderComments(animeId) {
 
   const comments = data.comments
 
-  console.log(comments)
 
   let commentsContent = ''
 

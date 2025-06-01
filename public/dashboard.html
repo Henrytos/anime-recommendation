@@ -362,15 +362,14 @@
                 headers,
             })
             const dataComments = await responseComments.json()
-            const comments = dataComments.comments
-            console.log(comments)
+            const comments = dataComments.comments.slice(0, 5)
             let contentComments = ''
 
             for (let count = 0; count < comments.length; count++) {
                 let comment = comments[count]
 
                 contentComments += `
-                    <div class="comment">
+                    <a class="comment" href='./anime.html?animeId=${comment.anime_id}'>
                         <img src="./assets/uploads/henry-profile.png" alt="">
                         <div class="content">
                             <div class="content-text">
@@ -381,7 +380,7 @@
                         ${comment.description}
                         </p>
                         </div>
-                    </div>
+                    </a>
                 `
             }
 

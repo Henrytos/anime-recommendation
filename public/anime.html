@@ -258,6 +258,43 @@
     <script src="./assets/javascript/on-load-anime.js" type="module" defer></script>
 
     <script>
+        async function renderComments(animeId) {
+            const response = await fetch(`/comments/${animeId}`)
+            const data = await response.json()
+
+            const comments = data.comments
+
+
+            let commentsContent = ''
+
+            for (let position = 0; position < comments.length; position++) {
+                let comment = comments[position]
+
+                commentsContent += `
+    <div class="comment">
+        <img src="./assets/uploads/${comment.avatar_url}"
+            alt="" class="profile-comment">
+        <div class="details-comment">
+            <div class="top">
+                <h3>
+                  ${comment.username}
+                </h3>
+                <p>
+                    ${comment.time_relative}
+                </p>
+            </div>
+            <p>
+                ${comment.description}
+            </p>
+        </div>
+    </div>
+    `
+            }
+
+
+            div_comments.innerHTML = commentsContent
+        }
+
         function cleanComment() {
             document.getElementById("comment-content").value = ""
         }
@@ -289,7 +326,8 @@
                 })
             }).then(response => {
                 if (response.ok) {
-                    alert("comentado")
+                    cleanComment()
+                    renderComments(animeId)
                 } else {
                     alert("deu tudo errado")
                 }
