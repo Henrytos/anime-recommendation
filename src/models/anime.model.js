@@ -10,7 +10,6 @@ function findMany() {
   const query = `SELECT * FROM animes;`;
 
   return database.execute(query);
-
 }
 
 module.exports = {

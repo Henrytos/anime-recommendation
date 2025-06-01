@@ -15,6 +15,7 @@ const app = express();
 const userRouter = require("./src/routes/user.route.js");
 const commentRouter = require("./src/routes/comment.route.js")
 const quizRouter = require("./src/routes/quiz.route.js");
+const animeRouter = require("./src/routes/anime.route.js")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,6 +26,7 @@ app.use(cors());
 app.use("/users", userRouter);
 app.use("/comments", commentRouter);
 app.use("/quiz", quizRouter);
+app.use("/animes", animeRouter);
 
 app.listen(PORT_APP, function () {
   console.log("Conectando em:", process.env.DB_HOST);

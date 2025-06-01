@@ -160,16 +160,40 @@
         let slide = 1
         let sizeSlide = 0
 
+        const animesMapping = []
+
+
+
         function setSlide(size) {
             sizeSlide = size
         }
 
-        function selectionAlternative(alternativeId, questionId) {
+
+        function selectionAlternative(alternativeId, questionId, targetAudience, gender) {
             console.log({
                 alternativeId,
                 questionId,
+                targetAudience,
+                gender
             });
 
+            for (let positionAnime = 0; positionAnime < animesMapping.length; positionAnime++) {
+                let anime = animesMapping[positionAnime]
+
+                if (anime.target_audience == targetAudience) {
+                    animesMapping[positionAnime].points++
+                }
+                if (anime.gender == gender) {
+                    animesMapping[positionAnime].points++
+                }
+            }
+
+
+
+            verifySlideFinished()
+        }
+
+        function verifySlideFinished() {
             const questionsSection = document.querySelectorAll(".question");
 
             if (slide < sizeSlide) {
@@ -183,12 +207,26 @@
                 let newSlide = document.querySelector('.content-final')
                 nextSlide(newSlide, oldSlide)
 
+                let bestRecommendedPoints = animesMapping[0].points
+                let bestRecommendedPointsAnimeId = animesMapping[0].anime_id
+
+                for (let positionAnime = 0; positionAnime < animesMapping.length; positionAnime++) {
+                    const anime = animesMapping[positionAnime];
+
+                    if (anime.points > bestRecommendedPoints) {
+                        bestRecommendedPoints = anime.points
+                        bestRecommendedPointsAnimeId = anime.anime_id
+                    }
+                }
+
                 const TIME_TWO_SECONDS = 2000;
                 setTimeout(() => {
-                    window.location.href = './anime.html'
+                    const url = new URL(window.location.href)
+                    const quizId = url.searchParams.get("quiz_id")
+
+                    window.location.href = `./anime.html?animeId=${bestRecommendedPointsAnimeId}&quizId=${quizId}`
                 }, TIME_TWO_SECONDS);
             }
-
         }
 
         function nextSlide(newElement, removeElement) {

@@ -4,7 +4,24 @@ window.addEventListener("load", () => {
 
   const quizId = url.searchParams.get("quiz_id");
   fetchQuizById(quizId);
+  setAnimes()
 });
+
+async function setAnimes() {
+  const response = await fetch("/animes")
+  const data = await response.json()
+
+  for (let position = 0; position < data.animes.length; position++) {
+    let anime = data.animes[position]
+
+    animesMapping.push({
+      anime_id: anime.anime_id,
+      target_audience: anime.target_audience,
+      gender: anime.gender,
+      points: 0
+    })
+  }
+}
 
 async function fetchQuizById(quizId) {
   const title = document.getElementById("title-quiz");
@@ -44,7 +61,7 @@ function renderQuestions(questions) {
     for (let positionAlternative = 0; positionAlternative < question.alternatives.length; positionAlternative++) {
       let alternative = question.alternatives[positionAlternative]
       contentQuestionsHTML += `
-        <div class='alternative' onclick='selectionAlternative(${alternative.id}, ${question.id})'>
+        <div class='alternative' onclick='selectionAlternative(${alternative.id}, ${question.id}, "${alternative.target_audience}", "${alternative.gender}")'>
           <img src='https://gqcanimes.com.br/wp-content/uploads/2021/07/Konosuba-GQCA1.jpg' alt='thumb url de konosuba' />
           <div div class='content-alternative'>
             <p>
