@@ -9,6 +9,9 @@ async function seedInDatabase() {
     port: process.env.DB_PORT,
   });
 
+  console.log("connection mysql ✅");
+
+
   await client.query("DELETE FROM quiz_result;");
   await client.query("DELETE FROM alternatives;");
   await client.query("DELETE FROM questions;");
@@ -16,6 +19,8 @@ async function seedInDatabase() {
   await client.query("DELETE FROM animes;");
   await client.query("DELETE FROM quizzes;");
   await client.query("DELETE FROM users;");
+
+  console.log("delete all ✅");
 
   // USERS
   const users = [
@@ -40,6 +45,8 @@ async function seedInDatabase() {
       VALUES ('${user.username}', '${user.email}', SHA2('${user.password}', 512), '${user.avatarUrl}')`
     );
   }
+  console.log("seed users ✅");
+
 
 
 
@@ -54,11 +61,13 @@ async function seedInDatabase() {
       true,
     ]
   );
+  console.log("seed quizzes ✅");
+
 
   // ANIMES
   const animes = [];
 
-  for (let page = 1; page <= 10; page++) {
+  for (let page = 1; page <= 5; page++) {
     const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`)
     const result = await response.json()
 
@@ -76,9 +85,10 @@ async function seedInDatabase() {
       const image_url = anime.images.jpg.large_image_url
       const target_audience = anime.demographics[0]?.name
       const gender = anime.genres[0]?.name
+      const score = anime.score
 
 
-      if (anime && anime_id && title && image_url && gender && description && target_audience) {
+      if (anime && anime_id && title && image_url && gender && description && target_audience && score) {
         animes.push({
           anime_id,
           title,
@@ -86,6 +96,7 @@ async function seedInDatabase() {
           description,
           target_audience,
           gender,
+          score
         })
       }
 
@@ -106,8 +117,8 @@ async function seedInDatabase() {
     let anime = animesOrder[position]
 
     await client.query(
-      `INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender)
-      VALUES (?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender, score)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         anime.anime_id,
         anime.title,
@@ -115,9 +126,13 @@ async function seedInDatabase() {
         anime.description,
         anime.target_audience,
         anime.gender,
+        anime.score
       ]
     );
   }
+
+  console.log("seed animes ✅");
+
 
   // COMMENTS
   const comments = [
@@ -134,7 +149,7 @@ async function seedInDatabase() {
       description: "Muito fofo e emocionante.",
     },
   ];
-  for (let position = 0; position < 30; position++) {
+  for (let position = 0; position < 6; position++) {
 
     let min = 0, max = comments.length
     let interval = max - min
@@ -146,6 +161,8 @@ async function seedInDatabase() {
       VALUES (DEFAULT, ${result.fk_anime_id}, ${result.fk_user_id}, '${result.description}')`,
     );
   }
+  console.log("seed comments ✅");
+
 
   // QUESTIONS
   const questions = [
@@ -170,6 +187,8 @@ async function seedInDatabase() {
       [question.fk_quiz_id, question.title, question.number]
     );
   }
+  console.log("seed questions ✅");
+
 
   // ALTERNATIVES
   const alternatives = [
@@ -253,6 +272,8 @@ async function seedInDatabase() {
       ]
     );
   }
+  console.log("seed alternatives ✅");
+
 
   const date = new Date();
   const year = date.getFullYear();
@@ -279,7 +300,7 @@ async function seedInDatabase() {
     created_at: formatDate(new Date(year, month, day - i, hour, minutes, seconds)),
   }));
 
-  for (let position = 0; position < 40; position++) {
+  for (let position = 0; position < 5; position++) {
 
     let min = 0, max = quizResults.length
     let interval = max - min
@@ -293,7 +314,7 @@ async function seedInDatabase() {
     );
   }
 
-  console.log("seed database ✅");
+  console.log("seed quiz_result ✅");
 
   const queryToDeleteViewCommentsUsers = `DROP VIEW IF EXISTS users_comments`
   await client.query(queryToDeleteViewCommentsUsers)
@@ -313,7 +334,7 @@ async function seedInDatabase() {
   const queryToCreateViewRecommendationsLastWeekUsers = `CREATE VIEW users_recommendations_last_week AS SELECT quiz_result.fk_user_id AS 'user_id',COUNT(fk_user_id) AS 'quantity', DAY(quiz_result.created_at) AS 'date' FROM quiz_result GROUP BY quiz_result.fk_user_id, DAY(quiz_result.created_at);`
   await client.query(queryToCreateViewRecommendationsLastWeekUsers)
 
-  const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id;`
+  const queryToCreateViewRecommendationsUsers = `CREATE VIEW users_recommendations AS SELECT quiz_result.fk_user_id as user_id,title, image_url, quiz_result.created_at ,anime_id FROM quiz_result JOIN animes ON quiz_result.fk_anime_id = animes.anime_id;`
   await client.query(queryToCreateViewRecommendationsUsers)
 
   const querytoCreateViewuUserMetricsQuizzesWeek = `
@@ -340,6 +361,7 @@ async function seedInDatabase() {
   console.log("create views ✅")
 
   await client.end();
+  console.log("disconnection mysql ✅");
 }
 
 

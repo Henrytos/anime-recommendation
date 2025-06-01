@@ -7,7 +7,7 @@ function findByAnimeId(animeId) {
 }
 
 function findMany() {
-  const query = `SELECT * FROM animes;`;
+  const query = `SELECT * FROM animes ORDER BY score DESC;`;
 
   return database.execute(query);
 }

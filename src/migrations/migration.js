@@ -8,6 +8,8 @@ async function createTablesInDatabase() {
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT,
   });
+  console.log("connect mysql ✅");
+
 
   const queryToDropQuizResultsTable = "DROP TABLE IF EXISTS quiz_result;";
   const queryToDropAlternativesTable = "DROP TABLE IF EXISTS alternatives;";
@@ -39,6 +41,7 @@ async function createTablesInDatabase() {
         CONSTRAINT chkEmail CHECK(email LIKE '%@%')
     );
   `;
+
   const queryToCreateQuizzesTable = `
     CREATE TABLE quizzes(
         quiz_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -56,7 +59,8 @@ async function createTablesInDatabase() {
         image_url VARCHAR(500),
         description TEXT,
         target_audience VARCHAR(45) NOT NULL,
-        gender VARCHAR(45) NOT NULL
+        gender VARCHAR(45) NOT NULL,
+        score DECIMAL(4,2) DEFAULT 0
         );
     `;
 
@@ -113,18 +117,30 @@ async function createTablesInDatabase() {
 `;
 
   await client.query(queryToCreateUserTable);
+  console.log("create table users  ✅");
+
   await client.query(queryToCreateQuizzesTable);
+  console.log("create table quizzes ✅");
+
   await client.query(queryToCreateAnimesTable);
+  console.log("create table animes ✅");
+
   await client.query(queryToCreateCommentsTable);
+  console.log("create table comments ✅");
+
   await client.query(queryToCreateQuestionsTable);
+  console.log("create table questions ✅");
+
   await client.query(queryToCreateAlternativesTable);
+  console.log("create table alternatives ✅");
+
   await client.query(queryToCreateQuizResult);
+  console.log("create table quiz_result ✅");
 
   console.log("create table to anime recommendation ✅");
 
   await client.end();
-  console.log("end connection ✅");
-
+  console.log("disconnect mysql ✅");
   return true;
 }
 
