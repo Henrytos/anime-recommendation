@@ -23,13 +23,13 @@ async function seedInDatabase() {
       username: "henry_dev",
       email: "henry@gmail.com",
       password: "123456",
-      avatarUrl: "https://example.com/avatar1.png",
+      avatarUrl: "henry-profile.png",
     },
     {
       username: "nathalia_art",
       email: "nathalia@gmail.com",
       password: "123456",
-      avatarUrl: "https://example.com/avatar2.png",
+      avatarUrl: "nathalia-profile.png",
     },
   ];
   for (let position = 0; position < users.length; position++) {
@@ -268,25 +268,31 @@ async function seedInDatabase() {
     );
   }
 
-  const date = new Date()
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minutes = date.getMinutes()
-  const seconds = date.getSeconds()
-  // QUIZ RESULT
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth(); // sem +1 aqui, só no formato final
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
 
+  function formatDate(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const h = String(d.getHours()).padStart(2, '0');
+    const min = String(d.getMinutes()).padStart(2, '0');
+    const s = String(d.getSeconds()).padStart(2, '0');
+    return `${y}-${m}-${day} ${h}:${min}:${s}`;
+  }
 
-  const quizResults = [
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day} ${hour}-${minutes}-${seconds}` },
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 102, created_at: `${year}-${month}-${day - 1} ${hour}-${minutes}-${seconds}` },
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 2} ${hour}-${minutes}-${seconds}` },
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 3} ${hour}-${minutes}-${seconds}` },
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 102, created_at: `${year}-${month}-${day - 4} ${hour}-${minutes}-${seconds}` },
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 5} ${hour}-${minutes}-${seconds}` },
-    { fk_user_id: 1, fk_quiz_id: 1000, fk_anime_id: 101, created_at: `${year}-${month}-${day - 6} ${hour}-${minutes}-${seconds}` },
-  ];
+  const quizResults = Array.from({ length: 7 }, (_, i) => ({
+    fk_user_id: 1,
+    fk_quiz_id: 1000,
+    fk_anime_id: i % 2 === 0 ? 101 : 102,
+    created_at: formatDate(new Date(year, month, day - i, hour, minutes, seconds)),
+  }));
+
   for (let position = 0; position < 40; position++) {
 
     let min = 0, max = quizResults.length
