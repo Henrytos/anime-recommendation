@@ -480,6 +480,7 @@ a {
 .comment img {
   width: 70px;
   height: 70px;
+  object-fit: cover !important;
   border-radius: 100%;
   border: 1px solid var(--color-background-foreground);
 }

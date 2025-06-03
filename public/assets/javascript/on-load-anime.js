@@ -125,6 +125,10 @@ window.addEventListener("load", () => {
   const url = new URL(window.location.href);
   const animeId = url.searchParams.get("animeId");
 
+  const { avatarUrl, username } = auth()
+
+  avatar_profile_url.src = `./assets/uploads/${avatarUrl}`
+  avatar_profile_username.innerHTML = username.toUpperCase()
   renderAnime(animeId);
   renderComments(animeId)
 });
