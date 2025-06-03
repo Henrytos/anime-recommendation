@@ -139,23 +139,13 @@
         <div class="links">
 
             <span class="link">
-                <a href="./index.html" class="active">Home</a>
+                <a href="./index.html">Home</a>
             </span>
             <span class="link">
                 <a href="./quizzes.html">Quizzes</a>
             </span>
-            <span class="link">
-                <a href="./index.html">Populares</a>
-            </span>
-            <span class="link">
-                <a href="./index.html">Indicações</a>
-            </span>
-            <span class="link">
-                <a href="./index.html">Autores</a>
-            </span>
-
             <span class="link auth">
-                <a href="./index.html">Configuração</a>
+                <a href="./dashboard.html" class="active">Dashboard</a>
             </span>
             <span class="link auth exit" id="button-exit">
                 <span href="./index.html">
@@ -367,10 +357,10 @@
 
             for (let count = 0; count < comments.length; count++) {
                 let comment = comments[count]
-
+                const avatarUrl = JSON.parse(sessionStorage.avatar_url)
                 contentComments += `
                     <a class="comment" href='./anime.html?animeId=${comment.anime_id}'>
-                        <img src="./assets/uploads/henry-profile.png" alt="">
+                        <img src="./assets/uploads/${avatarUrl}" alt="">
                         <div class="content">
                             <div class="content-text">
                             <h3 class="title-comment">${comment.username}</h3>
