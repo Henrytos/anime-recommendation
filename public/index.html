@@ -57,7 +57,8 @@
             <div class="texts">
                 <h1>Junte-se ao universo
                     de <span id="title"></span></h1>
-                <button class="button button-purple text-2xl font-semibold" style="padding: 14px 28px;">
+                <button class="button button-purple text-2xl font-semibold" style="padding: 14px 28px;"
+                    onclick="redirect()">
                     Veja mais
                 </button>
             </div>
@@ -137,7 +138,11 @@
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
 
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
-
+    <script>
+        function redirect() {
+            window.location.href = './quizzes.html'
+        }
+    </script>
 </body>
 
 </html>
