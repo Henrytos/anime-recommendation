@@ -2,7 +2,7 @@ const database = require("../database/config");
 
 function auth(email, password) {
   const query = `
-        SELECT * FROM users WHERE email = '${email}' AND password_hash = SHA2('${password}', 512);
+        SELECT * FROM users WHERE email = '${email}' AND password_hash = SHA2('${password}', ${process.env.MYSQL_HASH_LENGTH});
     `;
   ;
 
@@ -29,7 +29,7 @@ function findByUserId(userId) {
 
 function create(username, email, password, avatar) {
   const query = `
-    INSERT INTO users(username, email, password_hash, avatar_url) VALUES ('${username}', '${email}', SHA2('${password}'), '${avatar}');
+    INSERT INTO users(username, email, password_hash, avatar_url) VALUES ('${username}', '${email}', SHA2('${password}',${process.env.MYSQL_HASH_LENGTH}), '${avatar}');
     `;
   ;
 

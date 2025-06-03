@@ -22,6 +22,7 @@ function createUserController(request, response) {
           return response.json(200);
         })
         .catch((error) => {
+          console.log(error)
           return response.status(500).json(error.sqlMessage);
         });
     }

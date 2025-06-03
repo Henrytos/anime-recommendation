@@ -338,6 +338,7 @@ async function seedInDatabase() {
             WHEN TIMESTAMPDIFF(SECOND, comments.created_at, NOW()) < 60 THEN CONCAT('Há ', TIMESTAMPDIFF(SECOND, comments.created_at, NOW()), ' segundos')
             WHEN TIMESTAMPDIFF(MINUTE, comments.created_at, NOW()) < 60 THEN CONCAT('Há ', TIMESTAMPDIFF(MINUTE, comments.created_at, NOW()), ' minutos')
             WHEN TIMESTAMPDIFF(HOUR, comments.created_at, NOW()) < 24 THEN CONCAT('Há ', TIMESTAMPDIFF(HOUR, comments.created_at, NOW()), ' horas')
+            WHEN TIMESTAMPDIFF(DAY, comments.created_at, NOW()) = 1 THEN CONCAT('Há ', TIMESTAMPDIFF(DAY, comments.created_at, NOW()), ' dia')
             WHEN TIMESTAMPDIFF(DAY, comments.created_at, NOW()) < 7 THEN CONCAT('Há ', TIMESTAMPDIFF(DAY, comments.created_at, NOW()), ' dias')
             WHEN TIMESTAMPDIFF(WEEK, comments.created_at, NOW()) < 4 THEN CONCAT('Há ', TIMESTAMPDIFF(WEEK, comments.created_at, NOW()), ' semanas')
             WHEN TIMESTAMPDIFF(MONTH, comments.created_at, NOW()) < 12 THEN CONCAT('Há ', TIMESTAMPDIFF(MONTH, comments.created_at, NOW()), ' meses')
