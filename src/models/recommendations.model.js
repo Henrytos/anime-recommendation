@@ -40,6 +40,15 @@ function findByUserMetricsMappings(userId) {
 }
 
 
+function findByUserMetricsComments(userId) {
+  const query = `
+    
+  `
+
+  return database.execute(query)
+}
+
+
 module.exports = {
   findManyRecommendations,
   findRecommendationLastWeekByUserId,

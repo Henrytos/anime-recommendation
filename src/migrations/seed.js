@@ -67,7 +67,7 @@ async function seedInDatabase() {
   // ANIMES
   const animes = [];
 
-  for (let page = 1; page <= 5; page++) {
+  for (let page = 1; page <= 10; page++) {
     const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`)
     const result = await response.json()
 

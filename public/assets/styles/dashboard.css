@@ -359,23 +359,24 @@ a {
 
 .charts {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 32px;
+  margin-bottom: 32px;
+  max-height: 500px;
 }
 
 .chart-quizzes {
   grid-column-start: 1;
   grid-column-end: 6;
 }
-
-.indicators {
+.chart-comments {
   grid-column-start: 6;
-  grid-column-end: 10;
+  grid-column-end: 11;
 }
 
 .chart-mapping {
-  grid-column-start: 10;
-  grid-column-end: 13;
+  grid-column-start: 11;
+  grid-column-end: 14;
 }
 
 .histories {
@@ -546,4 +547,65 @@ a {
     grid-template-columns: repeat(6, 1fr);
     gap: 10px;
   }
+}
+
+.indicators {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.indicator {
+  border-radius: 16px;
+  border-left: 4px solid var(--color-red);
+  height: 300px;
+  background-color: var(--color-background);
+  margin-bottom: 32px;
+  padding: 20px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.indicator h4 {
+  font-size: var(--size-2xl);
+  font-weight: var(--font-normal);
+}
+
+.indicator .number {
+  font-size: var(--size-4xl);
+  font-weight: var(--font-normal);
+  transform: translateY(-40px);
+}
+
+.percentage {
+  font-size: 16px;
+  color: #84cc77;
+}
+
+.legend p {
+  margin-top: 10px;
+}
+
+.indicator .image-indicator {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+}
+
+.indicator-anime {
+  cursor: pointer;
+}
+
+.image-character {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  border-radius: 4px;
+  height: auto;
 }

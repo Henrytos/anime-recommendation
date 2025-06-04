@@ -55,6 +55,66 @@
         </nav>
 
         <div class="content">
+
+            <div class="indicators">
+                <div class="indicator">
+                    <h4>Média De Recomendações</h4>
+
+                    <p class="number">
+                        20
+
+                        <span class="percentage">
+                            +15%
+                        </span>
+                    </p>
+
+                    <span class="legend">
+                        <p>Média da semana passada: 4</p>
+
+                        <p>Está acima da média da semana passada :)</p>
+                    </span>
+
+                    <img src="./assets/icons/icon-star.svg" class="image-indicator" alt="">
+                </div>
+
+                <div class="indicator">
+                    <h4>Média Comentarios</h4>
+
+                    <p class="number">
+                        30
+
+                        <span class="percentage">
+                            +10%
+                        </span>
+                    </p>
+
+                    <span class="legend">
+                        <p>Média da semana passada: 27</p>
+
+                        <p>Está acima da média da semana passada :)</p>
+                    </span>
+
+                    <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
+                </div>
+
+                <div class="indicator indicator-anime">
+                    <h4>Anime Mais Popular</h4>
+                    <p class="number">
+                        Souso...
+                    </p>
+
+                    <span class="legend">
+                        <p>Top 1 Do Rank Da Plataforma</p>
+                        <p>Foi Recomendado há +190 Usuarios</p>
+                    </span>
+                    <img src="./assets/icons/icon-chart.svg" class="image-indicator" alt="">
+
+                    <img src="https://cdn.myanimelist.net/images/characters/7/525105.jpg?s=1706604ec2ca141a172526b8dedf3177"
+                        alt="image-character" class="image-character">
+                </div>
+            </div>
+
+
             <div class="charts">
                 <div class="chart-quizzes">
                     <h2 class="title">
@@ -66,8 +126,15 @@
                     </div>
                 </div>
 
-                <div class="indicators">
 
+                <div class="chart-comments">
+                    <h2 class="title">
+                        Comentarios
+                    </h2>
+
+                    <div class="div-content-chart">
+                        <canvas id="chart_bar_comments"></canvas>
+                    </div>
                 </div>
 
                 <div class="chart-mapping">
@@ -280,6 +347,8 @@
             }
 
             const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
+            const chartBarComments = new Chart(chart_bar_comments, optionsChartBarQuizzes)
+
             const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
             const buttonTheme = document.getElementById('button_theme')
 

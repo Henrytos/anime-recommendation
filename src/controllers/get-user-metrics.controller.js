@@ -21,6 +21,7 @@ async function getUserMetricsController(request, response) {
         });
     }
     const userMetricsQuizzes = await recommendationsModel.findByUserMetricsQuizzes(userId)
+    // const userMetricsComments = await recommendationsModel.findByUserMetricsComments(userId)
     const userMetricsMappings = await recommendationsModel.findByUserMetricsMappings(userId)
 
     return response.status(200).json({
