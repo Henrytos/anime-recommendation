@@ -183,7 +183,7 @@
             verifySlideFinished()
         }
 
-        function verifySlideFinished() {
+        async function verifySlideFinished() {
             const questionsSection = document.querySelectorAll(".question");
 
             if (slide < sizeSlide) {
@@ -197,24 +197,43 @@
                 let newSlide = document.querySelector('.content-final')
                 nextSlide(newSlide, oldSlide)
 
-                let bestRecommendedPoints = animesMapping[0].points
-                let bestRecommendedPointsAnimeId = animesMapping[0].anime_id
+                const sortAnimes = sortAnimeByPoints(animesMapping)
 
-                for (let positionAnime = 0; positionAnime < animesMapping.length; positionAnime++) {
-                    const anime = animesMapping[positionAnime];
+                const userId = sessionStorage.getItem("user_id")
+                const headers = new Headers()
+                headers.append("userId", userId)
 
-                    if (anime.points > bestRecommendedPoints) {
-                        bestRecommendedPoints = anime.points
-                        bestRecommendedPointsAnimeId = anime.anime_id
+                const response = await fetch("/users/recommendations", {
+                    headers
+                })
+                const { recommendations: oldRecommendations } = await response.json()
+
+                let recommendationsFilter = []
+
+                for (let index = 0; index < sortAnimes.length; index++) {
+                    const currentAnime = sortAnimes[index]
+
+                    for (let indexOldAnime = 0; indexOldAnime < oldRecommendations.length; indexOldAnime++) {
+                        const oldRecommendation = oldRecommendations[indexOldAnime]
+                        const lastIndex = oldRecommendations.length - 1
+
+                        if (oldRecommendation.anime_id == currentAnime.anime_id) break
+
+                        if (indexOldAnime == lastIndex) {
+                            recommendationsFilter.push(currentAnime)
+                        }
                     }
+
                 }
+
 
                 const TIME_TWO_SECONDS = 2000;
                 setTimeout(() => {
                     const url = new URL(window.location.href)
                     const quizId = url.searchParams.get("quiz_id")
-                    const userId = sessionStorage.getItem("user_id")
+                    const bestRecommendedPointsAnimeId = recommendationsFilter[recommendationsFilter.length - 1].anime_id
 
+                    console.log(recommendationsFilter)
                     fetch("/quiz/result", {
                         method: "POST",
                         headers: {
@@ -237,6 +256,28 @@
             newElement.classList.add("slide-show");
 
             slide++
+        }
+
+
+        function sortAnimeByPoints(animes) {
+            if (animes.length <= 1) return animes;
+
+            let minorAnimesPoints = [];
+            let majorAnimesPoints = [];
+
+            let positionMedium = Math.floor(animes.length / 2);
+            let comparisonAnimes = animes[positionMedium];
+
+            for (let position = 0; position < animes.length; position++) {
+                let anime = animes[position];
+
+                if (position == positionMedium) continue;
+
+                if (anime.points <= comparisonAnimes.points) minorAnimesPoints.push(anime);
+                else majorAnimesPoints.push(anime);
+            }
+
+            return [...sortAnimeByPoints(minorAnimesPoints), comparisonAnimes, ...sortAnimeByPoints(majorAnimesPoints)];
         }
 
     </script>
