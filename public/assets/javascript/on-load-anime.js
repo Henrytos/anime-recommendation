@@ -35,16 +35,6 @@ async function renderAnime(animeId) {
   const recommendations = await responseRecommendations.json();
   const sevenRecommendations = recommendations.data.slice(0, 7);
 
-  /*
-        ids: 
-        h1_anime_title
-        p_anime_description
-        img_anime_preview_cover
-        
-        div_characters
-        div_recommendations
-    */
-
   h1_anime_title.innerHTML = anime.data.title;
   p_anime_description.innerHTML = anime.data.synopsis.slice(0, 800) + "...";
   img_anime_preview_cover.src = anime.data.images.jpg.large_image_url;
@@ -80,6 +70,11 @@ async function renderAnime(animeId) {
             </h2>
         </a>
         `;
+  }
+
+  const node = document.getElementById("spinner");
+  if (node.parentNode) {
+    node.parentNode.removeChild(node);
   }
 }
 

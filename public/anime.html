@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="./assets/icons/logo.png" type="image/x-icon">
 </head>
 
-<body>
+<body class="invisible">
     <section class="start container">
         <nav class="nav-bar">
             <a href="./index.html">
@@ -58,29 +58,15 @@
             <div class='details'>
                 <div>
                     <h1 class='title' id="h1_anime_title">
-                        Boku no Hero Academia
+
                     </h1>
                     <p id="p_anime_description">
-                        The appearance of "quirks," newly discovered super powers, has been steadily increasing over the
-                        years, with 80 percent
-                        of humanity possessing various abilities from manipulation of elements to shapeshifting. This
-                        leaves the remainder of
-                        the world completely powerless, and Izuku Midoriya is one such individual.
-
-                        Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero.
-                        Izuku's unfair fate
-                        Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero.
-                        Izuku's unfair fate
-                        Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero.
-                        Izuku's unfair fate
-                        Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero.
-                        Izuku's unfair fate
 
                     </p>
                 </div>
                 <div>
                     <h3 class='title'>
-                        Personagens
+
                     </h3>
                     <div class='characters' id="div_characters">
                     </div>
@@ -88,16 +74,16 @@
 
             </div>
             <div class='anime-cover'>
-                <img src='https://cdn.myanimelist.net/images/anime/1089/121748l.jpg' alt='cover anime'
-                    id="img_anime_preview_cover" />
+                <img src='' alt='cover anime' id="img_anime_preview_cover" />
             </div>
 
             <h3 class='title'>
-                Similares
+
             </h3>
             <div class="posters" id="div_recommendations">
-
             </div>
+
+
         </div>
 
 
@@ -149,7 +135,7 @@
                     placeholder="The appearance of " quirks," newly discovered super powers, has been steadily
                     increasing over the years, with 80 percent o"></textarea>
                 <div class="buttons-comment">
-                    <button onclick="cleanComment()">
+                    <button id="button_clear_comment">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-trash-icon lucide-trash">
@@ -160,7 +146,7 @@
                         <span>Limpar</span>
                     </button>
 
-                    <button onclick="registerComment()">
+                    <button id="button_add_comment">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-check-icon lucide-check">
@@ -246,86 +232,12 @@
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
     <script src="./assets/javascript/on-load-anime.js" type="module" defer></script>
+    <script src="./assets/javascript/on-submit-comment.js" type="module" defer></script>
 
-    <script>
-        async function renderComments(animeId) {
-            const response = await fetch(`/comments/${animeId}`)
-            const data = await response.json()
-
-            const comments = data.comments
-
-
-            let commentsContent = ''
-
-            for (let position = 0; position < comments.length; position++) {
-                let comment = comments[position]
-
-                commentsContent += `
-    <div class="comment">
-        <img src="./assets/uploads/${comment.avatar_url}"
-            alt="" class="profile-comment">
-        <div class="details-comment">
-            <div class="top">
-                <h3>
-                  ${comment.username}
-                </h3>
-                <p>
-                    ${comment.time_relative}
-                </p>
-            </div>
-            <p>
-                ${comment.description}
-            </p>
-        </div>
+    <!-- SPINNER -->
+    <div class="div-spinner" id="spinner">
+        <div class="spinner"></div>
     </div>
-    `
-            }
-
-
-            div_comments.innerHTML = commentsContent
-        }
-
-        function cleanComment() {
-            document.getElementById("comment-content").value = ""
-        }
-
-        function registerComment() {
-            const url = new URL(window.location.href)
-            const animeId = url.searchParams.get("animeId")
-            const comment = document.getElementById("comment-content").value
-            const userId = sessionStorage.user_id
-            if (comment == "") {
-                alert("preencha o comentario!!")
-                return
-            }
-
-            console.log({
-                description: comment,
-                animeId,
-                userId
-            })
-            fetch("/comments", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    description: comment,
-                    animeId,
-                    userId
-                })
-            }).then(response => {
-                if (response.ok) {
-                    cleanComment()
-                    renderComments(animeId)
-                } else {
-                    alert("deu tudo errado")
-                }
-            })
-        }
-
-    </script>
-
 </body>
 
 </html>
