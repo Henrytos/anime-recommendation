@@ -132,31 +132,63 @@ async function seedInDatabase() {
   console.log("seed animes ✅");
 
 
+
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth(); // sem +1 aqui, só no formato final
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  const quizResults = Array.from({ length: 100 }, (_) => ({
+    fk_user_id: 1,
+    fk_quiz_id: 1000,
+    fk_anime_id: animesOrder[Math.floor(Math.random() * animesOrder.length)].anime_id,
+    created_at: formatDate(new Date(year, month, day - Math.floor(Math.random() * 7), hour, minutes, seconds)),
+  }));
+
+  for (let position = 0; position < 50; position++) {
+
+    let min = 0, max = quizResults.length
+    let interval = max - min
+    let randomPosition = Math.floor(Math.random() * interval)
+    let result = quizResults[randomPosition]
+
+    await client.query(
+      `INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id, created_at)
+      VALUES (?, ?, ?, ?)`,
+      [result.fk_user_id, result.fk_quiz_id, result.fk_anime_id, result.created_at]
+    );
+  }
+
+  console.log("seed quiz_result ✅");
+
   // COMMENTS
   const comments = [
     {
-      comment_id: 1,
-      fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
+      fk_anime_id: quizResults[Math.floor(Math.random() * quizResults.length)].fk_anime_id,
       fk_user_id: 1,
       description: "Anime incrível, cheio de ação!",
     },
     {
-      comment_id: 2,
-      fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
-      fk_user_id: 2,
+      fk_anime_id: quizResults[Math.floor(Math.random() * quizResults.length)].fk_anime_id,
+      fk_user_id: 1,
       description: "Muito fofo e emocionante.",
     },
   ];
-  for (let position = 0; position < 6; position++) {
+  for (let position = 0; position < 50; position++) {
 
     let min = 0, max = comments.length
     let interval = max - min
     let randomPosition = Math.floor(Math.random() * interval)
     let result = comments[randomPosition]
+    const created_at = formatDate(new Date(year, month, day - Math.floor(Math.random() * 7), hour, minutes, seconds))
+
 
     await client.query(
-      `INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description)
-      VALUES (DEFAULT, ${result.fk_anime_id}, ${result.fk_user_id}, '${result.description}')`,
+      `INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description, created_at)
+      VALUES (DEFAULT, ${result.fk_anime_id}, ${result.fk_user_id}, '${result.description}', '${created_at}')`,
     );
   }
   console.log("seed comments ✅");
@@ -273,49 +305,19 @@ async function seedInDatabase() {
   console.log("seed alternatives ✅");
 
 
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth(); // sem +1 aqui, só no formato final
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-
-  function formatDate(d) {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const h = String(d.getHours()).padStart(2, '0');
-    const min = String(d.getMinutes()).padStart(2, '0');
-    const s = String(d.getSeconds()).padStart(2, '0');
-    return `${y}-${m}-${day} ${h}:${min}:${s}`;
-  }
-
-  const quizResults = Array.from({ length: 100 }, (_) => ({
-    fk_user_id: 1,
-    fk_quiz_id: 1000,
-    fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
-    created_at: formatDate(new Date(year, month, day - Math.floor(Math.random() * 7), hour, minutes, seconds)),
-  }));
-
-  for (let position = 0; position < 50; position++) {
-
-    let min = 0, max = quizResults.length
-    let interval = max - min
-    let randomPosition = Math.floor(Math.random() * interval)
-    let result = quizResults[randomPosition]
-
-    await client.query(
-      `INSERT INTO quiz_result (fk_user_id, fk_quiz_id, fk_anime_id, created_at)
-      VALUES (?, ?, ?, ?)`,
-      [result.fk_user_id, result.fk_quiz_id, result.fk_anime_id, result.created_at]
-    );
-  }
-
-  console.log("seed quiz_result ✅");
-
   await client.end();
   console.log("disconnection mysql ✅");
+}
+
+
+function formatDate(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const h = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+  const s = String(d.getSeconds()).padStart(2, '0');
+  return `${y}-${m}-${day} ${h}:${min}:${s}`;
 }
 
 seedInDatabase();

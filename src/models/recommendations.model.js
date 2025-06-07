@@ -42,7 +42,23 @@ function findByUserMetricsMappings(userId) {
 
 function findByUserMetricsComments(userId) {
   const query = `
-    
+SELECT
+    comments.fk_user_id AS user_id,
+    COUNT(*) AS 'quantity',
+    CASE
+      WHEN DAY(created_at) = DAY(NOW()) THEN "hoje"
+      WHEN DAYNAME(created_at) = "Monday" THEN "segunda-feira"
+      WHEN DAYNAME(created_at) = "Tuesday" THEN "terça-feira"
+      WHEN DAYNAME(created_at) = "Wednesday" THEN "quarta-feira"
+      WHEN DAYNAME(created_at) = "Thursday" THEN "quinta-feira"
+      WHEN DAYNAME(created_at) = "Friday" THEN "sexta-feira"
+      WHEN DAYNAME(created_at) = "Saturday" THEN "sábado"
+      WHEN DAYNAME(created_at) = "Sunday" THEN "domingo"
+    END AS date
+    FROM comments
+    WHERE TIMESTAMPDIFF(DAY,created_at, NOW()) < 7 AND comments.fk_user_id = ${userId}
+    GROUP BY DAY(created_at), MONTH(created_at), date, fk_user_id
+    ORDER BY MONTH(created_at) ASC, DAY(created_at) ASC;
   `
 
   return database.execute(query)
@@ -53,5 +69,6 @@ module.exports = {
   findManyRecommendations,
   findRecommendationLastWeekByUserId,
   findByUserMetricsQuizzes,
-  findByUserMetricsMappings
+  findByUserMetricsMappings,
+  findByUserMetricsComments
 };

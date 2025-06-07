@@ -74,14 +74,14 @@
                         <p>Está acima da média da semana passada :)</p>
                     </span>
 
-                    <img src="./assets/icons/icon-star.svg" class="image-indicator" alt="">
+                    <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
                 </div>
 
                 <div class="indicator">
-                    <h4>Média Comentarios</h4>
+                    <h4>Nivel de engajamento</h4>
 
                     <p class="number">
-                        30
+                        120%
 
                         <span class="percentage">
                             +10%
@@ -89,12 +89,12 @@
                     </p>
 
                     <span class="legend">
-                        <p>Média da semana passada: 27</p>
+                        <p>Quantidade de comentarios: 14</p>
 
-                        <p>Está acima da média da semana passada :)</p>
+                        <p>Quantidade de recomendações : 10</p>
                     </span>
 
-                    <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
+                    <img src="./assets/icons/icon-star.svg" class="image-indicator" alt="">
                 </div>
 
                 <div class="indicator indicator-anime">
@@ -233,7 +233,8 @@
     </div>
 
     <script>
-
+        let page = 1
+        let perPage = 10
 
         window.addEventListener("DOMContentLoaded", async () => {
 
@@ -248,9 +249,7 @@
                 headers,
             })
 
-            const dataMetrics = await responseMetrics.json()
-            console.log(dataMetrics)
-            const quizzes = dataMetrics.quizzes
+            const { quizzes, mappings, comments } = await responseMetrics.json()
 
             const quizzesDates = []
             const quizzesQuantities = []
@@ -262,7 +261,16 @@
                 quizzesQuantities.push(quiz.quantity)
             }
 
-            const mappings = dataMetrics.mappings
+            const commentsDates = []
+            const commentsQuantities = []
+
+            for (let count = 0; count < comments.length; count++) {
+                let quiz = comments[count]
+
+                commentsDates.push(quiz.date)
+                commentsQuantities.push(quiz.quantity)
+            }
+
             const mappingsTarget = []
             const mappingsQuantities = []
 
@@ -319,6 +327,51 @@
                 }
             }
 
+            const optionsChartBarComments = {
+                type: 'bar',
+                data: {
+                    labels: commentsDates,
+                    datasets: [
+                        {
+                            label: 'Quantidade',
+                            data: commentsQuantities,
+                            borderColor: '#cb4648',
+                            backgroundColor: '#cb4648'
+                        },
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#fff'
+                            }
+                        },
+                        datalabels: {
+                            color: '#fff'
+
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#fff',
+                                beginAtZero: true,
+
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#fff',
+                                beginAtZero: true,
+
+                            }
+                        },
+
+                    }
+                }
+            }
 
             const optionsChartPieMapping = {
                 type: 'pie',
@@ -347,7 +400,7 @@
             }
 
             const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
-            const chartBarComments = new Chart(chart_bar_comments, optionsChartBarQuizzes)
+            const chartBarComments = new Chart(chart_bar_comments, optionsChartBarComments)
 
             const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
             const buttonTheme = document.getElementById('button_theme')
@@ -382,12 +435,14 @@
             console.log({
                 recommendations
             })
+
+
             let contentRecommendations = ''
 
-            for (let count = 0; count < recommendations.length; count++) {
+
+
+            for (let count = page - 1; count < perPage * page && count < recommendations.length; count++) {
                 let recommendation = recommendations[count]
-
-
 
                 const colorMap = {
                     [mappingsTarget[0]]: '#cb4648',
@@ -423,11 +478,11 @@
                 headers,
             })
             const dataComments = await responseComments.json()
-            const comments = dataComments.comments.slice(0, 5)
+            const commentsFromUser = dataComments.comments
             let contentComments = ''
 
-            for (let count = 0; count < comments.length; count++) {
-                let comment = comments[count]
+            for (let count = 0; count < commentsFromUser.length; count++) {
+                let comment = commentsFromUser[count]
                 const avatarUrl = JSON.parse(sessionStorage.avatar_url)
                 contentComments += `
                     <a class="comment" href='./anime.html?animeId=${comment.anime_id}'>

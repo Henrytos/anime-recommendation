@@ -8,7 +8,7 @@
     "dev": "nodemon --exec node app.js",
     "migrate:dev": "node --env-file=.env ./src/migrations/migration.js",
     "seed": "node --env-file=.env ./src/migrations/seed.js",
-    "views": "node --env-file=.env ./src/migrations/view.js"
+    "view": "node --env-file=.env ./src/migrations/view.js"
 
   },
   "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",

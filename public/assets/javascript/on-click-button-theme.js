@@ -117,7 +117,7 @@ const images = {
         file: "logo-home.png",
       },
       light: {
-        file: "logo-home-light.png",
+        file: "logo-red.png",
       },
     },
   ],
@@ -137,7 +137,7 @@ const images = {
         file: "logo-home.png",
       },
       light: {
-        file: "logo-home-light.png",
+        file: "logo-red.png",
       },
     },
   ],
@@ -148,7 +148,7 @@ const images = {
         file: "logo-home.png",
       },
       light: {
-        file: "logo-home-light.png",
+        file: "logo-red.png",
       },
     },
   ],
@@ -159,7 +159,7 @@ const images = {
         file: "logo-home.png",
       },
       light: {
-        file: "logo-home-light.png",
+        file: "logo-red.png",
       },
     },
   ],
@@ -170,7 +170,7 @@ const images = {
         file: "logo-home.png",
       },
       light: {
-        file: "logo-home-light.png",
+        file: "logo-red.png",
       },
     },
   ],
@@ -181,7 +181,7 @@ const images = {
         file: "logo-home.png",
       },
       light: {
-        file: "logo-home-light.png",
+        file: "logo-red.png",
       },
     },
   ],
