@@ -145,3 +145,5 @@ async function createTablesInDatabase() {
 }
 
 createTablesInDatabase();
+
+module.exports = createTablesInDatabase
