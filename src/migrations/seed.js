@@ -68,7 +68,7 @@ async function seedInDatabase() {
   // ANIMES
   const animes = [];
 
-  for (let page = 1; page <= 1; page++) {
+  for (let page = 1; page <= 20; page++) {
     const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`)
     const result = await response.json()
 
@@ -291,14 +291,14 @@ async function seedInDatabase() {
     return `${y}-${m}-${day} ${h}:${min}:${s}`;
   }
 
-  const quizResults = Array.from({ length: 100 }, (_, i) => ({
+  const quizResults = Array.from({ length: 100 }, (_) => ({
     fk_user_id: 1,
     fk_quiz_id: 1000,
     fk_anime_id: animesOrder[Math.floor(Math.random() * animes.length)].anime_id,
-    created_at: formatDate(new Date(year, month, day - i, hour, minutes, seconds)),
+    created_at: formatDate(new Date(year, month, day - Math.floor(Math.random() * 7), hour, minutes, seconds)),
   }));
 
-  for (let position = 0; position < 5; position++) {
+  for (let position = 0; position < 50; position++) {
 
     let min = 0, max = quizResults.length
     let interval = max - min

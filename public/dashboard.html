@@ -328,8 +328,8 @@
                         {
                             label: 'Quantidade',
                             data: mappingsQuantities,
-                            borderColor: ['#cb4648', '#a39fbf', '#313646', '#754946'],
-                            backgroundColor: ['#cb4648', '#a39fbf', '#313646', '#754946']
+                            borderColor: ['#cb4648', '#a39fbf', '#313646', '#754946', '#f3f3f3', '#141617', '#6A92E8'],
+                            backgroundColor: ['#cb4648', '#a39fbf', '#313646', '#754946', '#f3f3f3', '#141617', '#6A92E8']
                         },
                     ]
                 },
@@ -386,27 +386,29 @@
 
             for (let count = 0; count < recommendations.length; count++) {
                 let recommendation = recommendations[count]
-                let color = ""
 
-                if (recommendation.gender == mappingsTarget[0]) {
-                    color = '#cb4648'
-                }
-                else if (recommendation.gender == mappingsTarget[1]) {
-                    color = '#a39fbf'
-                }
-                else if (recommendation.gender == mappingsTarget[2]) {
-                    color = '#313646'
-                }
-                else if (recommendation.gender == mappingsTarget[3]) {
-                    color = '#754946'
-                }
+
+
+                const colorMap = {
+                    [mappingsTarget[0]]: '#cb4648',
+                    [mappingsTarget[1]]: '#a39fbf',
+                    [mappingsTarget[2]]: '#313646',
+                    [mappingsTarget[3]]: '#754946',
+                    [mappingsTarget[4]]: '#f3f3f3',
+                    [mappingsTarget[5]]: '#141617',
+                    [mappingsTarget[6]]: '#6A92E8'
+                };
+
+                const backgroundColor = colorMap[recommendation.gender];
+
+                const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
 
                 contentRecommendations += `
-                  <div class="recommendation mapping-1" style="background-color:${color}">
+                  <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
                         <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
                             <img src="${recommendation.image_url}"
                                 alt="image preview anime" class="recommendation-image-preview">
-                            <h4 class="recommendation-title">
+                            <h4 class="recommendation-title" style="color:${colorForeground}">
                                 ${recommendation.title.length > 15 ? recommendation.title.slice(0, 15).concat("...") : recommendation.title}
                             </h4>
                         </a>

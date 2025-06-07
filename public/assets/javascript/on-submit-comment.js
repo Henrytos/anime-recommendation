@@ -76,6 +76,27 @@ function registerComment() {
     const { avatarUrl, username } = auth()
 
     const contents = String(div_comments.innerHTML)
+    if (contents.includes('not-found')) {
+        div_comments.innerHTML = `
+         <div class="comment">
+            <img src="./assets/uploads/${avatarUrl}" alt="" class="profile-comment">
+            <div class="details-comment">
+                <div class="top">
+                    <h3>
+                        ${username}
+                    </h3>
+                    <p>
+                        0 segundo atrás
+                    </p>
+                </div>
+                <p>
+                ${comment}
+                </p>
+            </div>
+        </div>
+        `
+        return
+    }
     const newComment = `
         <div class="comment">
             <img src="./assets/uploads/${avatarUrl}" alt="" class="profile-comment">

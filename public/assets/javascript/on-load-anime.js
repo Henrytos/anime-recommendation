@@ -72,6 +72,14 @@ async function renderAnime(animeId) {
         `;
   }
 
+  if (sevenRecommendations.length == 0) {
+    const title = document.getElementById("title-recommendations-animes")
+    const content = document.getElementById("div_recommendations")
+    title.style.display = 'none'
+    content.style.display = "none"
+    second.style.paddingTop = '32px'
+  }
+
   const node = document.getElementById("spinner");
   if (node.parentNode) {
     node.parentNode.removeChild(node);
@@ -85,6 +93,15 @@ async function renderComments(animeId) {
 
   const comments = data.comments
 
+  if (comments.length == 0) {
+    div_comments.innerHTML = `
+      <div class='not-found'>
+        <img src='./assets/images/not-found-loli.png' alt='nenhum comentario encontrado' width="427"  />
+        <h1 class="title-not-found">Sem comentarios </h1>
+      </div>
+    `
+    return
+  }
 
   let commentsContent = ''
 
@@ -92,24 +109,24 @@ async function renderComments(animeId) {
     let comment = comments[position]
 
     commentsContent += `
-    <div class="comment">
-        <img src="./assets/uploads/${comment.avatar_url}"
-            alt="" class="profile-comment">
-        <div class="details-comment">
-            <div class="top">
-                <h3>
-                  ${comment.username}
-                </h3>
-                <p>
-                    ${comment.time_relative}
-                </p>
-            </div>
-            <p>
-                ${comment.description}
-            </p>
-        </div>
-    </div>
-    `
+      <div class="comment">
+          <img src="./assets/uploads/${comment.avatar_url}"
+              alt="" class="profile-comment">
+          <div class="details-comment">
+              <div class="top">
+                  <h3>
+                    ${comment.username}
+                  </h3>
+                  <p>
+                      ${comment.time_relative}
+                  </p>
+              </div>
+              <p>
+                  ${comment.description}
+              </p>
+          </div>
+      </div>
+      `
   }
 
 

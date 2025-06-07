@@ -71,7 +71,7 @@ const background = {
     {
       selector: ".start",
       dark: {
-        file: "background-start.png",
+        file: "back-ground-quizzes-opacity.png",
       },
       light: {
         file: "background-start-white.png",

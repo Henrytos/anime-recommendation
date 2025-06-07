@@ -451,7 +451,7 @@ body {
 
 .title {
   font-size: var(--size-4xl);
-  color: var(--color-red);
+  color: var(--color-background-foreground);
   font-weight: var(--font-bold);
   transform: translate(20px, 0px);
   margin-bottom: 20px;
@@ -461,7 +461,7 @@ body {
   content: " ";
   width: 10px;
   height: 100%;
-  background-color: var(--color-red);
+  background-color: var(--color-background-foreground);
   display: block;
   position: absolute;
   transform: translate(-20px, 5px);
@@ -520,12 +520,15 @@ h3 {
 
 .comment .top {
   display: flex;
+  width: 100%;
+  align-items: end;
   justify-content: space-between;
 }
 
 .comment .details-comment {
   display: flex;
   flex-direction: column;
+  width: 100%;
   height: 100%;
   justify-content: center;
   gap: 12px;
@@ -659,4 +662,18 @@ h3 {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.not-found {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-not-found {
+  color: #6a92e8;
+  font-weight: var(--font-semibold);
+  font-size: var(--size-4xl);
 }
