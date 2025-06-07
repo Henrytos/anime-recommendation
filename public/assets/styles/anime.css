@@ -42,6 +42,9 @@ html {
   height: auto;
   position: relative;
 }
+body {
+  position: relative;
+}
 
 .layout {
   position: absolute;
@@ -621,4 +624,39 @@ h3 {
 .create-comment .buttons-comment button:nth-child(2) {
   background-color: var(--color-purple-light);
   color: var(--color-background-foreground);
+}
+
+/*  SPINNER */
+.div-spinner {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+  background-color: var(--color-background);
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #e63946;
+  border-radius: 100%;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
