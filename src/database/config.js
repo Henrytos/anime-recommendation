@@ -33,7 +33,7 @@ function execute(query) {
       resolve(results);
     });
     connection.on("error", function (error) {
-      return "ERRO NO MySQL SERVER: ", error.sqlMessage;
+      return "ERROR NO MySQL SERVER: ", error.sqlMessage;
     });
   });
 }

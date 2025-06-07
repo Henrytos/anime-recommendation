@@ -17,12 +17,16 @@ const {
   getUserMetricsController,
 } = require("../controllers/get-user-metrics.controller.js");
 
+const { getUserMetricsKpiController } = require("../controllers/get-user-metrics-kpi.controller.js")
+
 const upload = require("../config/configUpload");
 
 router.post("/", upload.single("avatarUrl"), createUserController);
 router.post("/auth", authenticateWithPasswordController);
 router.get("/recommendations", fetchRecommendationsController);
 router.get("/comments", fetchCommentsController);
-router.get("/metrics", getUserMetricsController);
+router.get("/metrics/chart", getUserMetricsController);
+router.get("/metrics/kpi", getUserMetricsKpiController);
+
 
 module.exports = router;

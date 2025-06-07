@@ -245,7 +245,7 @@
             headers.append("userId", userId)
             console.log(headers)
 
-            const responseMetrics = await fetch("/users/metrics", {
+            const responseMetrics = await fetch("/users/metrics/chart", {
                 headers,
             })
 

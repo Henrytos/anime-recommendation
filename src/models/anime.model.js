@@ -22,8 +22,21 @@ function create(anime_id, title, image_url, target_audience, gender, score) {
   return database.execute(query)
 }
 
+function getPopularAnime() {
+  const query = `
+    SELECT fk_anime_id AS anime_id, COUNT(fk_anime_id) AS quantity_recommendation, animes.title
+		FROM quiz_result
+    JOIN animes ON quiz_result.fk_anime_id = animes.anime_id
+    GROUP BY fk_anime_id , animes.anime_id
+    ORDER BY quantity_recommendation DESC LIMIT 1;
+  `
+
+  return database.execute(query)
+}
+
 module.exports = {
   findByAnimeId,
   findMany,
-  create
+  create,
+  getPopularAnime
 };
