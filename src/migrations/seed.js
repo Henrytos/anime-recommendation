@@ -82,19 +82,17 @@ async function seedInDatabase() {
       const anime = animesResponse[position]
       const anime_id = anime.mal_id
       const title = anime.title
-      const description = anime.synopsis
       const image_url = anime.images.jpg.large_image_url
       const target_audience = anime.demographics[0]?.name
       const gender = anime.genres[0]?.name
       const score = anime.score
 
 
-      if (anime && anime_id && title && image_url && gender && description && target_audience && score) {
+      if (anime && anime_id && title && image_url && gender && target_audience && score) {
         animes.push({
           anime_id,
           title,
           image_url,
-          description,
           target_audience,
           gender,
           score
@@ -118,13 +116,12 @@ async function seedInDatabase() {
     let anime = animesOrder[position]
 
     await client.query(
-      `INSERT INTO animes (anime_id, title, image_url, description, target_audience, gender, score)
-      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO animes (anime_id, title, image_url, target_audience, gender, score)
+      VALUES (?, ?, ?, ?, ?, ?)`,
       [
         anime.anime_id,
         anime.title,
         anime.image_url,
-        anime.description,
         anime.target_audience,
         anime.gender,
         anime.score

@@ -12,7 +12,18 @@ function findMany() {
   return database.execute(query);
 }
 
+function create(anime_id, title, image_url, target_audience, gender, score) {
+  const query = `
+    INSERT INTO animes (anime_id, title, image_url, target_audience, gender, score)
+    VALUES (${anime_id}, '${title}', '${image_url}', '${target_audience}', '${gender}', ${score});
+    `
+  console.log(query)
+
+  return database.execute(query)
+}
+
 module.exports = {
   findByAnimeId,
-  findMany
+  findMany,
+  create
 };

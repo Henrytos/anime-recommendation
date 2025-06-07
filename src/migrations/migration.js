@@ -57,7 +57,6 @@ async function createTablesInDatabase() {
         anime_id INT PRIMARY KEY, 
         title VARCHAR(255),
         image_url VARCHAR(500),
-        description TEXT,
         target_audience VARCHAR(45) NOT NULL,
         gender VARCHAR(45) NOT NULL,
         score DECIMAL(4,2) DEFAULT 0
