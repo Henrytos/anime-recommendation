@@ -1,7 +1,7 @@
 const database = require("../database/config.js");
 
 function findManyRecommendations(userId) {
-  const query = `SELECT title, image_url, anime_id, gender FROM users_recommendations WHERE user_id = ${userId} ;`;
+  const query = `SELECT title, image_url, anime_id, gender, target_audience FROM users_recommendations WHERE user_id = ${userId} ;`;
   ;
 
   return database.execute(query);
