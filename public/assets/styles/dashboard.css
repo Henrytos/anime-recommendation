@@ -609,3 +609,21 @@ a {
   border-radius: 4px;
   height: auto;
 }
+
+/* NOT FOUND RECOMMENDATION */
+.not-found {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-not-found {
+  color: #6a92e8;
+  font-weight: var(--font-semibold);
+  font-size: var(--size-4xl);
+}

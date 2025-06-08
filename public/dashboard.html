@@ -65,7 +65,6 @@
                         <span class="percentage">
                             +2º
                         </span>
-
                     </p>
 
                     <span class="legend">
@@ -73,7 +72,6 @@
 
                         <p id="p_legend_rank">Está acima da média da semana passada :)</p>
                     </span>
-
                     <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
                 </div>
 
@@ -151,15 +149,16 @@
                         </h2>
 
                         <div class="filters">
-                            <select id="select_gender"></select>
-                            <select id="select_target_audience"></select>
+                            <select id="select_gender" onchange="searchRecommendation()"></select>
+                            <select id="select_target_audience" onchange="searchRecommendation()"></select>
                         </div>
                     </div>
 
                     <div class="recommendations" id="div_recommendations"></div>
 
                     <div id="div_links">
-
+                        <!-- PAGINATION -->
+                        <div class="pagination" id="div_pagination"></div>
                     </div>
                 </div>
 
@@ -167,14 +166,10 @@
                     <h2 class="title">Histórico de comentários</h2>
 
                     <div id="div_comments" class="comments"></div>
-
-
                 </div>
-
             </div>
 
-            <!-- PAGINATION -->
-            <div class="pagination"></div>
+
         </div>
 
         <div class="layout">
@@ -242,12 +237,62 @@
     </div>
 
     <script>
-        let page = 1, perPage = 10
+        let page = 1, perPage = 10, maxPages = 1
         let animePopular = 0
         let mappingsList
 
         function redirectAnimePopular() {
             window.location.href = `./anime.html?animeId=${animePopular}`
+        }
+
+        function searchRecommendation() {
+            const gender = select_gender.value
+            const targetAudience = select_target_audience.value
+
+            const userId = sessionStorage.getItem("user_id")
+            const headers = new Headers()
+            headers.append("userId", userId)
+
+            fetch(`/users/recommendations?gender=${gender}&targetAudience=${targetAudience}&page=${page}`, {
+                headers,
+            }).then(response => response.json()).then(({
+                filtersGender,
+                filtersTargetAudience,
+                recommendations,
+                page: pageCurrentInitial,
+                maxPages: maxPagesInitial
+            }) => {
+                page = pageCurrentInitial
+                maxPages = maxPagesInitial
+
+                renderRecommendations(recommendations)
+                renderPaginationButtons(page, maxPages)
+            })
+        }
+
+        function changePage(nextPage) {
+            const gender = select_gender.value
+            const targetAudience = select_target_audience.value
+
+            const userId = sessionStorage.getItem("user_id")
+            const headers = new Headers()
+            headers.append("userId", userId)
+
+            fetch(`/users/recommendations?gender=${gender}&targetAudience=${targetAudience}&page=${nextPage}`, {
+                headers,
+            }).then(response => response.json()).then(({
+                filtersGender,
+                filtersTargetAudience,
+                recommendations,
+                page: pageCurrentInitial,
+                maxPages: maxPagesInitial
+            }) => {
+                page = pageCurrentInitial
+                maxPages = maxPagesInitial
+
+                renderRecommendations(recommendations)
+                renderPaginationButtons(nextPage, maxPages)
+            })
         }
 
         window.addEventListener("DOMContentLoaded", () => {
@@ -268,8 +313,19 @@
 
                 fetch("/users/recommendations", {
                     headers,
-                }).then(response => response.json()).then(({ recommendations }) => {
+                }).then(response => response.json()).then(({
+                    filtersGender,
+                    filtersTargetAudience,
+                    recommendations,
+                    page: pageCurrentInitial,
+                    maxPages: maxPagesInitial
+                }) => {
+                    page = pageCurrentInitial
+                    maxPages = maxPagesInitial
+
                     renderRecommendations(recommendations)
+                    renderFilterSelects(filtersGender, filtersTargetAudience)
+                    renderPaginationButtons(page, maxPages)
                 })
             })
 
@@ -280,65 +336,25 @@
             })
         })
 
+        function renderPaginationButtons(currentPage, maxPages) {
+            let contentButtonPages = ''
 
-        function renderKpis(anime, engagement, rank) {
-            animePopular = anime.anime_id
-            const userId = JSON.parse(sessionStorage.user_id)
+            for (let page = 1; page <= maxPages; page++) {
 
-            image_character.src = anime.image_url
-            title_anime.innerHTML = anime.title.length > 14 ? anime.title.slice(0, 14).concat("...") : anime.title
-            span_number_recommendation.innerHTML = anime.quantity_recommendation
+                const className = 'button-page'
 
-            span_quantity_comments.innerHTML = engagement.quantity_comments
-            span_quantity_recommendations.innerHTML = engagement.quantity_recommendations
-
-            const difference = engagement.percentage_current - 100
-            span_percentage_engagement.innerHTML = `
-                ${Number(engagement.percentage_current).toFixed(0)}%
-                <span class="percentage">
-                    ${difference > 0 ? '+' : '-'} ${difference.toFixed(1)}%
-                </span>
-            `
-
-            let userRank = 1
-            for (let position = 0; position < rank.length; position++) {
-                const currentRank = rank[position]
-                if (currentRank.user_id == userId) {
-                    userRank = position + 1
-                    break
+                if (page == currentPage) {
+                    className.concat(' ', 'button-page-current')
                 }
+
+                contentButtonPages += `
+                <button class='${className}' onclick='changePage(${page})'>
+                    ${page}
+                </button>
+                `
             }
 
-            const rankLastWeek = sortUserByPoints(rank)
-            let userRankLastWeek = 1
-
-            for (let position = 0; position < rankLastWeek.length; position++) {
-                const currentRank = rankLastWeek[position]
-                if (currentRank.user_id == userId) {
-                    userRank = position + 1
-                    break
-                }
-            }
-
-            const differenceRank = userRankLastWeek - userRank
-            span_number_rank.innerHTML = `
-                 ${userRank}º RANK
-                 <span class="percentage">
-                 ${differenceRank >= 0 ? '+' : '-'}${differenceRank.toFixed(1)}º
-                 </span>
-            `
-            span_rank_last_week.innerHTML = userRankLastWeek
-
-            if (userRank == 1) {
-                p_legend_rank.innerHTML = `Parabéns ${JSON.parse(sessionStorage.username)} você é o top 1  🌟`
-            } else if (userRank == userRankLastWeek) {
-                p_legend_rank.innerHTML = `Foco no progresso ${JSON.parse(sessionStorage.username)} ✊`
-            }
-            else if (userRank > userRankLastWeek) {
-                p_legend_rank.innerHTML = `Sempre evoluindo Parabéns ${JSON.parse(sessionStorage.username)} 🚀`
-            } else {
-                p_legend_rank.innerHTML = `Mais sorte na proxima ${JSON.parse(sessionStorage.username)} ❤️‍🩹`
-            }
+            div_pagination.innerHTML = contentButtonPages
         }
 
         function renderComments(commentsFromUser) {
@@ -364,6 +380,109 @@
             }
 
             div_comments.innerHTML = contentComments
+        }
+
+        function renderFilterSelects(filtersGender, filtersTargetAudience) {
+            let contentFilterGender = `
+                    <option value='all'>
+                        Todos  
+                    </option>
+            `
+            for (let position = 0; position < filtersGender.length; position++) {
+                const gender = filtersGender[position]
+                contentFilterGender += `
+                    <option value='${gender}'>
+                        ${gender}    
+                    </option>
+                `
+            }
+
+            select_gender.innerHTML = contentFilterGender
+
+
+            let contentFilterTargetAudience = `
+                    <option value='all'>
+                        Todos  
+                    </option>
+            `
+            for (let position = 0; position < filtersTargetAudience.length; position++) {
+                const targetAudience = filtersTargetAudience[position]
+                contentFilterTargetAudience += `
+                    <option value='${targetAudience}'>
+                        ${targetAudience}    
+                    </option>
+                `
+            }
+
+            select_target_audience.innerHTML = contentFilterTargetAudience
+
+        }
+
+        function renderRecommendations(recommendations) {
+            let contentRecommendations = ''
+
+            console.log(recommendations)
+            if (recommendations == undefined) {
+                div_recommendations.innerHTML = `
+                    <div class='not-found'>
+                        <img src='./assets/images/not-found-loli.png' alt='nenhum comentario encontrado' width="427"  />
+                        <h1 class="title-not-found">Ops parece que não temos essa combinação :( </h1>
+                    </div>
+                `
+                return
+            }
+
+            for (let count = 0; count < recommendations.length; count++) {
+                let recommendation = recommendations[count]
+
+                const colorMap = {
+                    [mappingsList[0]]: '#cb4648',
+                    [mappingsList[1]]: '#a39fbf',
+                    [mappingsList[2]]: '#313646',
+                    [mappingsList[3]]: '#754946',
+                    [mappingsList[4]]: '#f3f3f3',
+                    [mappingsList[5]]: '#141617',
+                    [mappingsList[6]]: '#6A92E8'
+                };
+
+                const backgroundColor = colorMap[recommendation.gender];
+                const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
+
+                contentRecommendations += `
+                    <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
+                        <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
+                            <img src="${recommendation.image_url}"
+                                alt="image preview anime" class="recommendation-image-preview">
+                            <h4 class="recommendation-title" style="color:${colorForeground}">
+                                ${recommendation.title.length > 13 ? recommendation.title.slice(0, 13).concat("...") : recommendation.title}
+                            </h4>
+                        </a>
+                    </div>
+                    `
+            }
+
+            div_recommendations.innerHTML = contentRecommendations
+        }
+
+        function sortUserByPoints(users) {
+            if (users.length <= 1) return users;
+
+            let minorUserPoints = [];
+            let majorUserPoints = [];
+
+            let positionMedium = Math.floor(users.length / 2);
+            let comparisonUser = users[positionMedium];
+
+            for (let position = 0; position < users.length; position++) {
+                let user = users[position];
+
+                if (position == positionMedium) continue;
+
+                if (user.total_points_last_week <= comparisonUser.total_points_last_week) minorUserPoints.push(user);
+                else majorUserPoints.push(user);
+            }
+
+            return [...sortUserByPoints(majorUserPoints), comparisonUser, ...sortUserByPoints(minorUserPoints)];
         }
 
         function renderCharts(quizzes, comments, mappings) {
@@ -539,62 +658,67 @@
             })
         }
 
-        function renderRecommendations(recommendations) {
-            let contentRecommendations = ''
+        function renderKpis(anime, engagement, rank) {
+            animePopular = anime.anime_id
+            const userId = JSON.parse(sessionStorage.user_id)
 
-            for (let count = 0; count < recommendations.length; count++) {
-                let recommendation = recommendations[count]
+            image_character.src = anime.image_url
+            title_anime.innerHTML = anime.title.length > 14 ? anime.title.slice(0, 14).concat("...") : anime.title
+            span_number_recommendation.innerHTML = anime.quantity_recommendation
 
-                const colorMap = {
-                    [mappingsList[0]]: '#cb4648',
-                    [mappingsList[1]]: '#a39fbf',
-                    [mappingsList[2]]: '#313646',
-                    [mappingsList[3]]: '#754946',
-                    [mappingsList[4]]: '#f3f3f3',
-                    [mappingsList[5]]: '#141617',
-                    [mappingsList[6]]: '#6A92E8'
-                };
+            span_quantity_comments.innerHTML = engagement.quantity_comments
+            span_quantity_recommendations.innerHTML = engagement.quantity_recommendations
 
-                const backgroundColor = colorMap[recommendation.gender];
-                const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
+            const difference = engagement.percentage_current - 100
+            span_percentage_engagement.innerHTML = `
+                ${Number(engagement.percentage_current).toFixed(0)}%
+                <span class="percentage">
+                    ${difference > 0 ? '+' : '-'} ${difference.toFixed(1)}%
+                </span>
+            `
 
-                contentRecommendations += `
-                    <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
-                            <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
-                                <img src="${recommendation.image_url}"
-                                    alt="image preview anime" class="recommendation-image-preview">
-                                <h4 class="recommendation-title" style="color:${colorForeground}">
-                                    ${recommendation.title.length > 15 ? recommendation.title.slice(0, 15).concat("...") : recommendation.title}
-                                </h4>
-                            </a>
-                        </div>
-                    `
-            }
-            div_recommendations.innerHTML = contentRecommendations
-        }
-
-        function sortUserByPoints(users) {
-            if (users.length <= 1) return users;
-
-            let minorUserPoints = [];
-            let majorUserPoints = [];
-
-            let positionMedium = Math.floor(users.length / 2);
-            let comparisonUser = users[positionMedium];
-
-            for (let position = 0; position < users.length; position++) {
-                let user = users[position];
-
-                if (position == positionMedium) continue;
-
-                if (user.total_points_last_week <= comparisonUser.total_points_last_week) minorUserPoints.push(user);
-                else majorUserPoints.push(user);
+            let userRank = 1
+            for (let position = 0; position < rank.length; position++) {
+                const currentRank = rank[position]
+                if (currentRank.user_id == userId) {
+                    userRank = position + 1
+                    break
+                }
             }
 
-            return [...sortUserByPoints(majorUserPoints), comparisonUser, ...sortUserByPoints(minorUserPoints)];
+            const rankLastWeek = sortUserByPoints(rank)
+            let userRankLastWeek = 1
+
+            for (let position = 0; position < rankLastWeek.length; position++) {
+                const currentRank = rankLastWeek[position]
+                if (currentRank.user_id == userId) {
+                    userRank = position + 1
+                    break
+                }
+            }
+
+            const differenceRank = userRankLastWeek - userRank
+            span_number_rank.innerHTML = `
+                 ${userRank}º RANK
+                 <span class="percentage">
+                 ${differenceRank >= 0 ? '+' : '-'}${differenceRank.toFixed(1)}º
+                 </span>
+            `
+            span_rank_last_week.innerHTML = userRankLastWeek
+
+            if (userRank == 1) {
+                p_legend_rank.innerHTML = `Parabéns ${JSON.parse(sessionStorage.username)} você é o top 1  🌟`
+            } else if (userRank == userRankLastWeek) {
+                p_legend_rank.innerHTML = `Foco no progresso ${JSON.parse(sessionStorage.username)} ✊`
+            }
+            else if (userRank > userRankLastWeek) {
+                p_legend_rank.innerHTML = `Sempre evoluindo Parabéns ${JSON.parse(sessionStorage.username)} 🚀`
+            } else {
+                p_legend_rank.innerHTML = `Mais sorte na proxima ${JSON.parse(sessionStorage.username)} ❤️‍🩹`
+            }
         }
+
     </script>
-
     <script src="./assets/javascript/redirects.js" type="module" defer></script>
     <script src="./assets/javascript/manege-storage-session.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-theme.js" type="module" defer></script>
@@ -602,11 +726,7 @@
     <script src="./assets/javascript/on-click-in-link-in-sheet.js" type="module" defer></script>
     <script src="./assets/javascript/remove-item-in-page.js" type="module" defer></script>
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
-
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
-
-
-
 </body>
 
 </html>
