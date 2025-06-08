@@ -670,8 +670,8 @@
             const difference = engagement.percentage_current - 100
             span_percentage_engagement.innerHTML = `
                 ${Number(engagement.percentage_current).toFixed(0)}%
-                <span class="percentage">
-                    ${difference > 0 ? '+' : '-'} ${difference.toFixed(1)}%
+                <span class="percentage" style='color:${difference > 0 ? '#84cc77' : '#cb4648'}'>
+                    ${difference > 0 ? '+' : ''} ${difference.toFixed(1)}%
                 </span>
             `
 
@@ -698,7 +698,7 @@
             const differenceRank = userRankLastWeek - userRank
             span_number_rank.innerHTML = `
                  ${userRank}º RANK
-                 <span class="percentage">
+                 <span class="percentage"  style='color:${differenceRank >= 0 ? '#84cc77' : '#cb4648'}'>
                  ${differenceRank >= 0 ? '+' : '-'}${differenceRank.toFixed(1)}º
                  </span>
             `
