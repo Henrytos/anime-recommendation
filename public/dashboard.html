@@ -58,20 +58,20 @@
 
             <div class="indicators">
                 <div class="indicator">
-                    <h4>Média De Recomendações</h4>
+                    <h4>Rank Atual</h4>
 
-                    <p class="number">
-                        20
-
+                    <p class="number" id="span_number_rank">
+                        º RANK
                         <span class="percentage">
-                            +15%
+                            +2º
                         </span>
+
                     </p>
 
                     <span class="legend">
-                        <p>Média da semana passada: 4</p>
+                        <p>Rank da semana passada: <span id="span_rank_last_week"></span></p>
 
-                        <p>Está acima da média da semana passada :)</p>
+                        <p id="p_legend_rank">Está acima da média da semana passada :)</p>
                     </span>
 
                     <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
@@ -80,37 +80,32 @@
                 <div class="indicator">
                     <h4>Nivel de engajamento</h4>
 
-                    <p class="number">
-                        120%
+                    <p class="number" id="span_percentage_engagement">
 
-                        <span class="percentage">
-                            +10%
-                        </span>
                     </p>
 
                     <span class="legend">
-                        <p>Quantidade de comentarios: 14</p>
+                        <p>Quantidade de comentarios: <span id="span_quantity_comments"></span></p>
 
-                        <p>Quantidade de recomendações : 10</p>
+                        <p>Quantidade de recomendações : <span id="span_quantity_recommendations"></span></p>
                     </span>
 
                     <img src="./assets/icons/icon-star.svg" class="image-indicator" alt="">
                 </div>
 
-                <div class="indicator indicator-anime">
+                <div class="indicator indicator-anime" onclick="redirectAnimePopular()">
                     <h4>Anime Mais Popular</h4>
-                    <p class="number">
-                        Souso...
+                    <p class="number" id="title_anime">
                     </p>
 
                     <span class="legend">
                         <p>Top 1 Do Rank Da Plataforma</p>
-                        <p>Foi Recomendado há +190 Usuarios</p>
+                        <p>Foi Recomendado há + <span id="span_number_recommendation"></span> Usuarios</p>
                     </span>
                     <img src="./assets/icons/icon-chart.svg" class="image-indicator" alt="">
 
                     <img src="https://cdn.myanimelist.net/images/characters/7/525105.jpg?s=1706604ec2ca141a172526b8dedf3177"
-                        alt="image-character" class="image-character">
+                        alt="image-character" class="image-character" id="image_character">
                 </div>
             </div>
 
@@ -236,14 +231,86 @@
         let page = 1
         let perPage = 10
 
+        let animePopular = 0
+
+        function redirectAnimePopular() {
+            window.location.href = `./anime.html?animeId=${animePopular}`
+        }
+
+
         window.addEventListener("DOMContentLoaded", async () => {
 
             const userId = sessionStorage.getItem("user_id")
-            console.log({ userId })
 
             const headers = new Headers()
             headers.append("userId", userId)
-            console.log(headers)
+            fetch("/users/metrics/kpi", {
+                headers,
+            }).then(responseMetricsKpi => responseMetricsKpi.json()).then(({ anime, engagement, rank }) => {
+                animePopular = anime.anime_id
+
+
+                console.log({ anime, engagement, rank })
+                image_character.src = anime.image_url
+                title_anime.innerHTML = anime.title.length > 14 ? anime.title.slice(0, 14).concat("...") : anime.title
+                span_number_recommendation.innerHTML = anime.quantity_recommendation
+
+                span_quantity_comments.innerHTML = engagement.quantity_comments
+                span_quantity_recommendations.innerHTML = engagement.quantity_recommendations
+
+                const difference = engagement.percentage_current - 100
+                span_percentage_engagement.innerHTML = `
+                    ${Number(engagement.percentage_current).toFixed(0)}%
+                        <span class="percentage">
+                        ${difference > 0 ? '+' : '-'} ${difference}%
+                        </span>
+                `
+
+                let userRank = 1
+
+                for (let position = 0; position < rank.length; position++) {
+                    const currentRank = rank[position]
+                    if (currentRank.user_id == userId) {
+                        userRank = position + 1
+                        break
+                    }
+                }
+
+                const rankLastWeek = sortUserByPoints(rank)
+                let userRankLastWeek = 1
+
+                for (let position = 0; position < rankLastWeek.length; position++) {
+                    const currentRank = rankLastWeek[position]
+                    if (currentRank.user_id == userId) {
+                        userRank = position + 1
+                        break
+                    }
+                }
+
+                const differenceRank = userRankLastWeek - userRank
+
+
+                span_number_rank.innerHTML = `
+                        ${userRank}º RANK
+                        <span class="percentage">
+                        ${differenceRank >= 0 ? '+' : '-'}${differenceRank}º
+                        </span>
+
+                `
+                span_rank_last_week.innerHTML = userRankLastWeek
+
+                if (userRank == 1) {
+                    p_legend_rank.innerHTML = `Parabéns ${JSON.parse(sessionStorage.username)} você é o top 1  🌟`
+                } else if (userRank == userRankLastWeek) {
+                    p_legend_rank.innerHTML = `Foco no progresso ${JSON.parse(sessionStorage.username)} ✊`
+                }
+                else if (userRank > userRankLastWeek) {
+                    p_legend_rank.innerHTML = `Sempre evoluindo Parabéns ${JSON.parse(sessionStorage.username)} 🚀`
+                } else {
+                    p_legend_rank.innerHTML = `Mais sorte na proxima ${JSON.parse(sessionStorage.username)} ❤️‍🩹`
+                }
+            })
+
 
             const responseMetrics = await fetch("/users/metrics/chart", {
                 headers,
@@ -504,6 +571,27 @@
 
 
         })
+
+        function sortUserByPoints(users) {
+            if (users.length <= 1) return users;
+
+            let minorUserPoints = [];
+            let majorUserPoints = [];
+
+            let positionMedium = Math.floor(users.length / 2);
+            let comparisonUser = users[positionMedium];
+
+            for (let position = 0; position < users.length; position++) {
+                let user = users[position];
+
+                if (position == positionMedium) continue;
+
+                if (user.total_points_last_week <= comparisonUser.total_points_last_week) minorUserPoints.push(user);
+                else majorUserPoints.push(user);
+            }
+
+            return [...sortUserByPoints(majorUserPoints), comparisonUser, ...sortUserByPoints(minorUserPoints)];
+        }
 
     </script>
 

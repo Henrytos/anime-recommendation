@@ -141,8 +141,8 @@ async function seedInDatabase() {
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
 
-  const quizResults = Array.from({ length: 100 }, (_) => ({
-    fk_user_id: 1,
+  const quizResults = Array.from({ length: 100 }, (_, i) => ({
+    fk_user_id: i % 2 == 0 ? 1 : 2,
     fk_quiz_id: 1000,
     fk_anime_id: animesOrder[Math.floor(Math.random() * animesOrder.length)].anime_id,
     created_at: formatDate(new Date(year, month, day - Math.floor(Math.random() * 7), hour, minutes, seconds)),
@@ -167,28 +167,27 @@ async function seedInDatabase() {
   // COMMENTS
   const comments = [
     {
-      fk_anime_id: quizResults[Math.floor(Math.random() * quizResults.length)].fk_anime_id,
       fk_user_id: 1,
       description: "Anime incrível, cheio de ação!",
     },
     {
-      fk_anime_id: quizResults[Math.floor(Math.random() * quizResults.length)].fk_anime_id,
-      fk_user_id: 1,
+      fk_user_id: 2,
       description: "Muito fofo e emocionante.",
     },
   ];
-  for (let position = 0; position < 50; position++) {
+  for (let position = 0; position < 100; position++) {
 
     let min = 0, max = comments.length
     let interval = max - min
     let randomPosition = Math.floor(Math.random() * interval)
     let result = comments[randomPosition]
-    const created_at = formatDate(new Date(year, month, day - Math.floor(Math.random() * 7), hour, minutes, seconds))
+    const created_at = formatDate(new Date(year, month, day - Math.floor(Math.random() * 14), hour, minutes, seconds))
+    const fk_anime_id = quizResults[Math.floor(Math.random() * quizResults.length)].fk_anime_id
 
 
     await client.query(
       `INSERT INTO comments (comment_id, fk_anime_id, fk_user_id, description, created_at)
-      VALUES (DEFAULT, ${result.fk_anime_id}, ${result.fk_user_id}, '${result.description}', '${created_at}')`,
+      VALUES (DEFAULT, ${fk_anime_id}, ${result.fk_user_id}, '${result.description}', '${created_at}')`,
     );
   }
   console.log("seed comments ✅");

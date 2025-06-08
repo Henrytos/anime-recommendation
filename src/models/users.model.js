@@ -41,7 +41,7 @@ function getEngagementByUserId(userId) {
       SELECT
       users.user_id,
       (SELECT COUNT(comments.comment_id) FROM comments WHERE comments.fk_user_id = users.user_id AND TIMESTAMPDIFF(DAY, comments.created_at, NOW()) < 7) AS quantity_comments,
-      (SELECT COUNT(quiz_result.quiz_result_id) FROM quiz_result WHERE quiz_result.fk_user_id = users.user_id AND TIMESTAMPDIFF(DAY, quiz_result.created_at, NOW()) < 7) AS quantity_recommendation,
+      (SELECT COUNT(quiz_result.quiz_result_id) FROM quiz_result WHERE quiz_result.fk_user_id = users.user_id AND TIMESTAMPDIFF(DAY, quiz_result.created_at, NOW()) < 7) AS quantity_recommendations,
       IFNULL(TRUNCATE(
         ((
           (SELECT COUNT(comments.comment_id) FROM comments WHERE comments.fk_user_id = users.user_id AND TIMESTAMPDIFF(DAY, comments.created_at, NOW()) < 7)
@@ -61,18 +61,29 @@ function getEngagementByUserId(userId) {
 
 function findManyPointsByUsers() {
   const query = `
-    SELECT 
-      users.user_id,
-      users.username,
-      (SELECT COUNT(comments.comment_id) FROM comments WHERE comments.fk_user_id = users.user_id) AS quantity_comments,
-      (SELECT COUNT(quiz_result.quiz_result_id) FROM quiz_result WHERE quiz_result.fk_user_id = users.user_id) AS quantity_recommendations,
-      (
-        (SELECT COUNT(comments.comment_id) FROM comments WHERE comments.fk_user_id = users.user_id) * 2
-        +
-        (SELECT COUNT(quiz_result.quiz_result_id) FROM quiz_result WHERE quiz_result.fk_user_id = users.user_id) * 10
-      ) AS total_points
-    FROM users
-    ORDER BY total_points DESC
+        SELECT
+          users.user_id,
+          users.username,
+          (SELECT COUNT(comments.comment_id) FROM comments WHERE comments.fk_user_id = users.user_id) AS quantity_comments,
+          (SELECT COUNT(quiz_result.quiz_result_id) FROM quiz_result WHERE quiz_result.fk_user_id = users.user_id) AS quantity_recommendations,
+          (
+            (SELECT COUNT(comments.comment_id) FROM comments WHERE comments.fk_user_id = users.user_id) * 2
+            +
+            (SELECT COUNT(quiz_result.quiz_result_id) FROM quiz_result WHERE quiz_result.fk_user_id = users.user_id) * 10
+          ) AS total_points,
+          (
+            (SELECT
+              COUNT(comments.comment_id) FROM comments
+              WHERE comments.fk_user_id = users.user_id AND TIMESTAMPDIFF(WEEK, comments.created_at, NOW()) = 1
+            ) * 2
+            +
+            (SELECT
+              COUNT(quiz_result.quiz_result_id) FROM quiz_result
+              WHERE quiz_result.fk_user_id = users.user_id AND TIMESTAMPDIFF(WEEK, quiz_result.created_at, NOW()) = 1
+            ) * 10
+          ) AS total_points_last_week
+        FROM users
+        ORDER BY total_points DESC
   `;
 
   return database.execute(query)
