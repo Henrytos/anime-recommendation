@@ -302,7 +302,7 @@
             span_percentage_engagement.innerHTML = `
                 ${Number(engagement.percentage_current).toFixed(0)}%
                     <span class="percentage">
-                    ${difference > 0 ? '+' : '-'} ${difference}%
+                    ${difference > 0 ? '+' : '-'} ${difference.toFixed(1)}%
                     </span>
             `
 
@@ -333,7 +333,7 @@
             span_number_rank.innerHTML = `
         ${userRank}º RANK
         <span class="percentage">
-        ${differenceRank >= 0 ? '+' : '-'}${differenceRank}º
+        ${differenceRank >= 0 ? '+' : '-'}${differenceRank.toFixed(1)}º
         </span>
 
 `
@@ -559,7 +559,7 @@
 
 
 
-            for (let count = page - 1; count < perPage * page && count < recommendations.length; count++) {
+            for (let count = 0; count < recommendations.length; count++) {
                 let recommendation = recommendations[count]
 
                 const colorMap = {
