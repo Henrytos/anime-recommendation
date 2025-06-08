@@ -383,16 +383,39 @@ a {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 40px;
+  padding-bottom: 64px;
 }
 
 .history-recommendation {
   grid-column-start: 1;
   grid-column-end: 9;
+  position: relative;
 }
 
-.history-comments {
-  grid-column-start: 9;
-  grid-column-end: 13;
+.history-recommendation .top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+}
+
+.filters select {
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: var(--color-background-foreground);
+  color: var(--color-background);
+  border-radius: 4px;
+  border: none;
+}
+
+.filters select option {
+  cursor: pointer;
+  color: var(--color-background);
 }
 
 .histories .title {
@@ -408,14 +431,19 @@ a {
   transform: translate(-10px, 2px);
 }
 
+.history-comments {
+  grid-column-start: 9;
+  grid-column-end: 13;
+}
+
 .recommendations {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
 .recommendation {
-  padding: 10px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -454,7 +482,7 @@ a {
 
 .recommendation-image-preview {
   width: 100%;
-  height: 200px;
+  height: 230px;
   object-fit: cover;
   border-radius: 2px;
 }
@@ -613,7 +641,7 @@ a {
 /* NOT FOUND RECOMMENDATION */
 .not-found {
   grid-column-start: 1;
-  grid-column-end: 5;
+  grid-column-end: 7;
   display: flex;
   width: 100%;
   height: 100%;
@@ -626,4 +654,39 @@ a {
   color: #6a92e8;
   font-weight: var(--font-semibold);
   font-size: var(--size-4xl);
+  text-align: center;
+}
+
+.pagination {
+  position: absolute;
+  right: 0px;
+  bottom: -50px;
+}
+
+.button-page {
+  all: unset;
+  padding: 10px 14px;
+  cursor: pointer;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-background-foreground);
+  border-radius: 4px;
+  color: var(--color-background-foreground);
+  font-size: var(--size-sm);
+  transition: 0.2s all;
+}
+.button-page-current {
+  all: unset;
+  padding: 10px 14px;
+  cursor: pointer;
+  background-color: var(--color-background-foreground);
+  border: 1px solid var(--color-background);
+  border-radius: 4px;
+  color: var(--color-background);
+  font-size: var(--size-sm);
+}
+
+.button-page:hover {
+  background-color: var(--color-background-foreground);
+  border: 1px solid var(--color-background);
+  color: var(--color-background);
 }

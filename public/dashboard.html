@@ -241,6 +241,47 @@
         let animePopular = 0
         let mappingsList
 
+        window.addEventListener("DOMContentLoaded", () => {
+            const userId = sessionStorage.getItem("user_id")
+            const headers = new Headers()
+            headers.append("userId", userId)
+
+            fetch("/users/metrics/kpi", {
+                headers,
+            }).then(responseMetricsKpi => responseMetricsKpi.json()).then(({ anime, engagement, rank }) => {
+                renderKpis(anime, engagement, rank)
+            })
+
+            fetch("/users/metrics/chart", {
+                headers,
+            }).then((response) => response.json()).then(({ quizzes, mappings, comments: commentsUser }) => {
+                renderCharts(quizzes, commentsUser, mappings)
+
+                fetch("/users/recommendations", {
+                    headers,
+                }).then(response => response.json()).then(({
+                    filtersGender,
+                    filtersTargetAudience,
+                    recommendations,
+                    page: pageCurrentInitial,
+                    maxPages: maxPagesInitial
+                }) => {
+                    page = pageCurrentInitial
+                    maxPages = maxPagesInitial
+
+                    renderRecommendations(recommendations)
+                    renderFilterSelects(filtersGender, filtersTargetAudience)
+                    renderPaginationButtons(page, maxPages)
+                })
+            })
+
+            fetch("/users/comments", {
+                headers,
+            }).then((response) => response.json()).then(({ comments }) => {
+                renderComments(comments)
+            })
+        })
+
         function redirectAnimePopular() {
             window.location.href = `./anime.html?animeId=${animePopular}`
         }
@@ -295,56 +336,15 @@
             })
         }
 
-        window.addEventListener("DOMContentLoaded", () => {
-            const userId = sessionStorage.getItem("user_id")
-            const headers = new Headers()
-            headers.append("userId", userId)
-
-            fetch("/users/metrics/kpi", {
-                headers,
-            }).then(responseMetricsKpi => responseMetricsKpi.json()).then(({ anime, engagement, rank }) => {
-                renderKpis(anime, engagement, rank)
-            })
-
-            fetch("/users/metrics/chart", {
-                headers,
-            }).then((response) => response.json()).then(({ quizzes, mappings, comments: commentsUser }) => {
-                renderCharts(quizzes, commentsUser, mappings)
-
-                fetch("/users/recommendations", {
-                    headers,
-                }).then(response => response.json()).then(({
-                    filtersGender,
-                    filtersTargetAudience,
-                    recommendations,
-                    page: pageCurrentInitial,
-                    maxPages: maxPagesInitial
-                }) => {
-                    page = pageCurrentInitial
-                    maxPages = maxPagesInitial
-
-                    renderRecommendations(recommendations)
-                    renderFilterSelects(filtersGender, filtersTargetAudience)
-                    renderPaginationButtons(page, maxPages)
-                })
-            })
-
-            fetch("/users/comments", {
-                headers,
-            }).then((response) => response.json()).then(({ comments }) => {
-                renderComments(comments)
-            })
-        })
-
         function renderPaginationButtons(currentPage, maxPages) {
             let contentButtonPages = ''
 
             for (let page = 1; page <= maxPages; page++) {
 
-                const className = 'button-page'
+                let className = 'button-page'
 
                 if (page == currentPage) {
-                    className.concat(' ', 'button-page-current')
+                    className = 'button-page-current'
                 }
 
                 contentButtonPages += `
@@ -449,15 +449,13 @@
                 const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
 
                 contentRecommendations += `
-                    <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
-                        <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
+                    <a  href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
                             <img src="${recommendation.image_url}"
                                 alt="image preview anime" class="recommendation-image-preview">
                             <h4 class="recommendation-title" style="color:${colorForeground}">
                                 ${recommendation.title.length > 13 ? recommendation.title.slice(0, 13).concat("...") : recommendation.title}
                             </h4>
-                        </a>
-                    </div>
+                    </a>
                     `
             }
 
