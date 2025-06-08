@@ -150,6 +150,10 @@
                     </h2>
 
                     <div class="recommendations" id="div_recommendations"></div>
+
+                    <div id="div_links">
+
+                    </div>
                 </div>
 
                 <div class="history-comments">
@@ -232,6 +236,8 @@
         let perPage = 10
 
         let animePopular = 0
+        let recommendations
+        let mappingsTarget
 
         function redirectAnimePopular() {
             window.location.href = `./anime.html?animeId=${animePopular}`
@@ -247,68 +253,7 @@
             fetch("/users/metrics/kpi", {
                 headers,
             }).then(responseMetricsKpi => responseMetricsKpi.json()).then(({ anime, engagement, rank }) => {
-                animePopular = anime.anime_id
-
-
-                console.log({ anime, engagement, rank })
-                image_character.src = anime.image_url
-                title_anime.innerHTML = anime.title.length > 14 ? anime.title.slice(0, 14).concat("...") : anime.title
-                span_number_recommendation.innerHTML = anime.quantity_recommendation
-
-                span_quantity_comments.innerHTML = engagement.quantity_comments
-                span_quantity_recommendations.innerHTML = engagement.quantity_recommendations
-
-                const difference = engagement.percentage_current - 100
-                span_percentage_engagement.innerHTML = `
-                    ${Number(engagement.percentage_current).toFixed(0)}%
-                        <span class="percentage">
-                        ${difference > 0 ? '+' : '-'} ${difference}%
-                        </span>
-                `
-
-                let userRank = 1
-
-                for (let position = 0; position < rank.length; position++) {
-                    const currentRank = rank[position]
-                    if (currentRank.user_id == userId) {
-                        userRank = position + 1
-                        break
-                    }
-                }
-
-                const rankLastWeek = sortUserByPoints(rank)
-                let userRankLastWeek = 1
-
-                for (let position = 0; position < rankLastWeek.length; position++) {
-                    const currentRank = rankLastWeek[position]
-                    if (currentRank.user_id == userId) {
-                        userRank = position + 1
-                        break
-                    }
-                }
-
-                const differenceRank = userRankLastWeek - userRank
-
-
-                span_number_rank.innerHTML = `
-                        ${userRank}º RANK
-                        <span class="percentage">
-                        ${differenceRank >= 0 ? '+' : '-'}${differenceRank}º
-                        </span>
-
-                `
-                span_rank_last_week.innerHTML = userRankLastWeek
-
-                if (userRank == 1) {
-                    p_legend_rank.innerHTML = `Parabéns ${JSON.parse(sessionStorage.username)} você é o top 1  🌟`
-                } else if (userRank == userRankLastWeek) {
-                    p_legend_rank.innerHTML = `Foco no progresso ${JSON.parse(sessionStorage.username)} ✊`
-                }
-                else if (userRank > userRankLastWeek) {
-                    p_legend_rank.innerHTML = `Sempre evoluindo Parabéns ${JSON.parse(sessionStorage.username)} 🚀`
-                } else {
-                    p_legend_rank.innerHTML = `Mais sorte na proxima ${JSON.parse(sessionStorage.username)} ❤️‍🩹`
-                }
+                renderKpis(anime, engagement, rank)
             })
 
 
@@ -316,7 +261,122 @@
                 headers,
             })
 
-            const { quizzes, mappings, comments } = await responseMetrics.json()
+            const { quizzes, mappings, comments: commentsUser } = await responseMetrics.json()
+
+            renderCharts(quizzes, commentsUser, mappings)
+
+            const responseRecommendations = await fetch("/users/recommendations", {
+                headers,
+            })
+            const dataRecommendations = await responseRecommendations.json()
+            const recommendationsData = dataRecommendations.recommendations
+
+            recommendations = recommendationsData
+            renderRecommendations()
+
+            const responseComments = await fetch("/users/comments", {
+                headers,
+            })
+            const dataComments = await responseComments.json()
+            const commentsFromUser = dataComments.comments
+            renderComments(commentsFromUser)
+
+
+
+        })
+
+
+        function renderKpis(anime, engagement, rank) {
+            animePopular = anime.anime_id
+            const userId = JSON.parse(sessionStorage.user_id)
+
+            console.log({ anime, engagement, rank })
+            image_character.src = anime.image_url
+            title_anime.innerHTML = anime.title.length > 14 ? anime.title.slice(0, 14).concat("...") : anime.title
+            span_number_recommendation.innerHTML = anime.quantity_recommendation
+
+            span_quantity_comments.innerHTML = engagement.quantity_comments
+            span_quantity_recommendations.innerHTML = engagement.quantity_recommendations
+
+            const difference = engagement.percentage_current - 100
+            span_percentage_engagement.innerHTML = `
+                ${Number(engagement.percentage_current).toFixed(0)}%
+                    <span class="percentage">
+                    ${difference > 0 ? '+' : '-'} ${difference}%
+                    </span>
+            `
+
+            let userRank = 1
+
+            for (let position = 0; position < rank.length; position++) {
+                const currentRank = rank[position]
+                if (currentRank.user_id == userId) {
+                    userRank = position + 1
+                    break
+                }
+            }
+
+            const rankLastWeek = sortUserByPoints(rank)
+            let userRankLastWeek = 1
+
+            for (let position = 0; position < rankLastWeek.length; position++) {
+                const currentRank = rankLastWeek[position]
+                if (currentRank.user_id == userId) {
+                    userRank = position + 1
+                    break
+                }
+            }
+
+            const differenceRank = userRankLastWeek - userRank
+
+
+            span_number_rank.innerHTML = `
+        ${userRank}º RANK
+        <span class="percentage">
+        ${differenceRank >= 0 ? '+' : '-'}${differenceRank}º
+        </span>
+
+`
+            span_rank_last_week.innerHTML = userRankLastWeek
+
+            if (userRank == 1) {
+                p_legend_rank.innerHTML = `Parabéns ${JSON.parse(sessionStorage.username)} você é o top 1  🌟`
+            } else if (userRank == userRankLastWeek) {
+                p_legend_rank.innerHTML = `Foco no progresso ${JSON.parse(sessionStorage.username)} ✊`
+            }
+            else if (userRank > userRankLastWeek) {
+                p_legend_rank.innerHTML = `Sempre evoluindo Parabéns ${JSON.parse(sessionStorage.username)} 🚀`
+            } else {
+                p_legend_rank.innerHTML = `Mais sorte na proxima ${JSON.parse(sessionStorage.username)} ❤️‍🩹`
+            }
+        }
+
+        function renderComments(commentsFromUser) {
+            let contentComments = ''
+
+            for (let count = 0; count < commentsFromUser.length; count++) {
+                let comment = commentsFromUser[count]
+                const avatarUrl = JSON.parse(sessionStorage.avatar_url)
+                contentComments += `
+                    <a class="comment" href='./anime.html?animeId=${comment.anime_id}'>
+                        <img src="./assets/uploads/${avatarUrl}" alt="">
+                        <div class="content">
+                            <div class="content-text">
+                            <h3 class="title-comment">${comment.username}</h3>
+                            <p class="time">${comment.time_relative}</p>
+                        </div>
+                        <p class="details">
+                        ${comment.description}
+                        </p>
+                        </div>
+                    </a>
+                `
+            }
+
+            div_comments.innerHTML = contentComments
+        }
+
+        function renderCharts(quizzes, comments, mappings) {
 
             const quizzesDates = []
             const quizzesQuantities = []
@@ -338,16 +398,16 @@
                 commentsQuantities.push(quiz.quantity)
             }
 
-            const mappingsTarget = []
+            const mappingsTargetList = []
             const mappingsQuantities = []
 
             for (let count = 0; count < mappings.length; count++) {
                 let mapping = mappings[count]
 
-                mappingsTarget.push(mapping.gender)
+                mappingsTargetList.push(mapping.gender)
                 mappingsQuantities.push(mapping.number)
             }
-
+            mappingsTarget = mappingsTargetList
             const optionsChartBarQuizzes = {
                 type: 'bar',
                 data: {
@@ -492,18 +552,9 @@
                 chartBarQuizzes.update()
                 chartPieMapping.update()
             })
+        }
 
-
-            const responseRecommendations = await fetch("/users/recommendations", {
-                headers,
-            })
-            const dataRecommendations = await responseRecommendations.json()
-            const recommendations = dataRecommendations.recommendations
-            console.log({
-                recommendations
-            })
-
-
+        function renderRecommendations() {
             let contentRecommendations = ''
 
 
@@ -526,7 +577,7 @@
                 const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
 
                 contentRecommendations += `
-                  <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
+                <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
                         <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
                             <img src="${recommendation.image_url}"
                                 alt="image preview anime" class="recommendation-image-preview">
@@ -538,39 +589,7 @@
                 `
             }
             div_recommendations.innerHTML = contentRecommendations
-
-
-
-            const responseComments = await fetch("/users/comments", {
-                headers,
-            })
-            const dataComments = await responseComments.json()
-            const commentsFromUser = dataComments.comments
-            let contentComments = ''
-
-            for (let count = 0; count < commentsFromUser.length; count++) {
-                let comment = commentsFromUser[count]
-                const avatarUrl = JSON.parse(sessionStorage.avatar_url)
-                contentComments += `
-                    <a class="comment" href='./anime.html?animeId=${comment.anime_id}'>
-                        <img src="./assets/uploads/${avatarUrl}" alt="">
-                        <div class="content">
-                            <div class="content-text">
-                            <h3 class="title-comment">${comment.username}</h3>
-                            <p class="time">${comment.time_relative}</p>
-                        </div>
-                        <p class="details">
-                        ${comment.description}
-                        </p>
-                        </div>
-                    </a>
-                `
-            }
-
-            div_comments.innerHTML = contentComments
-
-
-        })
+        }
 
         function sortUserByPoints(users) {
             if (users.length <= 1) return users;
