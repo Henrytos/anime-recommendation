@@ -145,9 +145,16 @@
 
             <div class="histories">
                 <div class="history-recommendation">
-                    <h2 class="title">
-                        Histórico de Recomendações
-                    </h2>
+                    <div class="top">
+                        <h2 class="title">
+                            Histórico de Recomendações
+                        </h2>
+
+                        <div class="filters">
+                            <select id="select_gender"></select>
+                            <select id="select_target_audience"></select>
+                        </div>
+                    </div>
 
                     <div class="recommendations" id="div_recommendations"></div>
 
@@ -165,6 +172,9 @@
                 </div>
 
             </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination"></div>
         </div>
 
         <div class="layout">
@@ -232,57 +242,42 @@
     </div>
 
     <script>
-        let page = 1
-        let perPage = 10
-
+        let page = 1, perPage = 10
         let animePopular = 0
-        let recommendations
-        let mappingsTarget
+        let mappingsList
 
         function redirectAnimePopular() {
             window.location.href = `./anime.html?animeId=${animePopular}`
         }
 
-
-        window.addEventListener("DOMContentLoaded", async () => {
-
+        window.addEventListener("DOMContentLoaded", () => {
             const userId = sessionStorage.getItem("user_id")
-
             const headers = new Headers()
             headers.append("userId", userId)
+
             fetch("/users/metrics/kpi", {
                 headers,
             }).then(responseMetricsKpi => responseMetricsKpi.json()).then(({ anime, engagement, rank }) => {
                 renderKpis(anime, engagement, rank)
             })
 
-
-            const responseMetrics = await fetch("/users/metrics/chart", {
+            fetch("/users/metrics/chart", {
                 headers,
+            }).then((response) => response.json()).then(({ quizzes, mappings, comments: commentsUser }) => {
+                renderCharts(quizzes, commentsUser, mappings)
+
+                fetch("/users/recommendations", {
+                    headers,
+                }).then(response => response.json()).then(({ recommendations }) => {
+                    renderRecommendations(recommendations)
+                })
             })
 
-            const { quizzes, mappings, comments: commentsUser } = await responseMetrics.json()
-
-            renderCharts(quizzes, commentsUser, mappings)
-
-            const responseRecommendations = await fetch("/users/recommendations", {
+            fetch("/users/comments", {
                 headers,
+            }).then((response) => response.json()).then(({ comments }) => {
+                renderComments(comments)
             })
-            const dataRecommendations = await responseRecommendations.json()
-            const recommendationsData = dataRecommendations.recommendations
-
-            recommendations = recommendationsData
-            renderRecommendations()
-
-            const responseComments = await fetch("/users/comments", {
-                headers,
-            })
-            const dataComments = await responseComments.json()
-            const commentsFromUser = dataComments.comments
-            renderComments(commentsFromUser)
-
-
-
         })
 
 
@@ -290,7 +285,6 @@
             animePopular = anime.anime_id
             const userId = JSON.parse(sessionStorage.user_id)
 
-            console.log({ anime, engagement, rank })
             image_character.src = anime.image_url
             title_anime.innerHTML = anime.title.length > 14 ? anime.title.slice(0, 14).concat("...") : anime.title
             span_number_recommendation.innerHTML = anime.quantity_recommendation
@@ -301,13 +295,12 @@
             const difference = engagement.percentage_current - 100
             span_percentage_engagement.innerHTML = `
                 ${Number(engagement.percentage_current).toFixed(0)}%
-                    <span class="percentage">
+                <span class="percentage">
                     ${difference > 0 ? '+' : '-'} ${difference.toFixed(1)}%
-                    </span>
+                </span>
             `
 
             let userRank = 1
-
             for (let position = 0; position < rank.length; position++) {
                 const currentRank = rank[position]
                 if (currentRank.user_id == userId) {
@@ -328,15 +321,12 @@
             }
 
             const differenceRank = userRankLastWeek - userRank
-
-
             span_number_rank.innerHTML = `
-        ${userRank}º RANK
-        <span class="percentage">
-        ${differenceRank >= 0 ? '+' : '-'}${differenceRank.toFixed(1)}º
-        </span>
-
-`
+                 ${userRank}º RANK
+                 <span class="percentage">
+                 ${differenceRank >= 0 ? '+' : '-'}${differenceRank.toFixed(1)}º
+                 </span>
+            `
             span_rank_last_week.innerHTML = userRankLastWeek
 
             if (userRank == 1) {
@@ -370,7 +360,7 @@
                         </p>
                         </div>
                     </a>
-                `
+                    `
             }
 
             div_comments.innerHTML = contentComments
@@ -407,7 +397,9 @@
                 mappingsTargetList.push(mapping.gender)
                 mappingsQuantities.push(mapping.number)
             }
-            mappingsTarget = mappingsTargetList
+
+            mappingsList = mappingsTargetList
+
             const optionsChartBarQuizzes = {
                 type: 'bar',
                 data: {
@@ -503,7 +495,7 @@
             const optionsChartPieMapping = {
                 type: 'pie',
                 data: {
-                    labels: mappingsTarget,
+                    labels: mappingsList,
                     datasets: [
                         {
                             label: 'Quantidade',
@@ -528,7 +520,6 @@
 
             const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
             const chartBarComments = new Chart(chart_bar_comments, optionsChartBarComments)
-
             const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
             const buttonTheme = document.getElementById('button_theme')
 
@@ -536,13 +527,7 @@
                 const isDarkMode = document.body.className == 'dark'
 
                 const color = isDarkMode ? '#000' : '#fff'
-                console.log({
-                    chartBarQuizzes, chartPieMapping
-                })
-                console.log({
-                    color,
-                    isDarkMode
-                })
+
                 chartBarQuizzes.options.scales.x.ticks.color = color
                 chartBarQuizzes.options.scales.y.ticks.color = color
 
@@ -554,39 +539,36 @@
             })
         }
 
-        function renderRecommendations() {
+        function renderRecommendations(recommendations) {
             let contentRecommendations = ''
-
-
 
             for (let count = 0; count < recommendations.length; count++) {
                 let recommendation = recommendations[count]
 
                 const colorMap = {
-                    [mappingsTarget[0]]: '#cb4648',
-                    [mappingsTarget[1]]: '#a39fbf',
-                    [mappingsTarget[2]]: '#313646',
-                    [mappingsTarget[3]]: '#754946',
-                    [mappingsTarget[4]]: '#f3f3f3',
-                    [mappingsTarget[5]]: '#141617',
-                    [mappingsTarget[6]]: '#6A92E8'
+                    [mappingsList[0]]: '#cb4648',
+                    [mappingsList[1]]: '#a39fbf',
+                    [mappingsList[2]]: '#313646',
+                    [mappingsList[3]]: '#754946',
+                    [mappingsList[4]]: '#f3f3f3',
+                    [mappingsList[5]]: '#141617',
+                    [mappingsList[6]]: '#6A92E8'
                 };
 
                 const backgroundColor = colorMap[recommendation.gender];
-
                 const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
 
                 contentRecommendations += `
-                <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
-                        <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
-                            <img src="${recommendation.image_url}"
-                                alt="image preview anime" class="recommendation-image-preview">
-                            <h4 class="recommendation-title" style="color:${colorForeground}">
-                                ${recommendation.title.length > 15 ? recommendation.title.slice(0, 15).concat("...") : recommendation.title}
-                            </h4>
-                        </a>
-                    </div>
-                `
+                    <div class="recommendation mapping-1" style="background-color:${backgroundColor}; ">
+                            <a href="./anime.html?animeId=${recommendation.anime_id}" class="recommendation">
+                                <img src="${recommendation.image_url}"
+                                    alt="image preview anime" class="recommendation-image-preview">
+                                <h4 class="recommendation-title" style="color:${colorForeground}">
+                                    ${recommendation.title.length > 15 ? recommendation.title.slice(0, 15).concat("...") : recommendation.title}
+                                </h4>
+                            </a>
+                        </div>
+                    `
             }
             div_recommendations.innerHTML = contentRecommendations
         }
@@ -611,7 +593,6 @@
 
             return [...sortUserByPoints(majorUserPoints), comparisonUser, ...sortUserByPoints(minorUserPoints)];
         }
-
     </script>
 
     <script src="./assets/javascript/redirects.js" type="module" defer></script>
