@@ -65,10 +65,27 @@ SELECT
 }
 
 
+function findManyAnimesPossibleRecommendations(userId) {
+  const query = `
+    SELECT animes.title, animes.gender, animes.target_audience
+    FROM quiz_result
+    RIGHT JOIN animes ON quiz_result.fk_anime_id = animes.anime_id AND quiz_result.fk_user_id = ${userId}
+    WHERE quiz_result.fk_anime_id IS NULL
+    AND animes.title NOT LIKE "%'%"
+    ORDER BY animes.score DESC
+    LIMIT 10;
+  `
+
+  return database.execute(query)
+}
+
+
 module.exports = {
   findManyRecommendations,
   findRecommendationLastWeekByUserId,
   findByUserMetricsQuizzes,
   findByUserMetricsMappings,
-  findByUserMetricsComments
+  findByUserMetricsComments,
+  findManyAnimesPossibleRecommendations
+
 };

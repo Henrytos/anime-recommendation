@@ -11,7 +11,7 @@ async function renderQuizzes() {
 
   if (quizzes.length == 0) {
     quizzesTexts +=
-      "<div class='not-found'> <img src='./assets/images/not-found.png' alt='não encontrado quizzes' width='427' height='307.89' /><h2>Sem quizzes disponíveis.</h2> <h3>Tente novamente mais tarde.</h3> </div>";
+      "<div class='not-found'> <img src='./assets/images/not-found-loli.png' alt='não encontrado quizzes' width='427' height='307.89' /><h2>Sem quizzes disponíveis.</h2> <h3>Tente novamente mais tarde.</h3> </div>";
     section_container.style.backgroundImage = "url('')";
   }
 

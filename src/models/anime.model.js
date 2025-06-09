@@ -34,9 +34,18 @@ function getPopularAnime() {
   return database.execute(query)
 }
 
+function findByName(name) {
+  const query = `
+    SELECT * FROM animes WHERE animes.title LIKE "${name}"
+  `
+
+  return database.execute(query)
+}
+
 module.exports = {
   findByAnimeId,
   findMany,
   create,
-  getPopularAnime
+  getPopularAnime,
+  findByName
 };

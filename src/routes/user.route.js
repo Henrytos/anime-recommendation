@@ -20,10 +20,12 @@ const {
 const { getUserMetricsKpiController } = require("../controllers/get-user-metrics-kpi.controller.js")
 
 const upload = require("../config/configUpload");
+const { getRecommendationAnimeByGeminiController } = require("../controllers/get-recommendation-anime-by-gemini.controller.js");
 
 router.post("/", upload.single("avatarUrl"), createUserController);
 router.post("/auth", authenticateWithPasswordController);
 router.get("/recommendations", fetchRecommendationsController);
+router.get("/recommendations/ia", getRecommendationAnimeByGeminiController)
 router.get("/comments", fetchCommentsController);
 router.get("/metrics/chart", getUserMetricsController);
 router.get("/metrics/kpi", getUserMetricsKpiController);
