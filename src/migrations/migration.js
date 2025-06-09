@@ -36,8 +36,6 @@ async function createTablesInDatabase() {
         email VARCHAR(45) NOT NULL UNIQUE,
         password_hash VARCHAR(${process.env.MYSQL_HASH_LENGTH}) NOT NULL,
         avatar_url VARCHAR(255) NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         CONSTRAINT chkEmail CHECK(email LIKE '%@%')
     );
   `;
@@ -45,11 +43,10 @@ async function createTablesInDatabase() {
   const queryToCreateQuizzesTable = `
     CREATE TABLE quizzes(
         quiz_id INT PRIMARY KEY AUTO_INCREMENT,
-        thumb_url VARCHAR(255) NOT NULL,
         title VARCHAR(45) NOT NULL,
         description VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        is_mapping BOOLEAN
+        thumb_url VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )AUTO_INCREMENT = 1000;
   `;
   const queryToCreateAnimesTable = `
@@ -59,17 +56,17 @@ async function createTablesInDatabase() {
         image_url VARCHAR(500),
         target_audience VARCHAR(45) NOT NULL,
         gender VARCHAR(45) NOT NULL,
-        score DECIMAL(4,2) DEFAULT 0
+        score DECIMAL(4,2) NOT NULL DEFAULT 0
     );
     `;
 
   const queryToCreateCommentsTable = `
     CREATE TABLE comments(
         comment_id INT AUTO_INCREMENT,
+        description VARCHAR(255) NOT NULL,
         fk_anime_id INT,
         fk_user_id INT, 
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        description VARCHAR(255) NOT NULL,
         CONSTRAINT pk_composite PRIMARY KEY(comment_id, fk_anime_id, fk_user_id),
         CONSTRAINT fk_comment_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id),
         CONSTRAINT fk_comment_user FOREIGN KEY (fk_user_id) REFERENCES users(user_id)
@@ -78,9 +75,9 @@ async function createTablesInDatabase() {
   const queryToCreateQuestionsTable = `
     CREATE TABLE questions(
         question_id INT AUTO_INCREMENT,
-        fk_quiz_id INT,
         title VARCHAR(100) NOT NULL,
         number INT NOT NULL,
+        fk_quiz_id INT,
         CONSTRAINT pk_composite PRIMARY KEY(question_id, fk_quiz_id),
         CONSTRAINT fk_question_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes(quiz_id)
     );`;
@@ -90,9 +87,8 @@ async function createTablesInDatabase() {
         title VARCHAR(100),
         description VARCHAR(255),
         image_url VARCHAR(500),
-        is_correct BOOLEAN,
-        target_audience VARCHAR(45) NOT NULL,
         gender VARCHAR(45) NOT NULL,
+        target_audience VARCHAR(45) NOT NULL,
         fk_question_id INT,
         fk_quiz_id INT,
         
@@ -111,9 +107,7 @@ async function createTablesInDatabase() {
       CONSTRAINT quiz_result_user FOREIGN KEY (fk_user_id) REFERENCES users (user_id),
       CONSTRAINT quiz_result_quiz FOREIGN KEY (fk_quiz_id) REFERENCES quizzes (quiz_id),
       CONSTRAINT quiz_result_anime FOREIGN KEY (fk_anime_id) REFERENCES animes (anime_id)
-    );
-
-`;
+    );`;
 
   await client.query(queryToCreateUserTable);
   console.log("create table users  ✅");
