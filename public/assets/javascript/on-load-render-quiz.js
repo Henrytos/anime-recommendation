@@ -53,7 +53,7 @@ function renderQuestions(questions) {
       <div class='left'>
       <h1>${question.id} - ${question.title}</h1>
       <div class='content-progress'>
-          <div class='line-progress'></div>
+          <div class='line-progress' style='width:${(positionQuestion + 1) * 10}%'></div>
           </div>
       <div class='content-alternatives'>      
         `

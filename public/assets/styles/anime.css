@@ -364,6 +364,11 @@ body {
   color: var(--color-background-foreground);
 }
 
+.light .anime .details p {
+  color: var(--color-purple-black);
+  background-color: var(--color-background);
+}
+
 .anime .characters {
   display: grid;
   grid-template-columns: repeat(4, 200px);
@@ -413,6 +418,13 @@ body {
   -webkit-text-stroke-color: var(--color-background);
 }
 
+.light .characters .character:hover h2,
+.poster:hover h2 {
+  visibility: visible;
+  -webkit-text-stroke-width: 2px; /* largura da borda */
+  -webkit-text-stroke-color: var(--color-background-foreground) !important;
+}
+
 .characters .character h2,
 .poster h2 {
   position: absolute;
@@ -455,6 +467,10 @@ body {
   font-weight: var(--font-bold);
   transform: translate(20px, 0px);
   margin-bottom: 20px;
+}
+
+.light .title {
+  background-color: var(--color-background);
 }
 
 .title::before {
@@ -510,6 +526,11 @@ h3 {
   backdrop-filter: blur(40px);
 }
 
+.light .comment {
+  background-color: hsla(226, 18%, 23%, 0.1) !important;
+  border: 1px solid var(--color-purple-black);
+}
+
 .comment img {
   height: 80px;
   width: 80px;
@@ -539,6 +560,15 @@ h3 {
   font-size: 16px;
   color: var(--color-background-foreground);
 }
+.light .comment .details-comment p {
+  color: var(--color-purple-black);
+}
+
+.light .comment h3 {
+  font-size: var(--size-lg) !important;
+  font-weight: var(--font-bold) !important;
+  color: var(--color-purple-black);
+}
 
 .comment h3 {
   font-size: var(--size-lg) !important;
@@ -552,13 +582,16 @@ h3 {
   font-size: var(--size-sm);
 }
 
+.light .create-comment {
+  border: 1px solid var(--color-purple-black) !important;
+}
 .create-comment {
   grid-column-start: 8;
   grid-column-end: 13;
 
   padding: 20px;
   border: 1px solid var(--color-purple-light);
-  background-color: hsla(226, 18%, 23%, 0.3);
+  background-color: hsla(226, 18%, 23%, 0.1);
   backdrop-filter: blur(40px);
   height: fit-content;
   display: flex;
@@ -579,10 +612,19 @@ h3 {
   object-fit: cover;
   border: 1px solid var(--color-red);
 }
+
+.light .create-comment .top h3 {
+  color: var(--color-purple-black);
+}
+
 .create-comment .top h3 {
   color: var(--color-purple-light);
   font-size: var(--size-2xl) !important;
   font-weight: var(--font-semibold) !important  ;
+}
+
+.light .create-comment textarea {
+  color: var(--color-background);
 }
 
 .create-comment textarea {
