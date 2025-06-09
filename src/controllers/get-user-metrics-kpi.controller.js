@@ -23,13 +23,17 @@ async function getUserMetricsKpiController(request, response) {
         .slice(0, 1);
 
     const image_url = charactersOrderByFavorites[0].character.images.jpg.image_url
+    console.log({
+        image_url
+    })
     const engagement = await userModel.getEngagementByUserId(userId)
     const rank = await userModel.findManyPointsByUsers()
 
     return response.status(200).json({
         anime: { ...animes[0], image_url },
         engagement: engagement[0],
-        rank
+        rank,
+
     })
 }
 
