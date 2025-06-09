@@ -45,4 +45,17 @@ app.listen(PORT_APP, function () {
     \tSe .:desenvolvimento:. você está se conectando ao banco local. \n
     \tSe .:producao:. você está se conectando ao banco remoto. \n\n
     \t\tPara alterar o ambiente, comente ou descomente as linhas 1 ou 2 no arquivo 'app.js'\n\n`);
+
+
+  console.info(
+    `
+      ######                ###    #    
+      #     #  ####  #####   #    # #   
+      #     # #    # #    #  #   #   #  
+      ######  #    # #####   #  #     # 
+      #     # #    # #    #  #  ####### 
+      #     # #    # #    #  #  #     # 
+      ######   ####  #####  ### #     # 
+      `
+  );
 });

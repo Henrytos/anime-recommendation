@@ -11,6 +11,58 @@
 </head>
 
 <body>
+
+    <dialog id="dialog_ia" class="close">
+        <div class="content-dialog">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-x-icon lucide-x " id="close-button" onclick="closeDialog()">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </svg>
+
+            <div>
+
+                <span class="description">
+                    <h3 id="h3_anime">Vinland Saga Season 2</h3>
+                    <span class="tags">
+                        <span class="tag" id="span_tag_gender">
+                            Action
+                        </span>
+                        <span class="tag" id="span_tag_target_audience">
+                            Shounen
+                        </span>
+                        <span class="tag" id="span_tag_score">
+                            8.9
+                        </span>
+                    </span>
+                    <p id="p_description">Henry_dev demonstra preferência por animes de ação, aventura e drama,
+                        apreciando
+                        tanto narrativas
+                        emocionantes quanto
+                        comédias e romances. A variedade de demografias indica um gosto diversificado, buscando
+                        histórias
+                        impactantes em
+                        Shounen, Shoujo, Seinen e Josei.</p>
+                </span>
+
+                <a id="a_anime">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-square-arrow-out-up-right-icon lucide-square-arrow-out-up-right">
+                        <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6" />
+                        <path d="m21 3-9 9" />
+                        <path d="M15 3h6v6" />
+                    </svg>
+                    <span>Ver Mais</span>
+                </a>
+            </div>
+
+            <img src="https://i.pinimg.com/736x/73/d8/99/73d899caec8f9ebcb91b3d2f9be8f647.jpg" alt="" id="img_anime">
+        </div>
+
+    </dialog>
+
     <section class="start container">
         <nav class="nav-bar">
             <a href="./index.html">
@@ -41,6 +93,32 @@
                         <path d="M9 18c-4.51 2-5-2-7-2" />
                     </svg>
                 </button>
+
+                <button class="button button-foreground button-ia" id="button_ia" onclick="recommendationIa()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-brain-circuit-icon lucide-brain-circuit">
+                        <path
+                            d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+                        <path d="M9 13a4.5 4.5 0 0 0 3-4" />
+                        <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" />
+                        <path d="M3.477 10.896a4 4 0 0 1 .585-.396" />
+                        <path d="M6 18a4 4 0 0 1-1.967-.516" />
+                        <path d="M12 13h4" />
+                        <path d="M12 18h6a2 2 0 0 1 2 2v1" />
+                        <path d="M12 8h8" />
+                        <path d="M16 8V5a2 2 0 0 1 2-2" />
+                        <circle cx="16" cy="13" r=".5" />
+                        <circle cx="18" cy="3" r=".5" />
+                        <circle cx="20" cy="21" r=".5" />
+                        <circle cx="20" cy="8" r=".5" />
+                    </svg>
+
+                    <span>
+                        Recomendação IA
+                    </span>
+                </button>
+
                 <a class="button button-foreground no-auth" href="./sign-up.html">Cadastrar</a>
                 <a class="button button-foreground no-auth" href="./sign-in.html">Entrar</a>
                 <a id="preview-profile" class="auth" href="./dashboard.html">
@@ -173,6 +251,7 @@
         </div>
 
         <div class="layout">
+
             <span class="boxes top-left">
                 <span class="box box-red-dark"></span>
                 <span class="box box-red-light"></span>
@@ -194,7 +273,9 @@
                 <span class="box box-red-light"></span>
             </span>
         </div>
+
     </section>
+
 
     <!-- expand -->
 
@@ -234,7 +315,9 @@
         </div>
 
 
+
     </div>
+
 
     <script>
         let page = 1, perPage = 10, maxPages = 1
@@ -281,6 +364,66 @@
                 renderComments(comments)
             })
         })
+
+        function recommendationIa() {
+            const dialog = document.getElementById("dialog_ia")
+
+            button_ia.innerHTML = 'Carregando...'
+
+
+            const headers = new Headers()
+            const userId = sessionStorage.user_id
+            headers.append('userId', userId)
+
+            fetch(`/users/recommendations/ia`, { headers }).then(response => response.json()).then(({ answer, anime }) => {
+                h3_anime.innerHTML = answer.recommendation
+                p_description.innerHTML = answer.description
+
+
+                span_tag_gender.innerHTML = anime.gender
+                span_tag_target_audience.innerHTML = anime.target_audience
+                span_tag_score.innerHTML = anime.score
+                a_anime.href = `./anime.html?animeId=${anime.anime_id}`
+                img_anime.src = anime.image_url
+
+                dialog.classList.remove("close")
+                dialog.classList.add("open")
+
+                searchRecommendation()
+            }).finally(() => {
+                button_ia.innerHTML = `
+                 <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-brain-circuit-icon lucide-brain-circuit">
+                        <path
+                            d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+                        <path d="M9 13a4.5 4.5 0 0 0 3-4" />
+                        <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" />
+                        <path d="M3.477 10.896a4 4 0 0 1 .585-.396" />
+                        <path d="M6 18a4 4 0 0 1-1.967-.516" />
+                        <path d="M12 13h4" />
+                        <path d="M12 18h6a2 2 0 0 1 2 2v1" />
+                        <path d="M12 8h8" />
+                        <path d="M16 8V5a2 2 0 0 1 2-2" />
+                        <circle cx="16" cy="13" r=".5" />
+                        <circle cx="18" cy="3" r=".5" />
+                        <circle cx="20" cy="21" r=".5" />
+                        <circle cx="20" cy="8" r=".5" />
+                    </svg>
+
+                    <span>
+                        Recomendação IA
+                    </span>
+                `
+            })
+        }
+
+        function closeDialog() {
+            const dialog = document.getElementById("dialog_ia")
+
+            dialog.classList.remove("open")
+            dialog.classList.add("close")
+        }
 
         function redirectAnimePopular() {
             window.location.href = `./anime.html?animeId=${animePopular}`
@@ -725,6 +868,10 @@
     <script src="./assets/javascript/remove-item-in-page.js" type="module" defer></script>
     <script src="./assets/javascript/set-preview-profile.js" type="module" defer></script>
     <script src="./assets/javascript/on-click-button-exit.js" type="module" defer></script>
+
+
+
+
 </body>
 
 </html>

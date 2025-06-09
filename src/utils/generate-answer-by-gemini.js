@@ -39,8 +39,8 @@ async function generateAnswer(username, genders, targetAudience, possibleRecomme
             tokens
         })
 
-        const responseExtract = response.slice(7, response.length - 3)
-
+        const responseExtract = response.slice(7, response.length - 4)
+        console.log(responseExtract)
         return JSON.parse(responseExtract);
     } catch (error) {
         console.error(error);
