@@ -60,7 +60,7 @@ async function createTablesInDatabase() {
         target_audience VARCHAR(45) NOT NULL,
         gender VARCHAR(45) NOT NULL,
         score DECIMAL(4,2) DEFAULT 0
-        );
+    );
     `;
 
   const queryToCreateCommentsTable = `
