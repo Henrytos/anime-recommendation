@@ -71,7 +71,6 @@ function findManyAnimesPossibleRecommendations(userId) {
     FROM quiz_result
     RIGHT JOIN animes ON quiz_result.fk_anime_id = animes.anime_id AND quiz_result.fk_user_id = ${userId}
     WHERE quiz_result.fk_anime_id IS NULL
-    AND animes.title NOT LIKE "%'%"
     ORDER BY animes.score DESC
     LIMIT 10;
   `
