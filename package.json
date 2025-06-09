@@ -9,11 +9,11 @@
     "migrate:dev": "node --env-file=.env ./src/migrations/migration.js",
     "seed": "node --env-file=.env ./src/migrations/seed.js",
     "view": "node --env-file=.env ./src/migrations/view.js"
-
   },
   "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",
   "license": "MIT",
   "dependencies": {
+    "@google/genai": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.17.1",
