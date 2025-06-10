@@ -363,24 +363,10 @@ body {
 
 .charts {
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
   margin-bottom: 32px;
   max-height: 500px;
-}
-
-.chart-quizzes {
-  grid-column-start: 1;
-  grid-column-end: 6;
-}
-.chart-comments {
-  grid-column-start: 6;
-  grid-column-end: 11;
-}
-
-.chart-mapping {
-  grid-column-start: 11;
-  grid-column-end: 14;
 }
 
 .histories {
@@ -590,7 +576,7 @@ body {
 .indicator {
   border-radius: 16px;
   border-left: 4px solid var(--color-red);
-  height: 300px;
+  height: 260px;
   background-color: var(--color-background);
   margin-bottom: 32px;
   padding: 20px 30px;
@@ -607,9 +593,9 @@ body {
 }
 
 .indicator .number {
-  font-size: var(--size-4xl);
+  font-size: var(--size-3xl);
   font-weight: var(--font-normal);
-  transform: translateY(-40px);
+  transform: translateY(-30px);
 }
 
 .percentage {
@@ -810,4 +796,17 @@ dialog {
   right: 0px;
   transform: translate(100%, 0);
   cursor: pointer;
+}
+
+.legends {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.legends span {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: var(--size-sm);
+  font-weight: var(--font-normal);
 }

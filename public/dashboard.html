@@ -136,7 +136,7 @@
 
             <div class="indicators">
                 <div class="indicator">
-                    <h4>Rank Atual</h4>
+                    <h4>Rank na Plataforma</h4>
 
                     <p class="number" id="span_number_rank">
                         º RANK
@@ -150,7 +150,7 @@
 
                         <p id="p_legend_rank">Está acima da média da semana passada :)</p>
                     </span>
-                    <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
+                    <img src="./assets/icons/icon-star.svg" class="image-indicator" alt="">
                 </div>
 
                 <div class="indicator">
@@ -166,7 +166,7 @@
                         <p>Quantidade de recomendações : <span id="span_quantity_recommendations"></span></p>
                     </span>
 
-                    <img src="./assets/icons/icon-star.svg" class="image-indicator" alt="">
+                    <img src="./assets/icons/icon-chat.svg" class="image-indicator" alt="">
                 </div>
 
                 <div class="indicator indicator-anime" onclick="redirectAnimePopular()">
@@ -208,15 +208,7 @@
                     </div>
                 </div>
 
-                <div class="chart-mapping">
-                    <h2 class="title">
-                        Mapeamento
-                    </h2>
 
-                    <div class="div-content-chart">
-                        <canvas id="chart_pie_mapping"></canvas>
-                    </div>
-                </div>
             </div>
 
             <div class="histories">
@@ -231,7 +223,9 @@
                             <select id="select_target_audience" onchange="searchRecommendation()"></select>
                         </div>
                     </div>
+                    <div class="legends" id="div_legends">
 
+                    </div>
                     <div class="recommendations" id="div_recommendations"></div>
 
                     <div id="div_links">
@@ -323,6 +317,7 @@
         let page = 1, perPage = 10, maxPages = 1
         let animePopular = 0
         let mappingsList
+
 
         window.addEventListener("DOMContentLoaded", () => {
             const userId = sessionStorage.getItem("user_id")
@@ -575,18 +570,19 @@
                 return
             }
 
+            const colorMap = {
+                [mappingsList[0]]: '#cb4648',
+                [mappingsList[1]]: '#a39fbf',
+                [mappingsList[2]]: '#313646',
+                [mappingsList[3]]: '#754946',
+                [mappingsList[4]]: '#f3f3f3',
+                [mappingsList[5]]: '#141617',
+                [mappingsList[6]]: '#6A92E8'
+            };
+
+
             for (let count = 0; count < recommendations.length; count++) {
                 let recommendation = recommendations[count]
-
-                const colorMap = {
-                    [mappingsList[0]]: '#cb4648',
-                    [mappingsList[1]]: '#a39fbf',
-                    [mappingsList[2]]: '#313646',
-                    [mappingsList[3]]: '#754946',
-                    [mappingsList[4]]: '#f3f3f3',
-                    [mappingsList[5]]: '#141617',
-                    [mappingsList[6]]: '#6A92E8'
-                };
 
                 const backgroundColor = colorMap[recommendation.gender];
                 const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
@@ -660,6 +656,32 @@
 
             mappingsList = mappingsTargetList
 
+            let contentLegends = ''
+
+            const colorMap = {
+                [mappingsList[0]]: '#cb4648',
+                [mappingsList[1]]: '#a39fbf',
+                [mappingsList[2]]: '#313646',
+                [mappingsList[3]]: '#754946',
+                [mappingsList[4]]: '#f3f3f3',
+                [mappingsList[5]]: '#141617',
+                [mappingsList[6]]: '#6A92E8',
+                [mappingsList[7]]: '#124548',
+                [mappingsList[8]]: '#cd46f8',
+
+
+            };
+
+            for (let position = 0; position < mappingsList.length; position++) {
+                const target = mappingsTargetList[position]
+                const backgroundColor = colorMap[target]
+                const colorForeground = backgroundColor == '#f3f3f3' || backgroundColor == '#a39fbf' || backgroundColor == '#6A92E8' ? '#141617' : '#f3f3f3'
+
+                contentLegends += ` <span style='background-color:${backgroundColor};color:${colorForeground}' > ${target} </span>`
+            }
+
+            div_legends.innerHTML = contentLegends
+
             const optionsChartBarQuizzes = {
                 type: 'bar',
                 data: {
@@ -678,11 +700,14 @@
                         legend: {
                             display: true,
                             labels: {
-                                color: '#fff'
+                                color: '#fff',
+                                font: {
+                                    size: 16
+                                }
                             }
                         },
                         datalabels: {
-                            color: '#fff'
+                            color: '#fff',
 
                         }
                     },
@@ -724,7 +749,10 @@
                         legend: {
                             display: true,
                             labels: {
-                                color: '#fff'
+                                color: '#fff',
+                                font: {
+                                    size: 16
+                                }
                             }
                         },
                         datalabels: {
@@ -752,50 +780,49 @@
                 }
             }
 
-            const optionsChartPieMapping = {
-                type: 'pie',
-                data: {
-                    labels: mappingsList,
-                    datasets: [
-                        {
-                            label: 'Quantidade',
-                            data: mappingsQuantities,
-                            borderColor: ['#cb4648', '#a39fbf', '#313646', '#754946', '#f3f3f3', '#141617', '#6A92E8'],
-                            backgroundColor: ['#cb4648', '#a39fbf', '#313646', '#754946', '#f3f3f3', '#141617', '#6A92E8']
-                        },
-                    ]
-                },
-                options: {
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: '#fff'
-                            },
-                            position: 'right'
-                        }
-                    },
-                }
-            }
 
             const chartBarQuizzes = new Chart(chart_bar_quizzes, optionsChartBarQuizzes)
             const chartBarComments = new Chart(chart_bar_comments, optionsChartBarComments)
-            const chartPieMapping = new Chart(chart_pie_mapping, optionsChartPieMapping)
             const buttonTheme = document.getElementById('button_theme')
 
-            buttonTheme.addEventListener("click", () => {
-                const isDarkMode = document.body.className == 'dark'
+            const modeTheme = document.body.className
 
-                const color = isDarkMode ? '#000' : '#fff'
+            let color = "#fefefe"
+
+            if (modeTheme == "light") {
+                color = "#000000"
+            }
+
+            chartBarQuizzes.options.scales.x.ticks.color = color
+            chartBarQuizzes.options.scales.y.ticks.color = color
+            chartBarQuizzes.options.plugins.legend.labels.color = color
+
+            chartBarComments.options.scales.x.ticks.color = color
+            chartBarComments.options.scales.y.ticks.color = color
+            chartBarComments.options.plugins.legend.labels.color = color
+
+            chartBarQuizzes.update()
+            chartBarComments.update()
+
+            buttonTheme.addEventListener("click", () => {
+                const modeTheme = document.body.className
+
+                let color = "#fefefe"
+
+                if (modeTheme == "light") {
+                    color = "#000000"
+                }
 
                 chartBarQuizzes.options.scales.x.ticks.color = color
                 chartBarQuizzes.options.scales.y.ticks.color = color
+                chartBarQuizzes.options.plugins.legend.labels.color = color
 
-                chartPieMapping.options.plugins.legend.labels.color = color
-                chartPieMapping.options.plugins.legend.labels.color = color
+                chartBarComments.options.scales.x.ticks.color = color
+                chartBarComments.options.scales.y.ticks.color = color
+                chartBarComments.options.plugins.legend.labels.color = color
 
                 chartBarQuizzes.update()
-                chartPieMapping.update()
+                chartBarComments.update()
             })
         }
 
