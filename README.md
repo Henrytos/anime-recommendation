@@ -28,21 +28,13 @@ A importância se baseia na **dificuldade que muitos têm ao escolher o que assi
 ## 📝 Prototipação
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/bac8efac-1f5e-4f63-94d7-a6c6a6a96b98" width="47%" />
-  <img src="https://github.com/user-attachments/assets/84c215f3-1712-4ba6-b770-5989cf879b34" width="47%" />
-  <img src="https://github.com/user-attachments/assets/4725b80f-57b2-48e8-9f96-95f4be9259b2" width="47%" />
-  <img src="https://github.com/user-attachments/assets/ea742cf2-e80d-4fe0-a50a-d2d9a057328e" width="47%" />
+  <img src="https://media.licdn.com/dms/image/v2/D4D22AQGaDNiv13Mf0A/feedshare-shrink_2048_1536/B4DZdhw_pzHwAo-/0/1749691923932?e=1764806400&v=beta&t=gqx9QjhT9qFpvYy1DbrPRYEoH4FPBlZ3C7A1CHmbGv8" width="47%" />
+  <img src="https://media.licdn.com/dms/image/v2/D4D22AQGHW9oGs0DxCw/feedshare-shrink_2048_1536/B4DZdhw_tDGUAo-/0/1749691931725?e=1764806400&v=beta&t=nh3OhZV5tppUcrjUbB6feOsFa5DuRJQtI9ZP0PGOO8I" width="47%" />
+  <img src="https://media.licdn.com/dms/image/v2/D4D22AQHFDtnQH2Ds1w/feedshare-shrink_2048_1536/B4DZdhw_syHkAo-/0/1749691930215?e=1764806400&v=beta&t=EdQ4g3t4ay69TegO_hRGtW87h1h5_xXC5W7f_oXZUug" width="47%" />
+  <img src="https://media.licdn.com/dms/image/v2/D4D22AQHovPBZv4k_HA/feedshare-shrink_2048_1536/B4DZdhw_tKH4Ao-/0/1749691932330?e=1764806400&v=beta&t=uCe0TpGPmHyEI-bOnPbfStf9MOUTl17f4Lhu8sPZgZE" width="47%" />
 </div>
 
 ---
-
-## 🚧 Em Desenvolvimento
-
-A plataforma está em desenvolvimento. Em breve novas funcionalidades como:
-
-- Recomendação personalizada por quiz
-- Interação entre usuario por meio de forúns e comentarios
-- Analise de aproveitamento de recomendação 
 
 ---
 
